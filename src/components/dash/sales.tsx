@@ -2,7 +2,8 @@ import { Bar } from 'react-chartjs-2';
 import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-
+import Chart from "../../components/lineChart";
+import { Highchart } from "../../components/highchart";
 export const Sales = (props: any) => {
   const theme = useTheme();
 
@@ -74,17 +75,19 @@ export const Sales = (props: any) => {
         title="Latest Sales"
       />
       <Divider />
-      <CardContent>
+      <CardContent dir="ltr">
         <Box
           sx={{
             height: 400,
             position: 'relative'
           }}
         >
-          <Bar
+                <Highchart />
+
+          {/* <Bar
             data={data}
             options={options}
-          />
+          /> */}
         </Box>
       </CardContent>
       <Divider />

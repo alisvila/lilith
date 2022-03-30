@@ -190,7 +190,7 @@ function DashboardContent() {
         >
           <Toolbar />
 
-          <Grid spacing={4}>
+          <Grid container spacing={4}>
           <Container maxWidth="xl">
               <Grid container spacing={3} sx={{pt: 5}}>
                 {/* Chart */}

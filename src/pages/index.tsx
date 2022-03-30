@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../components/hooks/useAuth";
-import { Auth } from "../auth";
+import { User } from "../auth";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,16 +9,15 @@ import {
 } from "react-router-dom";
 
 export default function Home() {
-  const { onLogin, token }: Auth = useAuth();
-  
+  const { onLogin, token }: User = useAuth();
+
   useEffect(() => {
-    console.log(token)
-  
-  }, [])
-  
+    console.log(token);
+  }, []);
+
   return (
     <>
-        <Navigation />
+      <Navigation />
 
       <div>index</div>
 
@@ -32,12 +31,11 @@ export default function Home() {
 }
 
 const Navigation = () => {
-  const { onLogout, token }: Auth = useAuth();
+  const { onLogout, token }: User = useAuth();
 
   useEffect(() => {
-    console.log(token)
-  
-  }, [])
+    console.log(token);
+  }, []);
 
   return (
     <nav>

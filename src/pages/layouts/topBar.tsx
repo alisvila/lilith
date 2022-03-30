@@ -15,7 +15,7 @@ import AccountMenu from "./navbarItems"
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.paper,
-  boxShadow: theme.shadows[3],
+  boxShadow: 'none',
   color: theme.palette.neutral[500],
 }));
 
@@ -26,7 +26,7 @@ export default function TopBar(props: any) {
     <DashboardNavbarRoot
       {...other}
       sx={{
-        right: {
+        left: {
           lg: 280,
         },
         width: {
@@ -52,7 +52,7 @@ export default function TopBar(props: any) {
           component="div"
           sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
         >
-          LOGO
+          Dashboard
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
 

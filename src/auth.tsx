@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect } from "react";
 import useLocalStorage from "./components/hooks/useLocalStorage";
+import { isExpired, decodeToken } from "react-jwt";
 
-export interface Auth {
+export interface User {
   token?: UserToken;
   onLogin?: any;
   onLogout?: any;
+  role: string;
 }
 
 export interface UserToken {
@@ -15,20 +17,24 @@ type child = {
   children: JSX.Element | JSX.Element[];
 };
 
-export const AuthContext = createContext<Auth>({});
+export const AuthContext = createContext<User>({ role: 'no'});
 
 export default function AuthProvider({ children }: child) {
   const [token, setToken] = useState<UserToken>({ token: null });
   const [name, setName] = useLocalStorage("token", "");
 
   useEffect(() => {
-    console.log(name, "name inside auth");
+    const token = localStorage.getItem("token")
+    setToken({
+      token
+    });
   }, []);
 
   const handleLogin = async () => {
     const token = await fakeAuth();
-    console.log("in");
-
+    localStorage.setItem("token", String(token?.token))
+    // TODO: Uncoment this line after auth endpoint
+    // const decode = decodeToken(token)
     setToken(token);
     // TODO: do somthing about this line
     // window.location.href = "/dashboard"
@@ -39,10 +45,11 @@ export default function AuthProvider({ children }: child) {
     setToken({ token: "" });
   };
 
-  const value: Auth = {
+  const value: User = {
     token,
     onLogin: handleLogin,
     onLogout: handleLogout,
+    role: 'admin'
   };
 
   console.log("last line of provider", value);

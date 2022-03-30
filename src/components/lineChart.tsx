@@ -87,12 +87,12 @@ export default function LineChartWrapper() {
           <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>
-
+{/* 
       <ResponsiveContainer width="100%" height="100%">
         <LineChart width={300} height={100} data={data}>
           <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
         </LineChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer> */}
     </>
   );
 }

@@ -7,7 +7,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import DrawerItems from './drawerItems'
+import DrawerItems from "./drawerItems";
 
 export default function SideBar(props: any) {
   const { open, onClose } = props;
@@ -22,12 +22,13 @@ export default function SideBar(props: any) {
     return (
       <Drawer
         variant="permanent"
-        anchor="right"
+        anchor="left"
         PaperProps={{
           sx: {
-            backgroundColor: "neutral.900",
-            color: "#FFFFFF",
+            // backgroundColor: "neutral.900",
+            color: "text.primary",
             width: 280,
+            border: "none",
           },
         }}
       >
@@ -38,14 +39,15 @@ export default function SideBar(props: any) {
 
   return (
     <Drawer
-      anchor="right"
+      anchor="left"
       onClose={onClose}
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "neutral.900",
-          color: "#FFFFFF",
+          // backgroundColor: "neutral.900",
+          color: "text.primary",
           width: 280,
+          border: "none",
         },
       }}
       sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}

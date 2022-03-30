@@ -17,6 +17,12 @@ import {
   Toolbar,
   Tooltip,
 } from "@mui/material";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+} from "react-router-dom";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -35,6 +41,7 @@ export default function AccountMenu() {
           minHeight: 64,
           left: 0,
           px: 2,
+          boxShadow: 'none',
         }}
       >
         <Box
@@ -77,15 +84,15 @@ export default function AccountMenu() {
             "& .MuiAvatar-root": {
               width: 32,
               height: 32,
-              mr: -0.5,
-              ml: 1,
+              ml: -0.5,
+              mr: 1,
             },
             "&:before": {
               content: '""',
               display: "block",
               position: "absolute",
               top: 0,
-              left: 55,
+              right: 40,
               width: 10,
               height: 10,
               bgcolor: "background.paper",
@@ -110,17 +117,17 @@ export default function AccountMenu() {
           </ListItemIcon>
           Add another account
         </MenuItem>
-        <MenuItem>
+        <MenuItem key="settings" component={NavLink} to="/settings">
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          تنظیمات
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          خروج
         </MenuItem>
       </Menu>
     </>
