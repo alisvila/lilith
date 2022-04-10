@@ -33,7 +33,10 @@ const ListItemButtonCus: any = styled(ListItemButton)(({theme}: any) => ({
   borderRadius: theme.shape.borderRadius,
   "&:hover": {
     backgroundColor: theme.palette.secondary.light,
-    color:theme.palette.secondary.dark
+    color:theme.palette.secondary.dark,
+    "& .MuiListItemIcon-root" : {
+      color:theme.palette.secondary.dark,
+    }
   },
 }));
 
@@ -87,7 +90,7 @@ export default function NestedList() {
         </ListItemIcon>
         <ListItemText primary="پنل کاربری" />
       </ListItemButtonCus>
-      <ListItemButtonCus key="Customers" component={NavLink} to="/Customers">
+      <ListItemButtonCus key="Customers" component={NavLink} to="/dashboard/Customers">
         <ListItemIcon>
           <DraftsIcon />
         </ListItemIcon>

@@ -210,6 +210,12 @@ export const theme = createTheme({
       secondary: "#65748B",
       disabled: "rgba(55, 65, 81, 0.48)",
     },
+    tab: {
+      primary: "#f0f0f0",
+      text: "",
+      gray: "#e3e3e3",
+      btn: "#d9d9d9"
+    }
   },
   shape: {
     borderRadius: 20,

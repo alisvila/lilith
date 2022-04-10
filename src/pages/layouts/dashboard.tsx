@@ -38,6 +38,12 @@ const cacheRtl = createCache({
   stylisPlugins: [prefixer, rtlPlugin],
 });
 
+const BoxMain: any = styled(Box)(({ theme }: any) => ({
+  backgroundColor: theme.palette.background.main,
+  borderRadius: theme.shape.borderRadius,
+  marginRight: "15px",
+}));
+
 export default function DashLayout(props: any) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isRtl, setIsRtl] = React.useState(true);
@@ -56,7 +62,15 @@ export default function DashLayout(props: any) {
                 width: "100%",
               }}
             >
-              {props.children}
+              <BoxMain
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                  py: 8,
+                }}
+              >
+                {props.children}
+              </BoxMain>
             </Box>
           </DashboardLayoutRoot>
           <TopBar onSidebarOpen={() => setSidebarOpen(true)} />

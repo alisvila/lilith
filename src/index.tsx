@@ -1,16 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import { Provider } from "react-redux";
 import App from "./App";
+import store from './store/index';
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
+
+import "./index.css";
 
 const AuthContext = React.createContext("ss");
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContext.Provider value={"token"}>
-      <App />
-    </AuthContext.Provider>
+    <Provider store={store}>
+      <AuthContext.Provider value={"token"}>
+        <App />
+      </AuthContext.Provider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

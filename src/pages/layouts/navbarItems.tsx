@@ -117,7 +117,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           Add another account
         </MenuItem>
-        <MenuItem key="settings" component={NavLink} to="/settings">
+        <MenuItem key="settings" component={NavLink} to="/dashboard/settings">
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>

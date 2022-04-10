@@ -7,9 +7,28 @@ import {
   Route,
   NavLink,
 } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { useStore } from "react-redux";
+
+import { authActions } from "../store/auth";
 
 export default function Home() {
   const { onLogin, token }: User = useAuth();
+
+  const dispatch = useDispatch();
+  const store = useStore();
+
+  const loginHandler = () => {
+    fakeAuth().then(token => {
+
+    })
+    dispatch(authActions.login({}))
+  }
+
+  const fakeAuth = () =>
+  new Promise((resolve: any) => {
+    setTimeout(() => resolve({ token: "2342f2f1d131rf12" }), 250);
+  });
 
   useEffect(() => {
     console.log(token);

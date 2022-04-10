@@ -14,6 +14,7 @@ import Chart from "../../components/lineChart";
 import Footer from "../footer";
 import styled from "@emotion/styled";
 import EarningCard from "./earningCard";
+import TableWrapper from "../../components/table/TableWrapper";
 
 const BoxMain: any = styled(Box)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.main,
@@ -31,15 +32,8 @@ export default function Index() {
   return (
     <DashLayout>
       <>
-        <BoxMain
-          component="main"
-          sx={{
-            flexGrow: 1,
-            py: 8,
-          }}
-        >
-          <Container maxWidth={false}>
-            <Grid container spacing={3}>
+        <Container maxWidth={false}>
+          <Grid container spacing={3}>
             <Grid item xs={12}>
               <Grid container spacing={5}>
                 <Grid item lg={4} md={6} sm={6} xs={12}>
@@ -60,36 +54,38 @@ export default function Index() {
                 </Grid>
               </Grid>
             </Grid>
-              <Grid item lg={6} xs={6}>
-                <PersonalInfo sx={{ height: "100%" }} />
-              </Grid>
-              <Grid item lg={3} sm={6} xl={3} xs={12}>
-                <Budget sx={{ height: "100%" }} />
-              </Grid>
-              <Grid item xl={3} lg={3} sm={6} xs={12}>
-                {/* <TotalCustomers /> */}
-              </Grid>
-              <Grid item xl={3} lg={3} sm={6} xs={12}>
-                {/* <TasksProgress /> */}
-              </Grid>
-              <Grid item xl={3} lg={3} sm={6} xs={12}>
-                {/* <TotalProfit sx={{ height: '100%' }} /> */}
-              </Grid>
-              <Grid item lg={8} md={12} xl={9} xs={12}>
-                <Sales />
-              </Grid>
-              <Grid item lg={4} md={6} xl={3} xs={12}>
-                {/* <TrafficByDevice sx={{ height: '100%' }} /> */}
-              </Grid>
-              <Grid item lg={8} md={12} xl={9} xs={12}>
-                <LatestOrders />
-              </Grid>
-              <Grid item lg={4} md={6} xl={3} xs={12}>
-                <LatestProducts sx={{ height: "100%" }} />
-              </Grid>
+            <Grid item xs={12}>
+              <TableWrapper />
             </Grid>
-          </Container>
-        </BoxMain>
+            <Grid item lg={6} xs={6}>
+              <PersonalInfo sx={{ height: "100%" }} />
+            </Grid>
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <Budget sx={{ height: "100%" }} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              {/* <TotalCustomers /> */}
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              {/* <TasksProgress /> */}
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              {/* <TotalProfit sx={{ height: '100%' }} /> */}
+            </Grid>
+            <Grid item lg={8} md={12} xl={9} xs={12}>
+              <Sales />
+            </Grid>
+            <Grid item lg={4} md={6} xl={3} xs={12}>
+              {/* <TrafficByDevice sx={{ height: '100%' }} /> */}
+            </Grid>
+            <Grid item lg={8} md={12} xl={9} xs={12}>
+              <LatestOrders />
+            </Grid>
+            <Grid item lg={4} md={6} xl={3} xs={12}>
+              <LatestProducts sx={{ height: "100%" }} />
+            </Grid>
+          </Grid>
+        </Container>
         <Footer />
       </>
     </DashLayout>

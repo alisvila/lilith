@@ -1,0 +1,7 @@
+.exel-input {
+
+}
+
+.exel-input:focus , .exel-input:focus-visible{
+    border-color: rgba(0, 0, 0, 0.16);
+}
