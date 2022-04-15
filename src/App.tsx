@@ -17,6 +17,8 @@ import { RotateLeft } from "@mui/icons-material";
 import Customers from "./pages/customers";
 import Meal from "./pages/dashboard/meal";
 import Illnes from './pages/dashboard/illnes';
+import Visit from './pages/dashboard/visit'
+
 
 function App() {
   return (
@@ -56,6 +58,14 @@ function App() {
             element={
               <ProtectedRoute  roles={["all"]}>
                 <Illnes />
+              </ProtectedRoute>
+            }
+          />
+            <Route
+            path="visit"
+            element={
+              <ProtectedRoute  roles={["all"]}>
+                <Visit />
               </ProtectedRoute>
             }
           />
