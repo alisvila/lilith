@@ -77,10 +77,15 @@ const TabsList = styled(TabsListUnstyled)(({ theme }: any) => ({
   borderWidth: '4px 4px 0 4px',
 }));
 
+const StickyGrid: any = styled(Card)(({ theme }: any) => ({
+  position: 'sticky',
+  top: '0'
+}));
+  
 
 export default function TableWrapper(props: any) {
   return (
-    <Card>
+    <StickyGrid>
       <CardContent>
         <TabsUnstyled defaultValue={0}>
           <TabsList>
@@ -90,19 +95,19 @@ export default function TableWrapper(props: any) {
             <Tab>دیابت</Tab>
           </TabsList>
           <TabPanel value={0}>
-            <ActualTable id="normal" x={6} y={6} />
+            <ActualTable id="normal" x={6} y={6} selectedCalery={props.selectedCalery} />
           </TabPanel>
           <TabPanel value={1}>
-            <ActualTable id="young" x={6} y={6} />
+            <ActualTable id="young" x={6} y={6} selectedCalery={props.selectedCalery} />
           </TabPanel>
           <TabPanel value={2}>
-            <ActualTable id="pregnant" x={6} y={6} />
+            <ActualTable id="pregnant" x={6} y={6} selectedCalery={props.selectedCalery} />
           </TabPanel>
           <TabPanel value={3}>
-            <ActualTable id="Diabetes" x={6} y={6} />
+            <ActualTable id="Diabetes" x={6} y={6} selectedCalery={props.selectedCalery} />
           </TabPanel>
         </TabsUnstyled>
       </CardContent>
-    </Card>
+    </StickyGrid>
   );
 }

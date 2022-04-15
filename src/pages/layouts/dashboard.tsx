@@ -15,12 +15,14 @@ import TopBar from "./topBar";
 import SideBar from "./drawer";
 import { theme } from "../../components/theme";
 import { defaultTheme } from "../../components/theme/default";
+import Footer from "../footer";
 
 const DashboardLayoutRoot = styled("div")(({ theme }: any) => ({
   display: "flex",
   flex: "1 1 auto",
   maxWidth: "100%",
   paddingTop: 64,
+  minHeight: 'calc(100vh - 88px)',
   [theme.breakpoints.up("lg")]: {
     paddingLeft: 280,
   },
@@ -75,6 +77,8 @@ export default function DashLayout(props: any) {
           </DashboardLayoutRoot>
           <TopBar onSidebarOpen={() => setSidebarOpen(true)} />
           <SideBar open={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Footer />
+
         </ThemeProvider>
       </CacheProvider>
     </>

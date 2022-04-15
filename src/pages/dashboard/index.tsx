@@ -11,7 +11,6 @@ import { Sales } from "../../components/dash/sales";
 import api from "../../services/service";
 import PersonalInfo from "../../components/dash/personalInfo";
 import Chart from "../../components/lineChart";
-import Footer from "../footer";
 import styled from "@emotion/styled";
 import EarningCard from "./earningCard";
 import TableWrapper from "../../components/table/TableWrapper";
@@ -86,7 +85,6 @@ export default function Index() {
             </Grid>
           </Grid>
         </Container>
-        <Footer />
       </>
     </DashLayout>
   );

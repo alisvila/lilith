@@ -16,6 +16,7 @@ import AccountSettings from "./pages/accountSettings";
 import { RotateLeft } from "@mui/icons-material";
 import Customers from "./pages/customers";
 import Meal from "./pages/dashboard/meal";
+import Illnes from './pages/dashboard/illnes';
 
 function App() {
   return (
@@ -50,6 +51,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+            <Route
+            path="Illnes"
+            element={
+              <ProtectedRoute  roles={["all"]}>
+                <Illnes />
+              </ProtectedRoute>
+            }
+          />
+          
           <Route
             path="dashboard/customers"
             element={
