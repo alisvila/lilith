@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -18,6 +18,15 @@ const steps = ["اطلاعات بیمار", "شرایط خاص بیمار"];
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<any>());
+
+  const [visit , setVisit ] = useState({ userDetail : {} , userCondition : {}})
+  const userDetailHandler = (e : any) => {
+    let newUserDetail = {...visit.userDetail , [e.target.name] : e.target.value }
+    setVisit( { ...visit , userDetail : {...newUserDetail}});
+  }
+  useEffect(()=>{
+    console.log(visit , " <<<<< ")
+  },[visit])
 
   const isStepOptional = (step: any) => {
     return step === 1;
@@ -84,7 +93,7 @@ export default function HorizontalLinearStepper() {
           ) : (
             <>
               <Grid sx={{ m : 5 }}>
-                {activeStep === 0 ? <UserDetail /> : <UserCondition />}
+                {activeStep === 0 ? <UserDetail userDetail={visit.userDetail} userDetailHandler={userDetailHandler} /> : <UserCondition />}
               </Grid>
 
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 , maxWidth : '10%'}}>
