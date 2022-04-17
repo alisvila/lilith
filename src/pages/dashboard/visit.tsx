@@ -19,14 +19,36 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<any>());
 
-  const [visit , setVisit ] = useState({ userDetail : {} , userCondition : {}})
-  const userDetailHandler = (e : any) => {
-    let newUserDetail = {...visit.userDetail , [e.target.name] : e.target.value }
-    setVisit( { ...visit , userDetail : {...newUserDetail}});
-  }
-  useEffect(()=>{
-    console.log(visit , " <<<<< ")
-  },[visit])
+  const [visit, setVisit] = useState({
+    userDetail: {
+      Height: 187,
+      Weight: 87,
+      Wrist: 19,
+      BellyArea: 100,
+      HipArea: 80,
+      SleepHour: 5,
+      Activity: 1,
+      Appetite: 1,
+      TopPressure: 12,
+      BottomPressure: 8,
+      Pulse: 70,
+      HistricalEat: false,
+      Diabete : undefined,
+      Lipidemia : undefined
+    },
+    userCondition: {},
+  });
+
+  const userDetailHandler = (e: any) => {
+    let newUserDetail = {
+      ...visit.userDetail,
+      [e.target.name]: e.target.value,
+    };
+    setVisit({ ...visit, userDetail: { ...newUserDetail } });
+  };
+  useEffect(() => {
+    console.log(visit, " <<<<< ");
+  }, [visit]);
 
   const isStepOptional = (step: any) => {
     return step === 1;
@@ -92,11 +114,25 @@ export default function HorizontalLinearStepper() {
             </>
           ) : (
             <>
-              <Grid sx={{ m : 5 }}>
-                {activeStep === 0 ? <UserDetail userDetail={visit.userDetail} userDetailHandler={userDetailHandler} /> : <UserCondition />}
+              <Grid sx={{ m: 5 }}>
+                {activeStep === 0 ? (
+                  <UserDetail
+                    userDetail={visit.userDetail}
+                    userDetailHandler={userDetailHandler}
+                  />
+                ) : (
+                  <UserCondition />
+                )}
               </Grid>
 
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 , maxWidth : '10%'}}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  pt: 2,
+                  maxWidth: "10%",
+                }}
+              >
                 <Button
                   color="inherit"
                   disabled={activeStep === 0}
