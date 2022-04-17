@@ -4,6 +4,10 @@ import {
   FormLabel,
   FormControlLabel,
   FormGroup,
+  Card,
+  CardContent,
+  Box,
+  Container
 } from "@mui/material";
 import {
   Radio,
@@ -12,11 +16,27 @@ import {
   TextField,
   InputAdornment,
   Checkbox,
+  Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 export default function UserDetail(props: any) {
-  // const userDetail = {...props.userDetail}
+  const {
+    Height,
+    Weight,
+    Wrist,
+    BellyArea,
+    HipArea,
+    SleepHour,
+    Activity,
+    Appetite,
+    TopPressure,
+    BottomPressure,
+    Pulse,
+    HistricalEat,
+    Diabete,
+    Lipidemia,
+  } = props.userDetail;
 
   const activityStatus = [
     { id: 0, label: "بستری (استراحت مطلق)", value: 0 },
@@ -31,198 +51,242 @@ export default function UserDetail(props: any) {
   ];
 
   return (
-    <Grid container spacing={2}>
-      <FormControl>
-        {/* <div>UserDetail</div>
+    <Card>
+      <CardContent>
+        {/* <Container maxWidth="md"> */}
+        <Typography mb={5} variant="h3">اطلاعات بیمار</Typography>
+        <Grid container spacing={3} xs={12} md={12} lg={8}>
+          {/* <div>UserDetail</div>
       <input name="Name" onChange={(e) => props.userDetailHandler(e)} /> */}
-        <TextField
-          required
-          id="Height"
-          label="قد"
-          type="number"
-          defaultValue={187}
-          onChange={(e) => props.userDetailHandler(e)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">سانتی متر</InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          required
-          id="Weight"
-          label="وزن"
-          type="number"
-          defaultValue={85}
-          onChange={(e) => props.userDetailHandler(e)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">کیلوگرم</InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          required
-          id="Wrist"
-          label="محیط مچ دست غیر فعال"
-          type="number"
-          defaultValue={19}
-          onChange={(e) => props.userDetailHandler(e)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">سانتی متر</InputAdornment>
-            ),
-          }}
-        />
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              required
+              id="Height"
+              name="Height"
+              label="قد"
+              type="number"
+              defaultValue={Height}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">سانتی متر</InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              required
+              id="Weight"
+              name="Weight"
+              label="وزن"
+              type="number"
+              defaultValue={Weight}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">کیلوگرم</InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              required
+              id="Wrist"
+              name="Wrist"
+              label="محیط مچ دست"
+              type="number"
+              defaultValue={Wrist}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">سانتی متر</InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              id="BellyArea"
+              name="BellyArea"
+              label="محیط دور شکم"
+              type="number"
+              defaultValue={BellyArea}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">سانتی متر</InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              id="HipArea"
+              name="HipArea"
+              label="محیط دور لگن"
+              type="number"
+              defaultValue={HipArea}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">سانتی متر</InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              required
+              id="SleepHour"
+              name="SleepHour"
+              label="زمان خواب در شبانه روز"
+              type="number"
+              defaultValue={SleepHour}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">ساعت</InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <TextField
+              required
+              id="Activity"
+              name="Activity"
+              label="میزان فعالیت"
+              select
+              defaultValue={Activity}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+            >
+              {activityStatus.map((activity) => (
+                <MenuItem key={activity.id} value={activity.value}>
+                  {activity.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <TextField
+              required
+              id="Appetite"
+              name="Appetite"
+              label="اشتها"
+              select
+              defaultValue={Appetite}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+            >
+              {appetiteStatus.map((activity) => (
+                <MenuItem key={activity.id} value={activity.value}>
+                  {activity.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              id="TopPressure"
+              name="TopPressure"
+              label="فشار خون بالا"
+              type="number"
+              defaultValue={TopPressure}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              id="BottomPressure"
+              name="BottomPressure"
+              label="فشار خون پایین"
+              type="number"
+              defaultValue={BottomPressure}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TextField
+              required
+              id="Pulse"
+              name="Pulse"
+              label="نبض درحالت استراحت"
+              type="number"
+              defaultValue={Pulse}
+              fullWidth
+              onChange={(e) => props.userDetailHandler(e)}
+            />
+          </Grid>
+          <Grid item xs={12} md={12} lg={6}>
+            <FormGroup row>
+              <FormLabel sx={{ px: 5 }}>پرخوری عصبی</FormLabel>
+              <RadioGroup
+                row
+                id="HistricalEat"
+                name="HistricalEat"
+                value={HistricalEat}
+                onChange={(e) => {
+                  console.log(e);
+                  props.userDetailHandler(e);
+                }}
+              >
+                <FormControlLabel
+                  value={"true"}
+                  name="HistricalEat"
+                  control={<Radio />}
+                  label="دارم"
+                />
+                <FormControlLabel
+                  value={"false"}
+                  name="HistricalEat"
+                  control={<Radio />}
+                  label="ندارم"
+                />
+              </RadioGroup>
+            </FormGroup>
+          </Grid>
 
-        <TextField
-          required
-          id="Activity"
-          label="میزان فعالیت"
-          select
-          defaultValue={1}
-          onChange={(e) => props.userDetailHandler(e)}
-        >
-          {activityStatus.map((activity) => (
-            <MenuItem key={activity.id} value={activity.value}>
-              {activity.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          required
-          id="Pulse"
-          name="Pulse"
-          label="نبض درحالت استراحت"
-          type="number"
-          defaultValue={70}
-          onChange={(e) => props.userDetailHandler(e)}
-        />
-        <TextField
-          id="BellyArea"
-          name="BellyArea"
-          label="محیط دور شکم"
-          type="number"
-          defaultValue={100}
-          onChange={(e) => props.userDetailHandler(e)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">سانتی متر</InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          id="HipArea"
-          name="HipArea"
-          label="محیط دور لگن"
-          type="number"
-          onChange={(e) => props.userDetailHandler(e)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">سانتی متر</InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          id="TopPressure"
-          name="TopPressure"
-          label="فشار خون بالا"
-          type="number"
-          defaultValue={12}
-          onChange={(e) => props.userDetailHandler(e)}
-        />
-        <TextField
-          id="BottomPressure"
-          name="BottomPressure"
-          label="فشار خون پایین"
-          type="number"
-          defaultValue={8}
-          onChange={(e) => props.userDetailHandler(e)}
-        />
-
-        <FormGroup row>
-          <FormLabel id="demo-row-radio-buttons-group-label">
-            پرخوری عصبی
-          </FormLabel>
-          <RadioGroup
-            row
-            id="HistricalEat"
-            name="HistricalEat"
-            value={true}
-            onChange={(e) => props.userDetailHandler(e)}
-          >
-            <FormControlLabel value="true" control={<Radio />} label="دارم" />
-            <FormControlLabel value="false" control={<Radio />} label="ندارم" />
-          </RadioGroup>
-        </FormGroup>
-        <TextField
-          required
-          id="SleepHour"
-          name="SleepHour"
-          label="زمان خواب در شبانه روز"
-          type="number"
-          defaultValue={5}
-          onChange={(e) => props.userDetailHandler(e)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">ساعت</InputAdornment>
-            ),
-          }}
-        />
-
-        <TextField
-          required
-          id="Appetite"
-          name="Appetite"
-          label="اشتها"
-          select
-          defaultValue={1}
-          onChange={(e) => props.userDetailHandler(e)}
-        >
-          {appetiteStatus.map((activity) => (
-            <MenuItem key={activity.id} value={activity.value}>
-              {activity.label}
-            </MenuItem>
-          ))}
-        </TextField>
-
-        <FormGroup row>
-          <FormLabel id="demo-row-radio-buttons-group-label">
-            شرایط زندگی
-          </FormLabel>
-          <FormControlLabel
-            id="LifeCondition"
-            name="LifeCondition"
-            value={[]}
-            control={<Checkbox value="diabete" />}
-            label="دیابت"
-            onChange={(e) => props.userDetailHandler(e)}
-          />
-          <FormControlLabel
-            id="LifeCondition"
-            name="LifeCondition"
-            value={[]}
-            control={<Checkbox value="fat" />}
-            label="چربی خون"
-            onChange={(e) => props.userDetailHandler(e)}
-          />
-        </FormGroup>
-
-        <TextField
-          required
-          id="LifeCondition"
-          name="LifeCondition"
-          label=""
-          type="شرایط زندگی"
-          defaultValue={180}
-          onChange={(e) => props.userDetailHandler(e)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">سانتی متر</InputAdornment>
-            ),
-          }}
-        />
-      </FormControl>
-    </Grid>
+          <Grid item xs={12} md={12} lg={6}>
+            <FormGroup row>
+              <FormLabel sx={{ px: 5 }}>شرایط زندگی</FormLabel>
+              <FormControlLabel
+                id="Diabete"
+                name="Diabete"
+                value={Diabete}
+                control={<Checkbox value={true} />}
+                label="دیابت"
+                onChange={(e: any) => {
+                  e.target.value = e.target.checked;
+                  props.userDetailHandler(e);
+                }}
+              />
+              <FormControlLabel
+                id="Lipidemia"
+                name="Lipidemia"
+                value={Lipidemia}
+                control={<Checkbox value={true} />}
+                label="چربی خون"
+                onChange={(e: any) => {
+                  e.target.value = e.target.checked;
+                  props.userDetailHandler(e);
+                }}
+              />
+            </FormGroup>
+          </Grid>
+        </Grid>
+        {/* </Container> */}
+      </CardContent>
+    </Card>
   );
 }
