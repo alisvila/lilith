@@ -33,8 +33,8 @@ export default function HorizontalLinearStepper() {
       BottomPressure: 8,
       Pulse: 70,
       HistricalEat: false,
-      Diabete : undefined,
-      Lipidemia : undefined
+      Diabete: undefined,
+      Lipidemia: undefined,
     },
     userCondition: {},
   });
@@ -46,9 +46,14 @@ export default function HorizontalLinearStepper() {
     };
     setVisit({ ...visit, userDetail: { ...newUserDetail } });
   };
-  useEffect(() => {
-    console.log(visit, " <<<<< ");
-  }, [visit]);
+
+  const userConditionHandler = (newUserCondition: any) => {
+    let newUserDetailState = {
+      ...visit.userCondition,
+      newUserCondition,
+    };
+    setVisit({ ...visit, userCondition: { ...newUserDetailState } });
+  };
 
   const isStepOptional = (step: any) => {
     return step === 1;
@@ -121,7 +126,8 @@ export default function HorizontalLinearStepper() {
                     userDetailHandler={userDetailHandler}
                   />
                 ) : (
-                  <UserCondition />
+                  <UserCondition 
+                    userConditionHandler={userConditionHandler} />
                 )}
               </Grid>
 
