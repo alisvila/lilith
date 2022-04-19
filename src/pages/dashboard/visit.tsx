@@ -11,9 +11,10 @@ import { Container, Grid } from "@mui/material";
 import DashLayout from "../layouts/dashboard";
 
 import UserDetail from "../../components/visit/UserDetail";
-import UserCondition from "../../components/visit/UserCondition";
+import UserMedicine from "../../components/visit/UserMedicine";
+import UserIllnessSurgery from "../../components/visit/UserIllnessSurgery";
 
-const steps = ["اطلاعات بیمار", "شرایط خاص بیمار"];
+const steps = ["اطلاعات بیمار", "داروهای مصرفی", "بیماری های خاص و جراحی"];
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = useState(0);
@@ -36,7 +37,9 @@ export default function HorizontalLinearStepper() {
       Diabete: undefined,
       Lipidemia: undefined,
     },
-    userCondition: {},
+    Medicine: [{id: 1994,title: "The Shawshank Redemption"}],
+    OtherMedicine : " بیماری های دیگر",
+    UserIllnessSurgery : {}
   });
 
   const userDetailHandler = (e: any) => {
@@ -44,15 +47,27 @@ export default function HorizontalLinearStepper() {
       ...visit.userDetail,
       [e.target.name]: e.target.value,
     };
-    setVisit({ ...visit, userDetail: { ...newUserDetail } });
+    setVisit((prev) => ({ ...prev, userDetail: { ...newUserDetail } }));
   };
 
-  const userConditionHandler = (newUserCondition: any) => {
+  const UserMedicineHandler = (newMedicine: any) => {
+    console.log(newMedicine , " <<<< ")
+    setVisit((prevVisit)=> ({...prevVisit , ...newMedicine}))
+    // let newUserDetailState = {
+    //   ...visit,
+    //   newUserMedicine,
+    // };
+    // setVisit((prev) => ({ ...prev, UserMedicine: { ...newUserDetailState } }));
+  };
+  useEffect(()=>{
+    console.log(visit , "NEW VISIT")
+  } , [visit])
+  const UserIllnessSurgeryHandler = (newUserIllnessSurgery: any) => {
     let newUserDetailState = {
-      ...visit.userCondition,
-      newUserCondition,
+      ...visit,
+      newUserIllnessSurgery,
     };
-    setVisit({ ...visit, userCondition: { ...newUserDetailState } });
+    setVisit((prev) => ({ ...prev, UserIllnessSurgery: { ...newUserIllnessSurgery } }));
   };
 
   const isStepOptional = (step: any) => {
@@ -80,6 +95,22 @@ export default function HorizontalLinearStepper() {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const StepComponentHandler = () => {
+    switch (activeStep) {
+      case 0:
+        return (
+          <UserDetail
+            userDetail={visit.userDetail}
+            userDetailHandler={userDetailHandler}
+          />
+        );
+      case 1:
+        return <UserMedicine Medicine={visit.Medicine} OtherMedicine={visit.OtherMedicine}  UserMedicineHandler={UserMedicineHandler} />;
+      case 2:
+        return <UserIllnessSurgery visit={visit} UserIllnessSurgeryHandler={UserIllnessSurgeryHandler} />;
+    }
   };
 
   return (
@@ -120,15 +151,7 @@ export default function HorizontalLinearStepper() {
           ) : (
             <>
               <Grid sx={{ m: 5 }}>
-                {activeStep === 0 ? (
-                  <UserDetail
-                    userDetail={visit.userDetail}
-                    userDetailHandler={userDetailHandler}
-                  />
-                ) : (
-                  <UserCondition 
-                    userConditionHandler={userConditionHandler} />
-                )}
+                {StepComponentHandler()}
               </Grid>
 
               <Box
