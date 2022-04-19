@@ -7,6 +7,7 @@ import {
   Autocomplete,
   TextField,
   Checkbox,
+  TextareaAutosize,
 } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -41,26 +42,30 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function UserMedicine(props: any) {
-
-  // const [Medicine , setMedicine] = useState(props.visit.Medicine);
-  // const [OtherMedicine , setOtherMedicine] = useState(props.visit.OtherMedicine);
-
-  const MedicineHandler = (e : any , value : any)=> {
-
-      props.UserMedicineHandler({Medicine : value})
-    }
+  const MedicineHandler = (e: any, value: any, fieldName: string) => {
+    props.UserMedicineHandler({ [fieldName]: value });
+  };
 
   return (
     <Card>
       <CardContent>
+        <Typography mb={5} variant="h3">
+          داروهای مصرفی
+        </Typography>
+        <Typography variant="body2" my={3}>
+          {" "}
+          در صورتیکه در حال حاضر دارو یا داروهایی را مصرف می نمایید، از لیست زیر
+          داروی مورد نظر را انتخاب کنید.
+        </Typography>
+
         <Autocomplete
           multiple
-          id="checkboxes-tags-demo"
+          id="Medicine"
           options={top100Films}
           disableCloseOnSelect
           value={props.Medicine}
           getOptionLabel={(option) => option.title}
-          onChange={(e,value)=> MedicineHandler(e,value)}
+          onChange={(e, value) => MedicineHandler(e, value, "Medicine")}
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
@@ -68,15 +73,22 @@ export default function UserMedicine(props: any) {
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
-                
               />
               {option.title}
             </li>
           )}
           style={{ width: 500 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Checkboxes" placeholder="Favorites" />
-          )}
+          renderInput={(params) => <TextField {...params} label="دارو ها" />}
+        />
+        <Typography variant="body2" my={3}>
+          اگر نام دارو و یا داروهای مصرفی شما درون لیست داروها قرار ندارد،داروی
+          خود را در قسمت زیر به صورت دستی تایپ نمایید.
+        </Typography>
+        <TextareaAutosize
+          minRows={6}
+          placeholder="داروهای دیگر"
+          style={{ width: 200, padding: "1%", borderColor: "#E6E8F0" }}
+          onChange={(e) => MedicineHandler(e, e.target.value, "OtherMedicine")}
         />
       </CardContent>
     </Card>

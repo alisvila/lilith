@@ -6,8 +6,11 @@ import {
   CardContent,
   Autocomplete,
   TextField,
-  Checkbox,
+  Checkbox,  
 } from "@mui/material";
+import {TreeView , TreeItem} from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
@@ -44,28 +47,22 @@ export default function UserIllnessSurgery(props: any) {
   return (
     <Card>
       <CardContent>
-        <Autocomplete
-          multiple
-          id="checkboxes-tags-demo"
-          options={top100Films}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.title}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.title}
-            </li>
-          )}
-          style={{ width: 500 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Checkboxes" placeholder="Favorites" />
-          )}
-        />
+        <TreeView
+          aria-label="file system navigator"
+          defaultCollapseIcon={<ExpandMoreIcon />}
+          defaultExpandIcon={<ChevronRightIcon />}
+          sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        >
+          <TreeItem nodeId="1" label="Applications">
+            <TreeItem nodeId="2" label="Calendar" />
+          </TreeItem>
+          <TreeItem nodeId="5" label="Documents">
+            <TreeItem nodeId="10" label="OSS" />
+            <TreeItem nodeId="6" label="MUI">
+              <TreeItem nodeId="8" label="index.js" />
+            </TreeItem>
+          </TreeItem>
+        </TreeView>
       </CardContent>
     </Card>
   );
