@@ -8,7 +8,7 @@ import {
   TextField,
   Checkbox,  
 } from "@mui/material";
-import {TreeView , TreeItem} from '@mui/lab/TreeView';
+// import {TreeView , TreeItem} from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -47,7 +47,7 @@ export default function UserIllnessSurgery(props: any) {
   return (
     <Card>
       <CardContent>
-        <TreeView
+        {/* <TreeView
           aria-label="file system navigator"
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
@@ -62,7 +62,7 @@ export default function UserIllnessSurgery(props: any) {
               <TreeItem nodeId="8" label="index.js" />
             </TreeItem>
           </TreeItem>
-        </TreeView>
+        </TreeView> */}
       </CardContent>
     </Card>
   );
