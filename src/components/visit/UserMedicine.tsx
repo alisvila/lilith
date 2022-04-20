@@ -84,10 +84,13 @@ export default function UserMedicine(props: any) {
           اگر نام دارو و یا داروهای مصرفی شما درون لیست داروها قرار ندارد،داروی
           خود را در قسمت زیر به صورت دستی تایپ نمایید.
         </Typography>
-        <TextareaAutosize
-          minRows={6}
-          placeholder="داروهای دیگر"
-          style={{ width: 200, padding: "1%", borderColor: "#E6E8F0" }}
+        <TextField
+          id="filled-multiline-flexible"
+          label="داروهای دیگر"
+          multiline
+          minRows={4}
+          fullWidth
+          value={props.OtherMedicine}
           onChange={(e) => MedicineHandler(e, e.target.value, "OtherMedicine")}
         />
       </CardContent>

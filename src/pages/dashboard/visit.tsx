@@ -38,7 +38,7 @@ export default function HorizontalLinearStepper() {
       Lipidemia: undefined,
     },
     Medicine: [{id: 1994,title: "The Shawshank Redemption"}],
-    OtherMedicine : " بیماری های دیگر",
+    OtherMedicine : "",
     UserIllnessSurgery : {}
   });
 
