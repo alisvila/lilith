@@ -16,7 +16,8 @@ import AccountSettings from "./pages/accountSettings";
 import { RotateLeft } from "@mui/icons-material";
 import Customers from "./pages/customers";
 import Meal from "./pages/dashboard/meal";
-import Illnes from "./pages/dashboard/illnes";
+import Illnes from './pages/dashboard/illnes';
+import Visit from './pages/dashboard/visit'
 import Discount from "./pages/dashboard/Discount";
 import FoodCategory from "./pages/dashboard/FoodCategory";
 import DashLayout from "./pages/layouts/dashboard";
@@ -62,7 +63,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+            <Route
+            path="visit"
+            element={
+              <ProtectedRoute  roles={["all"]}>
+                <Visit />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="dashboard/customers"
             element={
