@@ -1,13 +1,10 @@
 import React from "react";
 import {
-  FormControl,
   FormLabel,
   FormControlLabel,
   FormGroup,
   Card,
   CardContent,
-  Box,
-  Container
 } from "@mui/material";
 import {
   Radio,
@@ -53,11 +50,8 @@ export default function UserDetail(props: any) {
   return (
     <Card>
       <CardContent>
-        {/* <Container maxWidth="md"> */}
-        <Typography mb={5} variant="h3">اطلاعات بیمار</Typography>
-        <Grid container spacing={3} xs={12} md={12} lg={8}>
-          {/* <div>UserDetail</div>
-      <input name="Name" onChange={(e) => props.userDetailHandler(e)} /> */}
+        <Typography mb={5} variant="h4">اطلاعات بیمار</Typography>
+        <Grid container spacing={3} >
           <Grid item xs={12} md={6} lg={4}>
             <TextField
               required
