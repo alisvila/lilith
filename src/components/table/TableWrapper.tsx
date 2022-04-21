@@ -6,7 +6,7 @@ import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import ActualTable from "./index";
-import { Card, CardContent } from "@mui/material";
+import { Box, Card, CardContent } from "@mui/material";
 
 const blue = {
   50: "#F0F7FF",
@@ -37,7 +37,7 @@ const Tab: any = styled(TabUnstyled)(({ theme }: any) => ({
 
   "&:hover": {
     backgroundColor: theme.palette.secondary[800],
-    color: "white"
+    color: "white",
   },
 
   "&:focus": {
@@ -64,49 +64,69 @@ const TabPanel = styled(TabPanelUnstyled)`
   border: 4px solid #ebebeb;
 `;
 
-
 const TabsList = styled(TabsListUnstyled)(({ theme }: any) => ({
-  minWidth: '320px',
+  minWidth: "320px",
   backgroundColor: theme.palette.tab.primary,
-  borderRadius: '8px 8px 0 0',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  alignContent: 'space-between',
-  border: 'solid #ebebeb',
-  borderWidth: '4px 4px 0 4px',
+  borderRadius: "8px 8px 0 0",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  alignContent: "space-between",
+  border: "solid #ebebeb",
+  borderWidth: "4px 4px 0 4px",
 }));
 
 const StickyGrid: any = styled(Card)(({ theme }: any) => ({
-  position: 'sticky',
-  top: '0'
+  position: "sticky",
+  top: "0",
 }));
-  
 
 export default function TableWrapper(props: any) {
   return (
     <StickyGrid>
       <CardContent>
-        <TabsUnstyled defaultValue={0}>
-          <TabsList>
-            <Tab>معمولی</Tab>
-            <Tab>نوجوان</Tab>
-            <Tab>باردار</Tab>
-            <Tab>دیابت</Tab>
-          </TabsList>
-          <TabPanel value={0}>
-            <ActualTable id="normal" x={6} y={6} selectedCalery={props.selectedCalery} />
-          </TabPanel>
-          <TabPanel value={1}>
-            <ActualTable id="young" x={6} y={6} selectedCalery={props.selectedCalery} />
-          </TabPanel>
-          <TabPanel value={2}>
-            <ActualTable id="pregnant" x={6} y={6} selectedCalery={props.selectedCalery} />
-          </TabPanel>
-          <TabPanel value={3}>
-            <ActualTable id="Diabetes" x={6} y={6} selectedCalery={props.selectedCalery} />
-          </TabPanel>
-        </TabsUnstyled>
+        <Box style={{ overflow: "auto" }}>
+          <TabsUnstyled defaultValue={0} style={{ minWidth: "800px" }}>
+            <TabsList>
+              <Tab>معمولی</Tab>
+              <Tab>نوجوان</Tab>
+              <Tab>باردار</Tab>
+              <Tab>دیابت</Tab>
+            </TabsList>
+            <TabPanel value={0}>
+              <ActualTable
+                id="normal"
+                x={6}
+                y={6}
+                selectedCalery={props.selectedCalery}
+              />
+            </TabPanel>
+            <TabPanel value={1}>
+              <ActualTable
+                id="young"
+                x={6}
+                y={6}
+                selectedCalery={props.selectedCalery}
+              />
+            </TabPanel>
+            <TabPanel value={2}>
+              <ActualTable
+                id="pregnant"
+                x={6}
+                y={6}
+                selectedCalery={props.selectedCalery}
+              />
+            </TabPanel>
+            <TabPanel value={3}>
+              <ActualTable
+                id="Diabetes"
+                x={6}
+                y={6}
+                selectedCalery={props.selectedCalery}
+              />
+            </TabPanel>
+          </TabsUnstyled>
+        </Box>
       </CardContent>
     </StickyGrid>
   );

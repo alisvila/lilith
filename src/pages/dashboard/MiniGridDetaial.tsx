@@ -96,8 +96,7 @@ const caleryList = [
   },
 ];
 
-export default function MiniGrid(props: any) {
-
+export default function MiniGridDetail(props: any) {
 
   return (
     <ListWrapper>
@@ -106,7 +105,7 @@ export default function MiniGrid(props: any) {
           <StickyGrid
             alignItems="flex-start"
             selected={props.selected === item.id}
-            key={item.id}
+            key={item.id + "ss"}
             onClick={(e: any) => props.handleClick(item.id, e)}
           >
             <ListItemAvatar>
