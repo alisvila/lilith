@@ -127,7 +127,7 @@ export const MealList = (props: any) => {
     <>
       <Card {...props}>
         <Grid sx={{ p: 3 }} container>
-          <Grid xs={4}>
+          <Grid xs={4} sm={4} md={4} lg={4}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">کالری</InputLabel>
               <Select
@@ -145,9 +145,9 @@ export const MealList = (props: any) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid xs={6}></Grid>
+          <Grid xs={2} sm={4} md={6} lg={6}></Grid>
           <Grid
-            xs={2}
+            xs={6}  sm={4} md={2} lg={2}
             sx={{
               display: "flex",
               alignItems: "center",

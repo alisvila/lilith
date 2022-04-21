@@ -5,7 +5,6 @@ import DashLayout from './layouts/dashboard';
 import { customers } from '../__mocks__/customers';
 
 const Customers = () => (
-  <DashLayout>
     <Box
       component="main"
       sx={{
@@ -20,7 +19,6 @@ const Customers = () => (
         </Box>
       </Container>
     </Box>
-  </DashLayout>
 );
 
 export default Customers;

@@ -16,14 +16,17 @@ import AccountSettings from "./pages/accountSettings";
 import { RotateLeft } from "@mui/icons-material";
 import Customers from "./pages/customers";
 import Meal from "./pages/dashboard/meal";
-import Illnes from './pages/dashboard/illnes';
+import Illnes from "./pages/dashboard/illnes";
+import Discount from "./pages/dashboard/Discount";
+import FoodCategory from "./pages/dashboard/FoodCategory";
+import DashLayout from "./pages/layouts/dashboard";
+import FoodGrid from "./pages/dashboard/FoodGrid";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
-        {/* <Navigation /> */}
-
+        <DashLayout>
         <Routes>
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
@@ -46,20 +49,20 @@ function App() {
           <Route
             path="dashboard/settings"
             element={
-              <ProtectedRoute  roles={["all"]}>
+              <ProtectedRoute roles={["all"]}>
                 <AccountSettings />
               </ProtectedRoute>
             }
           />
-            <Route
-            path="Illnes"
+          <Route
+            path="dashboard/Illnes"
             element={
-              <ProtectedRoute  roles={["all"]}>
+              <ProtectedRoute roles={["all"]}>
                 <Illnes />
               </ProtectedRoute>
             }
           />
-          
+
           <Route
             path="dashboard/customers"
             element={
@@ -69,8 +72,34 @@ function App() {
             }
           />
 
+          <Route
+            path="dashboard/Discount"
+            element={
+              <ProtectedRoute roles={["all"]}>
+                <Discount />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="dashboard/FoodCategory"
+            element={
+              <ProtectedRoute roles={["all"]}>
+                <FoodCategory />
+              </ProtectedRoute>
+            }
+          />
+                    <Route
+            path="dashboard/FoodGrid"
+            element={
+              <ProtectedRoute roles={["all"]}>
+                <FoodGrid />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<NoMatch />} />
         </Routes>
+        </DashLayout>
       </AuthProvider>
     </Router>
   );

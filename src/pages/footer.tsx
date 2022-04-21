@@ -41,30 +41,29 @@ const Footer = (props: any) => {
                   className="rounded-sm text-nowrap"
                   button
                   component="a"
-                  href="https://themes.material-ui.com/themes/carolina-react-admin-dashboard-free"
+                  href="/"
                   target="_blank"
                   rel="noopener"
                 >
-                  <ListItemText primary="Download now" />
+                  <ListItemText primary="ارتباط با ما" />
                 </ListItem>
                 <ListItem
                   className="rounded-sm text-nowrap"
                   button
                   component="a"
-                  href="https://themes.material-ui.com/themes/carolina-react-admin-dashboard-pro"
+                  href="/"
                   target="_blank"
                   rel="noopener"
                 >
-                  <ListItemText primary="View PRO Version" />
+                  <ListItemText primary="درباره ما" />
                 </ListItem>
               </List>
             </div>
             <div className="app-footer--second">
-              <span>Carolina React Admin Dashboard with Material-UI Free</span>{" "}
-              © 2020 - crafted with <span className="text-danger px-1">❤</span>{" "}
-              by{" "}
-              <a href="https://uifort.com" title="UiFort.com">
-                UiFort.com
+              <span>کلیه حقوق وب سایت محفوظ می باشد. </span>{" "}<span className="text-danger px-1">❤</span>{" "}
+              توسط{" "}
+              <a href="https://google.com" title="google.com">
+              شرکت ره پویان نوین تیروژ
               </a>
             </div>
           </div>

@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import Notification from '../../components/norifications'
 import { Bell as BellIcon } from "../../icons/bell";
 import {
   AppBar,
@@ -47,13 +48,14 @@ export default function AccountMenu() {
         <Box
           sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
         >
-          <Tooltip title="Notifications">
+          <Notification />
+          {/* <Tooltip title="Notifications">
             <IconButton sx={{ ml: 1 }}>
               <Badge badgeContent={4} color="primary" variant="dot">
                 <BellIcon fontSize="small" />
               </Badge>
             </IconButton>
-          </Tooltip>{" "}
+          </Tooltip>{" "} */}
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}

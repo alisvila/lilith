@@ -12,7 +12,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  CardContent
 } from '@mui/material';
 // import { getInitials } from '../../utils/get-initials';
 
@@ -77,8 +78,10 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
 
   return (
     <Card {...rest}>
+      <CardContent >
       <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
+        {/* <Box sx={{ minWidth: 1050 }}> */}
+        <Box style={{overflow: 'auto', }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -172,6 +175,7 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
         rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
       />
+      </CardContent>
     </Card>
   );
 };
