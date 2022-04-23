@@ -42,16 +42,7 @@ export default function PersonalInfo(props: any) {
                     <span>وضعیت جسه: </span>
                     <span>معمولی</span>
                   </div>
-                  <div
-                    style={{
-                      marginTop: "5px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span>میزان اضافه وزن: </span>
-                    <span>18 کیلوگرم</span>
-                  </div>
+
                 </Grid>
                 <Grid xs={1} />
                 {/* </div> */}
@@ -76,16 +67,6 @@ export default function PersonalInfo(props: any) {
                   >
                     <span>انرژی محاسبه شده بدن در فعالیت: </span>
                     <span>2575 کالری</span>
-                  </div>
-                  <div
-                    style={{
-                      marginTop: "5px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span>کالری دریافت شده: </span>
-                    <span>1500</span>
                   </div>
                 </Grid>
 

@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
 import {
   Typography,
-  Box,
   Card,
   CardContent,
   Autocomplete,
   TextField,
   Checkbox,
-  TextareaAutosize,
 } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -49,7 +46,7 @@ export default function UserMedicine(props: any) {
   return (
     <Card>
       <CardContent>
-        <Typography mb={5} variant="h3">
+        <Typography mb={5} variant="h4">
           داروهای مصرفی
         </Typography>
         <Typography variant="body2" my={3}>

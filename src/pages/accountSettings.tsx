@@ -11,7 +11,6 @@ import { AccountProfileDetails } from "../components/account/accountProfileDetai
 import DashLayout from "./layouts/dashboard";
 
 const AccountSettings = () => (
-  <DashLayout>
     <Container>
       <Card>
         <CardContent>
@@ -39,7 +38,6 @@ const AccountSettings = () => (
         </CardContent>
       </Card>
     </Container>
-  </DashLayout>
 );
 
 export default AccountSettings;

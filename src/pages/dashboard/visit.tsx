@@ -8,8 +8,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Container, Grid } from "@mui/material";
 
-import DashLayout from "../layouts/dashboard";
-
 import UserDetail from "../../components/visit/UserDetail";
 import UserMedicine from "../../components/visit/UserMedicine";
 import UserIllnessSurgery from "../../components/visit/UserIllnessSurgery";
@@ -39,8 +37,10 @@ export default function HorizontalLinearStepper() {
     },
     Medicine: [{id: 1994,title: "The Shawshank Redemption"}],
     OtherMedicine : "",
-    UserIllnessSurgery : {}
-  });
+    Disease : [{id: 1994,title: "The Shawshank Redemption"}],
+    OtherDisease : "",
+    Surgery : ""
+    });
 
   const userDetailHandler = (e: any) => {
     let newUserDetail = {
@@ -51,27 +51,12 @@ export default function HorizontalLinearStepper() {
   };
 
   const UserMedicineHandler = (newMedicine: any) => {
-    console.log(newMedicine , " <<<< ")
     setVisit((prevVisit)=> ({...prevVisit , ...newMedicine}))
-    // let newUserDetailState = {
-    //   ...visit,
-    //   newUserMedicine,
-    // };
-    // setVisit((prev) => ({ ...prev, UserMedicine: { ...newUserDetailState } }));
-  };
-  useEffect(()=>{
-    console.log(visit , "NEW VISIT")
-  } , [visit])
-  const UserIllnessSurgeryHandler = (newUserIllnessSurgery: any) => {
-    let newUserDetailState = {
-      ...visit,
-      newUserIllnessSurgery,
-    };
-    setVisit((prev) => ({ ...prev, UserIllnessSurgery: { ...newUserIllnessSurgery } }));
   };
 
-  const isStepOptional = (step: any) => {
-    return step === 1;
+  const UserIllnessSurgeryHandler = (newUserIllnessSurgery: any) => {
+    setVisit((prevVisit)=> ({...prevVisit , ...newUserIllnessSurgery}))
+
   };
 
   const isStepSkipped = (step: any) => {
@@ -109,12 +94,11 @@ export default function HorizontalLinearStepper() {
       case 1:
         return <UserMedicine Medicine={visit.Medicine} OtherMedicine={visit.OtherMedicine}  UserMedicineHandler={UserMedicineHandler} />;
       case 2:
-        return <UserIllnessSurgery visit={visit} UserIllnessSurgeryHandler={UserIllnessSurgeryHandler} />;
+        return <UserIllnessSurgery Disease={visit.Disease} OtherDisease={visit.OtherDisease} Surgery={visit.Surgery} UserIllnessSurgeryHandler={UserIllnessSurgeryHandler} />;
     }
   };
 
   return (
-    <DashLayout>
       <Container maxWidth={false}>
         <Box sx={{ width: "100%" }}>
           <Stepper activeStep={activeStep}>
@@ -123,11 +107,6 @@ export default function HorizontalLinearStepper() {
               const labelProps: {
                 optional?: any;
               } = {};
-              // if (isStepOptional(index)) {
-              //   labelProps.optional = (
-              //     <Typography variant="caption">Optional</Typography>
-              //   );
-              // }
               if (isStepSkipped(index)) {
                 stepProps.completed = false;
               }
@@ -179,6 +158,5 @@ export default function HorizontalLinearStepper() {
           )}
         </Box>
       </Container>
-    </DashLayout>
   );
 }

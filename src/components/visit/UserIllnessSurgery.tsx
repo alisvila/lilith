@@ -1,68 +1,195 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
-  Box,
   Card,
   CardContent,
-  Autocomplete,
   TextField,
-  Checkbox,  
+  Grid,
+  MenuItem,
+  List,
+  ListItem,
+  IconButton,
+  ListItemText,
+  styled,
 } from "@mui/material";
-// import {TreeView , TreeItem} from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const top100Films = [
-  { title: "The Shawshank Redemption", id: 1994 },
-  { title: "The Godfather", id: 1972 },
-  { title: "The Godfather: Part II", id: 1974 },
-  { title: "The Dark Knight", id: 2008 },
-  { title: "12 Angry Men", id: 1957 },
-  { title: "Schindler's List", id: 1993 },
-  { title: "Pulp Fiction", id: 1994 },
+const Illness = [
   {
-    title: "The Lord of the Rings: The Return of the King",
-    id: 2003,
-  },
-  { title: "The Good, the Bad and the Ugly", id: 1966 },
-  { title: "Fight Club", id: 1999 },
-  {
-    title: "The Lord of the Rings: The Fellowship of the Ring",
-    id: 2001,
+    name: "قلبی",
+    sub: [
+      { title: "The Shawshank Redemption", id: 1 },
+      { title: "The Godfather", id: 2 },
+      { title: "The Godfather: Part II", id: 3 },
+      { title: "The Dark Knight", id: 4 },
+      { title: "12 Angry Men", id: 5 },
+      { title: "Schindler's List", id: 6 },
+    ],
   },
   {
-    title: "Star Wars: Episode V - The Empire Strikes Back",
-    id: 1980,
+    name: "کلیوی",
+    sub: [
+      { title: "The Shawshank Redemption", id: 7 },
+      { title: "The Godfather", id: 8 },
+      { title: "The Godfather: Part II", id: 9 },
+      { title: "The Godfather", id: 10 },
+      { title: "The Godfather", id: 11 },
+      { title: "The Godfather", id: 12 },
+    ],
   },
-  { title: "Forrest Gump", id: 1994 },
-  { title: "Inception", id: 2010 },
+  {
+    name: "سوختگی",
+    sub: [
+      { title: "The Shawshank Redemption", id: 13 },
+      { title: "The Shawshank Redemption", id: 14 },
+      { title: "The Shawshank Redemption: Part II", id: 15 },
+      { title: "The Shawshank Redemption", id: 16 },
+      { title: "12 Angry Men", id: 17 },
+      { title: "Schindler's List", id: 18 },
+    ],
+  },
 ];
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const GridWrapper: any = styled(Grid)(({ theme }: any) => ({
+  border: `1px solid ${theme.palette.neutral[200]}`,
+  borderRadius: theme.shape.borderRadius,
+}));
 
 export default function UserIllnessSurgery(props: any) {
+  const [category, setCategory] = useState();
+
+  const categoryHandler = (e: any) => {
+    setCategory(e.target.value);
+  };
+  const diseaseHandler = (e: any) => {
+    const diseaseItem = Illness.map((cat) =>
+      cat.sub.find((disease) => disease.id === e.target.value)
+    ).find((i) => i);
+    !props.Disease.find((d: any) => d.id === diseaseItem?.id) &&
+      props.UserIllnessSurgeryHandler({
+        Disease: [diseaseItem, ...props.Disease],
+      });
+  };
+
+  const deleteDisease = (item: any) => {
+    const newDisease = props.Disease.filter((d: any) => d.id !== item.id);
+    props.UserIllnessSurgeryHandler({ Disease: newDisease });
+  };
+
   return (
     <Card>
       <CardContent>
-        {/* <TreeView
-          aria-label="file system navigator"
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-          sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
-        >
-          <TreeItem nodeId="1" label="Applications">
-            <TreeItem nodeId="2" label="Calendar" />
-          </TreeItem>
-          <TreeItem nodeId="5" label="Documents">
-            <TreeItem nodeId="10" label="OSS" />
-            <TreeItem nodeId="6" label="MUI">
-              <TreeItem nodeId="8" label="index.js" />
-            </TreeItem>
-          </TreeItem>
-        </TreeView> */}
+        <Typography mb={5} variant="h4">
+          بیماری های خاص{" "}
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6} lg={6}>
+            <TextField
+              id="category"
+              name="category"
+              label="گروه بیماری"
+              select
+              value={category ?? ""}
+              defaultValue={category ?? ""}
+              fullWidth
+              onChange={categoryHandler}
+            >
+              {Illness.map((category) => (
+                <MenuItem key={category.name} value={category.name}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <TextField
+              id="disease"
+              name="disease"
+              label=" بیماری"
+              value={"بیماری"}
+              select
+              fullWidth
+              onChange={diseaseHandler}
+            >
+              <MenuItem key={"Diseases"} disabled value={"بیماری"}>
+                بیماری ها
+              </MenuItem>
+              {Illness.find((ct) => ct.name === category)?.sub.map(
+                (desease) => (
+                  <MenuItem key={desease.id} value={desease.id}>
+                    {desease.title}
+                  </MenuItem>
+                )
+              )}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+              لیست بیماری های انتخاب شده
+            </Typography>
+            <Grid container>
+              <GridWrapper item xs={12} md={12} lg={12}>
+                <PerfectScrollbar
+                  style={{
+                    height: "100%",
+                    minHeight: "200px",
+                    maxHeight: "200px",
+                    overflowX: "hidden",
+                  }}
+                >
+                  <List dense={false}>
+                    {props.Disease.map((disease: any) => {
+                      return (
+                        <ListItem
+                          dense
+                          key={disease.id}
+                          secondaryAction={
+                            <IconButton
+                              edge="end"
+                              aria-label="delete"
+                              onClick={() => deleteDisease(disease)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ListItemText primary={disease.title} />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </PerfectScrollbar>
+              </GridWrapper>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+          دیگر بیماری ها
+        </Typography>
+        <TextField
+          id="filled-multiline-flexible"
+          multiline
+          minRows={4}
+          fullWidth
+          value={props.OtherDisease}
+          onChange={(e) =>
+            props.UserIllnessSurgeryHandler({ OtherDisease: e.target.value })
+          }
+        />
+        <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+          سوابق جراحی
+        </Typography>
+        <TextField
+          id="filled-multiline-flexible"
+          multiline
+          minRows={4}
+          fullWidth
+          value={props.Surgery}
+          onChange={(e) =>
+            props.UserIllnessSurgeryHandler({ Surgery: e.target.value })
+          }
+        />
       </CardContent>
     </Card>
   );

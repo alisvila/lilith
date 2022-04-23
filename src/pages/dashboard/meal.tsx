@@ -13,7 +13,6 @@ export default function Meal() {
   };
 
   return (
-    <DashLayout>
       <Container maxWidth={false}>
         {/* <Grid
           component="main"
@@ -23,14 +22,13 @@ export default function Meal() {
           }}
         > */}
         <Grid container spacing={3}>
-          <Grid item lg={12}>
+          <Grid item xs={12} lg={12}>
             <MealList handleChange={handleChange} selectedCalery={selectedCalery} sx={{ height: "100%" }} />
           </Grid>
-          <Grid item lg={12}>
+          <Grid item xs={12} lg={12}>
             <Table selectedCalery={selectedCalery} />
           </Grid>
         </Grid>
       </Container>
-    </DashLayout>
   );
 }

@@ -215,7 +215,12 @@ export const theme = createTheme({
       text: "",
       gray: "#e3e3e3",
       btn: "#d9d9d9"
-    }
+    },
+    orange: {
+      light: "#fbe9e7",
+      main: "#ffab91",
+      dark: "#d84315"
+  },
   },
   shape: {
     borderRadius: 20,

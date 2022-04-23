@@ -71,6 +71,13 @@ export default function Cell(props: any) {
       // css.fontWeight = "bold";
     }
 
+    if (props.x === 0 ) {
+      css.position = "sticky"
+      css.right= "0"
+      css.zIndex = "5"
+      // css.fontWeight = "bold";
+    }
+
     return css;
   };
 
