@@ -40,7 +40,7 @@ export default function HorizontalLinearStepper() {
     Disease : [{id: 1994,title: "The Shawshank Redemption"}],
     OtherDisease : "",
     Surgery : ""
-  });
+    });
 
   const userDetailHandler = (e: any) => {
     let newUserDetail = {
