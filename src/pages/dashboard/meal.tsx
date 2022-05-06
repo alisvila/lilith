@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import { Container, Grid } from "@mui/material";
-import React, { useState } from "react";
 import DashLayout from "../layouts/dashboard";
 import Table from "../../components/table/TableWrapper";
 import { MealList } from "../../components/dash/MealList";
@@ -7,7 +7,7 @@ import { MealList } from "../../components/dash/MealList";
 export default function Meal() {
   const [selectedCalery, setSelected]: any = useState("2500");
 
-
+  
   const handleChange = (e: any) => {
     setSelected(e.target.value);
   };

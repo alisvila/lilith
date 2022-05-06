@@ -138,6 +138,17 @@ export default React.memo(function NestedList() {
         </ListItemIcon>
         <ListItemText primary="لیست بیمارها" />
       </ListItemButtonCus>
+      <ListItemButtonCus
+        key="home"
+        component={NavLink}
+        selected={location.pathname === "/visit"}
+        to="/visit"
+      >
+        <ListItemIcon>
+          <HomeIcon />
+        </ListItemIcon>
+        <ListItemText primary="ویزیت جدید" />
+      </ListItemButtonCus>
 
       <ListItemButtonCus onClick={() => handleClick("rejim")}>
         <ListItemIcon>
@@ -267,6 +278,18 @@ export default React.memo(function NestedList() {
               <DiscountIcon />
             </ListItemIcon>
             <ListItemText primary="طرح های تخفیف" />
+          </ListItemButtonCus>
+          <ListItemButtonCus
+            sx={{ pl: 4 }}
+            key="payMethod"
+            component={NavLink}
+            selected={location.pathname === "/dashboard/payMethod"}
+            to="/dashboard/payMethod"
+          >
+            <ListItemIcon>
+              <DiscountIcon />
+            </ListItemIcon>
+            <ListItemText primary="شارژ حساب کاربری" />
           </ListItemButtonCus>
         </List>
       </Collapse>

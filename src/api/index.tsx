@@ -11,7 +11,7 @@ function getLocalRefreshToken() {
 }
 
 const Axios = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: "https://api.vazneman.com",
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${getLocalAccessToken()}`,

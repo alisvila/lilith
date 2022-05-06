@@ -5,9 +5,11 @@ import {
   Autocomplete,
   TextField,
   Checkbox,
+  Grid,
 } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import drug from "./drug.webp";
 
 const top100Films = [
   { title: "The Shawshank Redemption", id: 1994 },
@@ -54,42 +56,53 @@ export default function UserMedicine(props: any) {
           در صورتیکه در حال حاضر دارو یا داروهایی را مصرف می نمایید، از لیست زیر
           داروی مورد نظر را انتخاب کنید.
         </Typography>
-
-        <Autocomplete
-          multiple
-          id="Medicine"
-          options={top100Films}
-          disableCloseOnSelect
-          value={props.Medicine}
-          getOptionLabel={(option) => option.title}
-          onChange={(e, value) => MedicineHandler(e, value, "Medicine")}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.title}
-            </li>
-          )}
-          style={{ width: 500 }}
-          renderInput={(params) => <TextField {...params} label="دارو ها" />}
-        />
-        <Typography variant="body2" my={3}>
-          اگر نام دارو و یا داروهای مصرفی شما درون لیست داروها قرار ندارد،داروی
-          خود را در قسمت زیر به صورت دستی تایپ نمایید.
-        </Typography>
-        <TextField
-          id="filled-multiline-flexible"
-          label="داروهای دیگر"
-          multiline
-          minRows={4}
-          fullWidth
-          value={props.OtherMedicine}
-          onChange={(e) => MedicineHandler(e, e.target.value, "OtherMedicine")}
-        />
+        <Grid container spacing={3}>
+          <Grid item xs={8} md={6} lg={8}>
+            <Autocomplete
+              multiple
+              fullWidth
+              id="Medicine"
+              options={top100Films}
+              disableCloseOnSelect
+              value={props.Medicine}
+              getOptionLabel={(option) => option.title}
+              onChange={(e, value) => MedicineHandler(e, value, "Medicine")}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.title}
+                </li>
+              )}
+              // style={{ width: 500 }}
+              renderInput={(params) => (
+                <TextField {...params} label="دارو ها" />
+              )}
+            />
+            <Typography variant="body2" my={3}>
+              اگر نام دارو و یا داروهای مصرفی شما درون لیست داروها قرار
+              ندارد،داروی خود را در قسمت زیر به صورت دستی تایپ نمایید.
+            </Typography>
+            <TextField
+              id="filled-multiline-flexible"
+              label="داروهای دیگر"
+              multiline
+              minRows={4}
+              fullWidth
+              value={props.OtherMedicine}
+              onChange={(e) =>
+                MedicineHandler(e, e.target.value, "OtherMedicine")
+              }
+            />
+          </Grid>
+          <Grid item xs={4} >
+            <img src={drug} style={{width: '100%'}} />
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );

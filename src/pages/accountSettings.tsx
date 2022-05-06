@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -9,8 +10,14 @@ import {
 import { AccountProfile } from "../components/account/accountProfile";
 import { AccountProfileDetails } from "../components/account/accountProfileDetails";
 import DashLayout from "./layouts/dashboard";
+import getProfile from '../api/profile'
 
-const AccountSettings = () => (
+const AccountSettings = () => {
+  const [profile, setProfile] = useState()
+  useEffect(() => {
+  }, [])
+  
+  return (
     <Container>
       <Card>
         <CardContent>
@@ -23,7 +30,7 @@ const AccountSettings = () => (
           >
             <Container maxWidth="lg">
               <Typography sx={{ mb: 3 }} variant="h4">
-                Account
+                تنظیمات کاربری
               </Typography>
               <Grid container spacing={3}>
                 <Grid item lg={4} md={6} xs={12}>
@@ -38,6 +45,6 @@ const AccountSettings = () => (
         </CardContent>
       </Card>
     </Container>
-);
+)};
 
 export default AccountSettings;

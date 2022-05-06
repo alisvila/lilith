@@ -16,7 +16,8 @@ import {
     Stack,
     Typography
 } from '@mui/material';
-
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
+import EmailIcon from '@mui/icons-material/Email';
 // assets
 // import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons';
 // import User1 from 'assets/images/users/user-round.svg';
@@ -127,6 +128,7 @@ const NotificationList = () => {
                                 borderColor: theme.palette.success.main
                             }}
                         >
+                            <StoreMallDirectoryIcon />
                             {/* <IconBuildingStore stroke={1.5} size="1.3rem" /> */}
                         </Avatar>
                     </ListItemAvatar>
@@ -166,6 +168,7 @@ const NotificationList = () => {
                                 borderColor: theme.palette.primary.main
                             }}
                         >
+                            <EmailIcon />
                             {/* <IconMailbox stroke={1.5} size="1.3rem" /> */}
                         </Avatar>
                     </ListItemAvatar>

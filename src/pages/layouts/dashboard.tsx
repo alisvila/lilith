@@ -50,6 +50,8 @@ export default function DashLayout(props: any) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isRtl, setIsRtl] = React.useState(true);
 
+
+
   return (
     <>
       <CacheProvider value={isRtl ? cacheRtl : cacheLtr}>

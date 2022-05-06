@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Theme, useTheme, styled } from "@mui/material/styles";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {
@@ -27,11 +27,14 @@ import {
   ListSubheader,
   ListItem,
   ListItemText,
+  Skeleton,
 } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import DashLayout from "../layouts/dashboard";
+import MealApi from "../../api/meals";
+import { promises } from "dns";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -68,11 +71,11 @@ const foods = [
 
 const foodCat = [
   { title: "bread", id: 2010 },
-  { title: "Meat", id: 2010 },
-  { title: "Dairy", id: 2010 },
-  { title: "Fat", id: 2010 },
-  { title: "Fruit", id: 2010 },
-  { title: "Vegetable", id: 2010 },
+  { title: "Meat", id: 2011 },
+  { title: "Dairy", id: 2012 },
+  { title: "Fat", id: 2013 },
+  { title: "Fruit", id: 2014 },
+  { title: "Vegetable", id: 2015 },
 ];
 
 const meals = [
@@ -128,16 +131,46 @@ const ListWrapper: any = styled(CardContent)(({ theme }: any) => ({
   },
 }));
 
-const ListItemTextWrapper: any = styled(ListItemText)(({ theme }: any) => ({
-}))
+const ListItemTextWrapper: any = styled(ListItemText)(({ theme }: any) => ({}));
 export default function FoodCategory() {
   const theme = useTheme();
+  const [isLoading, setIsLoading] = useState(true);
   const [personName, setPersonName] = React.useState<string[]>([]);
+  const [mealsCata, setMealsCata]: any = useState([]);
   const [form, setForm]: any = useState({
     appetiteStatus: [],
     activityStatus: [],
   });
 
+  useEffect(() => {
+    async function getMealsApi() {
+      const parsedCata: any = [];
+      let mealCata: any = [
+        {
+          name: "string",
+          id: 0,
+        },
+      ];
+      await Promise.all([
+         MealApi.getMeals,
+         MealApi.getMeals,
+         MealApi.getMeals,
+      ]).then((values: any) => {
+        mealCata = values[0]
+        mealCata = values[1]
+        mealCata = values[3]
+        setIsLoading(false)
+      })
+      mealCata.map((item: any) => {
+        parsedCata.push({ title: item.name, id: item.id });
+      });
+      setMealsCata(parsedCata);
+    }
+    getMealsApi();
+  }, []);
+  // 316
+  // 45
+  // ma: 24
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
@@ -155,161 +188,231 @@ export default function FoodCategory() {
     <Container>
       <Card>
         <CardWrapper>
-          <Typography mb={5} variant="h3">
-            مواد غذایی
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={8} md={8} lg={8}>
+          {isLoading ? (
+            <>
+              <Skeleton
+                sx={{ mb: 4 }}
+                animation="wave"
+                variant="rectangular"
+                height={56}
+                width={500}
+              />
               <Grid container spacing={3}>
-                <Grid item xs={12} md={6} lg={4}>
-                  <TextField
-                    required
-                    id="name"
-                    name="name"
-                    label="نام"
-                    type="text"
-                    fullWidth
-                    onChange={(e) => userDetailHandler(e)}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <TextField
-                    required
-                    id="unit"
-                    name="unit"
-                    label="واحد"
-                    type="text"
-                    fullWidth
-                    onChange={(e) => userDetailHandler(e)}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <TextField
-                    required
-                    id="calery"
-                    name="calery"
-                    label="جمله"
-                    type="number"
-                    fullWidth
-                    onChange={(e) => userDetailHandler(e)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="start">کالری</InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={12} lg={12}>
-                  <TextField
-                    id="desc"
-                    name="desc"
-                    label="جمله"
-                    type="text"
-                    fullWidth
-                    onChange={(e) => userDetailHandler(e)}
-                  />
-                </Grid>
-                <Grid item xs={12} md={12} lg={12}>
-                  <Autocomplete
-                    multiple
-                    id="foodCat"
-                    options={foodCat}
-                    disableCloseOnSelect
-                    value={form.Medicine}
-                    getOptionLabel={(option) => option.title}
-                    onChange={(e, value) =>
-                      MedicineHandler(e, value, "foodCat")
-                    }
-                    renderOption={(props, option, { selected }) => (
-                      <li {...props}>
-                        <Checkbox
-                          icon={icon}
-                          checkedIcon={checkedIcon}
-                          style={{ marginRight: 8 }}
-                          checked={selected}
-                        />
-                        {option.title}
-                      </li>
-                    )}
-                    // style={{ width: 500 }}
-                    renderInput={(params) => (
-                      <TextField {...params} label="دسته بندی ها" />
-                    )}
-                  />
-                </Grid>
+                <Grid item xs={8} md={8} lg={8}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={56}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={56}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={56}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={56}
+                      />
+                    </Grid>
 
-                <Grid item xs={12} md={12} lg={12}>
-                  <Autocomplete
-                    multiple
-                    id="meals"
-                    options={meals}
-                    disableCloseOnSelect
-                    value={form.Medicine}
-                    getOptionLabel={(option) => option.title}
-                    onChange={(e, value) => MedicineHandler(e, value, "meals")}
-                    renderOption={(props, option, { selected }) => (
-                      <li {...props}>
-                        <Checkbox
-                          icon={icon}
-                          checkedIcon={checkedIcon}
-                          style={{ marginRight: 8 }}
-                          checked={selected}
-                        />
-                        {option.title}
-                      </li>
-                    )}
-                    // style={{ width: 500 }}
-                    renderInput={(params) => (
-                      <TextField {...params} label="وعده ها" />
-                    )}
-                  />
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={56}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={56}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} md={12} lg={12}>
-                  <Button variant="contained">ثبت</Button>
+                <Grid item xs={4} md={4} lg={4} sx={{ height: "100%" }}>
+                  <Skeleton height={375} animation="wave" variant="rectangular" />
                 </Grid>
               </Grid>
-            </Grid>
+            </>
+          ) : (
+            <>
+              <Typography mb={5} variant="h3">
+                مواد غذایی
+              </Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={8} md={8} lg={8}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <TextField
+                        required
+                        id="name"
+                        name="name"
+                        label="نام"
+                        type="text"
+                        fullWidth
+                        onChange={(e) => userDetailHandler(e)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <TextField
+                        required
+                        id="unit"
+                        name="unit"
+                        label="واحد"
+                        type="text"
+                        fullWidth
+                        onChange={(e) => userDetailHandler(e)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <TextField
+                        required
+                        id="calery"
+                        name="calery"
+                        label="جمله"
+                        type="number"
+                        fullWidth
+                        onChange={(e) => userDetailHandler(e)}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="start">
+                              کالری
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <TextField
+                        id="desc"
+                        name="desc"
+                        label="جمله"
+                        type="text"
+                        fullWidth
+                        onChange={(e) => userDetailHandler(e)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Autocomplete
+                        multiple
+                        id="foodCat"
+                        options={foodCat}
+                        disableCloseOnSelect
+                        value={form.Medicine}
+                        getOptionLabel={(option) => option.title}
+                        onChange={(e, value) =>
+                          MedicineHandler(e, value, "foodCat")
+                        }
+                        renderOption={(props, option, { selected }) => (
+                          <li {...props}>
+                            <Checkbox
+                              icon={icon}
+                              checkedIcon={checkedIcon}
+                              style={{ marginRight: 8 }}
+                              checked={selected}
+                            />
+                            {option.title}
+                          </li>
+                        )}
+                        // style={{ width: 500 }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="دسته بندی ها" />
+                        )}
+                      />
+                    </Grid>
 
-            <Grid item xs={4} md={4} lg={4} sx={{height: "100%"}}>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Autocomplete
+                        multiple
+                        id="meals"
+                        options={mealsCata}
+                        disableCloseOnSelect
+                        value={form.Medicine}
+                        getOptionLabel={(option) => option.title}
+                        onChange={(e, value) =>
+                          MedicineHandler(e, value, "meals")
+                        }
+                        renderOption={(props, option, { selected }) => (
+                          <li {...props}>
+                            <Checkbox
+                              icon={icon}
+                              checkedIcon={checkedIcon}
+                              style={{ marginRight: 8 }}
+                              checked={selected}
+                            />
+                            {option.title}
+                          </li>
+                        )}
+                        // style={{ width: 500 }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="وعده ها" />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Button variant="contained">ثبت</Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
-              <PerfectScrollbar
-                  style={{
-                    height: "100%",
-                    maxHeight: "calc(57vh - 205px)",
-                    overflowX: "hidden",
-                  }}
-                >
-
-                  <ListWrapper
-                  className="pa"
-                    sx={{
-                      width: "100%",
-                      bgcolor: "background.paper",
-                      position: "relative",
-                      overflow: "auto",
-                      "& ul": { padding: 0 },
-                    }}
-                    subheader={<li />}
-                  >
-
-                    {foodCat.map((sectionId) => (
-                      <div key={`${sectionId.id}`}>
-                        <ul>
-                          <ListSubheader>{`${sectionId.title}`}</ListSubheader>
-                          {[0, 1, 2].map((item) => (
-                            <ListItem key={`food-${sectionId}-${item}`}>
-                              <ListItemText sx={{padding: '0 15px'}} primary={`food ${item}`} />
-                            </ListItem>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </ListWrapper>
-                </PerfectScrollbar>
+                <Grid item xs={4} md={4} lg={4} sx={{ height: "100%" }}>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <PerfectScrollbar
+                      style={{
+                        height: "100%",
+                        maxHeight: "calc(57vh - 205px)",
+                        overflowX: "hidden",
+                      }}
+                    >
+                      <ListWrapper
+                        className="pa"
+                        sx={{
+                          width: "100%",
+                          bgcolor: "background.paper",
+                          position: "relative",
+                          overflow: "auto",
+                          "& ul": { padding: 0 },
+                        }}
+                        subheader={<li />}
+                      >
+                        {foodCat.map((sectionId) => (
+                          <div key={`${sectionId.id}`}>
+                            <ul>
+                              <ListSubheader>{`${sectionId.title}`}</ListSubheader>
+                              {[0, 1, 2].map((item) => (
+                                <ListItem key={`food-${sectionId}-${item}`}>
+                                  <ListItemText
+                                    sx={{ padding: "0 15px" }}
+                                    primary={`food ${item}`}
+                                  />
+                                </ListItem>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </ListWrapper>
+                    </PerfectScrollbar>
+                  </Grid>
+                </Grid>
               </Grid>
-            </Grid>
-          </Grid>
+            </>
+          )}
         </CardWrapper>
       </Card>
     </Container>

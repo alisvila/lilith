@@ -223,7 +223,7 @@ export const theme = createTheme({
   },
   },
   shape: {
-    borderRadius: 20,
+    borderRadius: 13,
   },
   shadows: [
     "none",
