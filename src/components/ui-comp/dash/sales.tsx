@@ -2,8 +2,8 @@ import { Bar } from 'react-chartjs-2';
 import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import Chart from "../../components/lineChart";
-import { Highchart } from "../../components/highchart";
+import Chart from "../lineChart";
+import { Highchart } from "../highchart";
 export const Sales = (props: any) => {
   const theme = useTheme();
 

@@ -26,7 +26,7 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "../listItem";
+import { mainListItems, secondaryListItems } from "../components/customers/listItem";
 
 const PieChartData = [
   { name: "Group A", value: 400, color: "primary" },

@@ -13,7 +13,7 @@ import NoMatch from "./pages/noMatch";
 import AuthProvider, { User } from "./auth";
 import { useAuth } from "./components/hooks/useAuth";
 import ProtectedRoute from "./protectedRoute";
-import AccountSettings from "./pages/accountSettings";
+import AccountSettings from "./pages/dashboard/users/accountSettings";
 import { RotateLeft } from "@mui/icons-material";
 import Customers from "./pages/customers";
 import Meal from "./pages/dashboard/meal";

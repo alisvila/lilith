@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import Notification from '../../components/norifications'
+import Notification from '../ui-comp/norifications'
 import { Bell as BellIcon } from "../../icons/bell";
 import {
   AppBar,
@@ -110,7 +110,7 @@ export default function AccountMenu() {
           <Avatar /> Profile
         </MenuItem>
         <MenuItem>
-          <Avatar /> My account
+          <Avatar /> ارسال نامه
         </MenuItem>
         <Divider />
         <MenuItem>

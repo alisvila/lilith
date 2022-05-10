@@ -7,10 +7,10 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { AccountProfile } from "../components/account/accountProfile";
-import { AccountProfileDetails } from "../components/account/accountProfileDetails";
-import DashLayout from "./layouts/dashboard";
-import getProfile from '../api/profile'
+import { AccountProfile } from "../../../components/account/accountProfile";
+import { AccountProfileDetails } from "../../../components/account/accountProfileDetails";
+import DashLayout from "../../layouts/dashboard";
+import getProfile from '../../../api/profile'
 
 const AccountSettings = () => {
   const [profile, setProfile] = useState()

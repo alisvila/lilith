@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import DashLayout from "../layouts/dashboard";
-import MiniGrid from "./miniGrid";
+import MiniGrid from "../../components/ui-comp/miniGrid";
 import MiniGridDetail from "./MiniGridDetaial";
 
 
@@ -20,7 +20,6 @@ export default function Illnes() {
   };
 
   return (
-      <>
         <Container maxWidth={false}>
           <Card>
             <CardContent>
@@ -39,6 +38,5 @@ export default function Illnes() {
             </CardContent>
           </Card>
         </Container>
-      </>
   );
 }

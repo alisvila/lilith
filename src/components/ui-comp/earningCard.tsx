@@ -6,8 +6,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Grid, Menu, MenuItem, Typography } from '@mui/material';
 
 // project imports
-import MainCard from '../../ui-components/cards/mainCard';
-import SkeletonEarningCard from '../../ui-components/cards/skeleton/EarningCard';
+import MainCard from './cards/mainCard';
+import SkeletonEarningCard from './skeleton/EarningCard';
 
 // assets
 import { RotateLeft } from "@mui/icons-material";

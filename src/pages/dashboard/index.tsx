@@ -4,16 +4,16 @@ import { Box, Container, Grid } from "@mui/material";
 
 import Link from "@mui/material/Link";
 import DashLayout from "../layouts/dashboard";
-import { LatestOrders } from "../../components/dash/lastOrders";
-import { LatestProducts } from "../../components/dash/latestProducts";
-import { Budget } from "../../components/dash/budget";
-import { Sales } from "../../components/dash/sales";
+import { LatestOrders } from "../../components/ui-comp/dash/lastOrders";
+import { LatestProducts } from "../../components/ui-comp/dash/latestProducts";
+import { Budget } from "../../components/ui-comp/dash/budget";
+import { Sales } from "../../components/ui-comp/dash/sales";
 import api from "../../services/service";
-import PersonalInfo from "../../components/dash/personalInfo";
-import Chart from "../../components/lineChart";
+import PersonalInfo from "../../components/ui-comp/dash/personalInfo";
+import Chart from "../../components/ui-comp/lineChart";
 import styled from "@emotion/styled";
-import EarningCard from "./earningCard";
-import TableWrapper from "../../components/table/TableWrapper";
+import EarningCard from "../../components/ui-comp/earningCard";
+import TableWrapper from "../../components/ui-comp/table/TableWrapper";
 
 const BoxMain: any = styled(Box)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.main,

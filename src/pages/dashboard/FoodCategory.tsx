@@ -27,14 +27,13 @@ import {
   ListSubheader,
   ListItem,
   ListItemText,
-  Skeleton,
 } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import DashLayout from "../layouts/dashboard";
-import MealApi from "../../api/meals";
-import { promises } from "dns";
+import { getProfile } from "../../api/profile";
+import CustomSkeleton from "../../components/ui-comp/Skeleton";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -152,15 +151,15 @@ export default function FoodCategory() {
         },
       ];
       await Promise.all([
-         MealApi.getMeals,
-         MealApi.getMeals,
-         MealApi.getMeals,
+        getProfile("/Meals"),
+        getProfile("/Meals"),
+        getProfile("/Meals"),
       ]).then((values: any) => {
-        mealCata = values[0]
-        mealCata = values[1]
-        mealCata = values[3]
-        setIsLoading(false)
-      })
+        mealCata = values[0];
+        mealCata = values[1];
+        mealCata = values[3];
+        setIsLoading(false);
+      });
       mealCata.map((item: any) => {
         parsedCata.push({ title: item.name, id: item.id });
       });
@@ -185,12 +184,12 @@ export default function FoodCategory() {
     setForm((prev: any) => ({ ...prev, [e.targe.name]: e.target.value }));
   };
   return (
-    <Container>
+    <Container maxWidth={false}>
       <Card>
         <CardWrapper>
           {isLoading ? (
             <>
-              <Skeleton
+              <CustomSkeleton
                 sx={{ mb: 4 }}
                 animation="wave"
                 variant="rectangular"
@@ -201,28 +200,28 @@ export default function FoodCategory() {
                 <Grid item xs={8} md={8} lg={8}>
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={6} lg={4}>
-                      <Skeleton
+                      <CustomSkeleton
                         animation="wave"
                         variant="rectangular"
                         height={56}
                       />
                     </Grid>
                     <Grid item xs={12} md={6} lg={4}>
-                      <Skeleton
+                      <CustomSkeleton
                         animation="wave"
                         variant="rectangular"
                         height={56}
                       />
                     </Grid>
                     <Grid item xs={12} md={6} lg={4}>
-                      <Skeleton
+                      <CustomSkeleton
                         animation="wave"
                         variant="rectangular"
                         height={56}
                       />
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
-                      <Skeleton
+                      <CustomSkeleton
                         animation="wave"
                         variant="rectangular"
                         height={56}
@@ -230,23 +229,35 @@ export default function FoodCategory() {
                     </Grid>
 
                     <Grid item xs={12} md={12} lg={12}>
-                      <Skeleton
+                      <CustomSkeleton
                         animation="wave"
                         variant="rectangular"
                         height={56}
                       />
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
-                      <Skeleton
+                      <CustomSkeleton
                         animation="wave"
                         variant="rectangular"
                         height={56}
                       />
                     </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <CustomSkeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={56}
+                        width={130}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Grid item xs={4} md={4} lg={4} sx={{ height: "100%" }}>
-                  <Skeleton height={375} animation="wave" variant="rectangular" />
+                  <CustomSkeleton
+                    height={375}
+                    animation="wave"
+                    variant="rectangular"
+                  />
                 </Grid>
               </Grid>
             </>

@@ -17,9 +17,9 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./listItem";
-import DataGridComp from '../components/dataGrid'
-import Chart from '../components/lineChart'
+import { mainListItems, secondaryListItems } from "../components/customers/listItem";
+import DataGridComp from '../components/ui-comp/dataGrid'
+import Chart from '../components/ui-comp/lineChart'
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 // import Orders from './Orders';

@@ -25,12 +25,12 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import MainCard from '../../ui-components/cards/mainCard';
-import Transitions from '../../ui-components/Transitions';
+import MainCard from '../cards/mainCard';
+import Transitions from '../Transitions';
 import NotificationList from './NotificationList';
 
 // assets
-import { Bell as BellIcon } from "../../icons/bell";
+import { Bell as BellIcon } from "../../../icons/bell";
 
 // notification status options
 const status = [
@@ -174,26 +174,6 @@ const NotificationSection = () => {
                                                 style={{ height: '100%', maxHeight: 'calc(100vh - 205px)', overflowX: 'hidden' }}
                                             >
                                                 <Grid container direction="column" spacing={2}>
-                                                    <Grid item xs={12}>
-                                                        <Box sx={{ px: 2, pt: 0.25 }}>
-                                                            <TextField
-                                                                id="outlined-select-currency-native"
-                                                                select
-                                                                fullWidth
-                                                                value={value}
-                                                                onChange={handleChange}
-                                                                SelectProps={{
-                                                                    native: true
-                                                                }}
-                                                            >
-                                                                {status.map((option) => (
-                                                                    <option key={option.value} value={option.value}>
-                                                                        {option.label}
-                                                                    </option>
-                                                                ))}
-                                                            </TextField>
-                                                        </Box>
-                                                    </Grid>
                                                     <Grid item xs={12} p={0}>
                                                         <Divider sx={{ my: 0 }} />
                                                     </Grid>

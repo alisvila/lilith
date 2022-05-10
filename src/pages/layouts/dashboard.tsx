@@ -11,11 +11,11 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box, CssBaseline } from "@mui/material";
 
-import TopBar from "./topBar";
-import SideBar from "./drawer";
+import TopBar from "../../components/navigation/topBar";
+import SideBar from "../../components/navigation/drawer";
 import { theme } from "../../components/theme";
 import { defaultTheme } from "../../components/theme/default";
-import Footer from "../footer";
+import Footer from "../../components/navigation/footer";
 
 const DashboardLayoutRoot = styled("div")(({ theme }: any) => ({
   display: "flex",

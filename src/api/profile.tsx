@@ -1,9 +1,9 @@
 import { sendRequest } from "./index";
 
-const createProfile = (payload: any) => {
+export const createProfile = (uri: string, payload: any) => {
   return new Promise((resolve, reject) => {
     sendRequest({
-      url: "/Person",
+      url: uri,
       method: "POST",
       body: payload,
     })
@@ -16,10 +16,10 @@ const createProfile = (payload: any) => {
   });
 };
 
-const getProfile = (id: number) => {
+export const getProfile = (uri: string) => {
   return new Promise((resolve, reject) => {
     sendRequest({
-      url: `/Person/${id}`,
+      url: uri,
       method: "GET",
     })
       .then((res) => {
@@ -31,10 +31,25 @@ const getProfile = (id: number) => {
   });
 };
 
-const updateProfile = (payload: any) => {
+export const getSingleProfile = (uri: string, id?: number) => {
   return new Promise((resolve, reject) => {
     sendRequest({
-      url: `/Person`,
+      url: `${uri}/${id}`,
+      method: "GET",
+    })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const updateProfile = (uri: string, payload: any) => {
+  return new Promise((resolve, reject) => {
+    sendRequest({
+      url: uri,
       method: "PATCH",
       body: payload,
     })
