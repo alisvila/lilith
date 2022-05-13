@@ -15,6 +15,7 @@ import UserIllnessSurgery from "../../components/visit/UserIllnessSurgery";
 const steps = ["اطلاعات بیمار", "داروهای مصرفی", "بیماری های خاص و جراحی"];
 
 export default function HorizontalLinearStepper() {
+  const [isLoading, setLoading] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<any>());
 

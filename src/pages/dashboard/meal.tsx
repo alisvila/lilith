@@ -5,6 +5,7 @@ import Table from "../../components/ui-comp/table/TableWrapper";
 import { MealList } from "../../components/ui-comp/dash/MealList";
 
 export default function Meal() {
+  const [isLoading, setLoading] = useState(true);
   const [selectedCalery, setSelected]: any = useState("2500");
 
   

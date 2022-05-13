@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import DashLayout from "../layouts/dashboard";
 import {
@@ -49,6 +49,8 @@ const rows = [
 const DataGridwrap = styled(DataGrid)(({ theme }: any) => ({}));
 
 export default function FoodGrid() {
+  const [isLoading, setLoading] = useState(true);
+
   return (
     <Container maxWidth={false}>
       <Card>

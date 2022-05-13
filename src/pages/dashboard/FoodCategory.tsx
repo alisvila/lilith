@@ -144,25 +144,20 @@ export default function FoodCategory() {
   useEffect(() => {
     async function getMealsApi() {
       const parsedCata: any = [];
-      let mealCata: any = [
-        {
-          name: "string",
-          id: 0,
-        },
-      ];
+      let mealCata: any = {meal: {}, cata: {}}
       await Promise.all([
         getProfile("/Meals"),
         getProfile("/Meals"),
         getProfile("/Meals"),
       ]).then((values: any) => {
-        mealCata = values[0];
-        mealCata = values[1];
-        mealCata = values[3];
+        mealCata.meal = values[0]
+        mealCata.cata = values[1]
+        values[0].map((item: any) => {
+          parsedCata.push({ title: item.name, id: item.id });
+        });
         setIsLoading(false);
       });
-      mealCata.map((item: any) => {
-        parsedCata.push({ title: item.name, id: item.id });
-      });
+      console.log(parsedCata, 'parsedCata')
       setMealsCata(parsedCata);
     }
     getMealsApi();

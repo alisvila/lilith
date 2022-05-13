@@ -25,6 +25,10 @@ import DashLayout from "./pages/layouts/dashboard";
 import FoodGrid from "./pages/dashboard/FoodGrid";
 import PayMethod from "./pages/dashboard/PayMethod";
 import Ticket from "./pages/dashboard/Ticket";
+import CreateDoctor from "./pages/dashboard/CreateDoctor";
+import DocPatients from "./pages/dashboard/DocPatients";
+import PatientDetail from "./pages/dashboard/PatientDetail";
+import MessageHistory from "./pages/MessageHistory";
 
 function App() {
   return (
@@ -47,105 +51,151 @@ function App() {
           post_logout_redirect_uri: "http://localhost:3000/my_logout_path",
         }}
       > */}
-        <AuthProvider>
-          <DashLayout>
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="home" element={<Home />} />
-              <Route
-                path="dashboard"
-                element={
-                  <ProtectedRoute roles={["admin", "all"]}>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/meal"
-                element={
-                  <ProtectedRoute roles={["admin", "all"]}>
-                    <Meal />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/settings"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <AccountSettings />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/Illnes"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <Illnes />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="visit"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <Visit />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/customers"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <Customers />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="dashboard/Discount"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <Discount />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/FoodCategory"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <FoodCategory />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/FoodGrid"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <FoodGrid />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/payMethod"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <PayMethod />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="dashboard/sendtiket"
-                element={
-                  <ProtectedRoute roles={["all"]}>
-                    <Ticket />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route path="*" element={<NoMatch />} />
-            </Routes>
-          </DashLayout>
-        </AuthProvider>
+      <AuthProvider>
+        <DashLayout>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route
+              path="dashboard"
+              element={
+                <ProtectedRoute roles={["admin", "all"]}>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/meal"
+              element={
+                <ProtectedRoute roles={["admin", "all"]}>
+                  <Meal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/settings"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <AccountSettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/Illnes"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <Illnes />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="visit"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <Visit />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/customers"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <Customers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/Discount"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <Discount />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/FoodCategory"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <FoodCategory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/FoodGrid"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <FoodGrid />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/payMethod"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <PayMethod />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/sendtiket"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <Ticket />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/doc/create"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <CreateDoctor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/doc/:id"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <DocPatients />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/patient/:id"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <DocPatients />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/patient/create"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <CreateDoctor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/patient/detail"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <PatientDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/history"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <MessageHistory />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </DashLayout>
+      </AuthProvider>
       {/* </Authenticate> */}
     </Router>
   );

@@ -6,16 +6,7 @@ export default function PersonalInfo(props: any) {
     <Card {...props}>
       <CardContent>
         <Grid container>
-          <Grid
-            container
-            item
-            xs={2}
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            <Avatar sx={{ height: 65, width: 65 }}>M</Avatar>
-          </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <div>
               <Typography variant="h5">مهران بادامی</Typography>
               <Grid container sx={{pt: 2}}>
@@ -29,7 +20,7 @@ export default function PersonalInfo(props: any) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <span>BMI بیمار: </span>
+                    <span>BMI: </span>
                     <span>18</span>
                   </div>
                   <div

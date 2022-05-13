@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import DashLayout from "../layouts/dashboard";
 import { Card, Container, CardContent, Typography } from "@mui/material";
@@ -48,6 +48,8 @@ const rows = [
 ];
 
 export default function Discount() {
+  const [isLoading, setLoading] = useState(true);
+
   return (
       <Container maxWidth={false}>
         <Card>

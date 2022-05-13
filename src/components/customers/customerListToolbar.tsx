@@ -15,6 +15,7 @@ import {
 import { Search as SearchIcon } from "../../icons/search";
 import { Upload as UploadIcon } from "../../icons/upload";
 import { Download as DownloadIcon } from "../../icons/download";
+import { NavLink } from 'react-router-dom';
 
 export const CustomerListToolbar = (props: any) => (
   <Box {...props}>
@@ -28,7 +29,7 @@ export const CustomerListToolbar = (props: any) => (
       }}
     >
       <Typography sx={{ m: 1 }} variant="h4">
-        Customers
+        لیست دکتر
       </Typography>
       <Box sx={{ m: 1 }}>
         {/* <Button
@@ -43,8 +44,13 @@ export const CustomerListToolbar = (props: any) => (
           >
             Export
           </Button> */}
-        <Button color="primary" variant="contained">
-          Add Customers
+        <Button
+          component={NavLink}
+          to="/dashboard/doc/create"
+          color="primary"
+          variant="contained"
+        >
+          اضافه کردن دکتر جدید
         </Button>
       </Box>
     </Box>

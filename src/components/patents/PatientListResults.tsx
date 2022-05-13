@@ -32,7 +32,7 @@ type Customer = {
     createdAt: Date
 }
 
-export const CustomerListResults = ({ customers, ...rest }: any) => {
+export const PatientListResults = ({ customers, ...rest }: any) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -118,7 +118,7 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
               {customers.slice(0, limit).map((customer: Customer) => (
                 <TableRow
                   component={NavLink}
-                  to={`/dashboard/doc/${customer.id}`}
+                  to="/dashboard"
                   hover
                   key={customer.id}
                   selected={selectedCustomerIds.indexOf(customer.id) !== -1}
@@ -181,8 +181,4 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
       </CardContent>
     </Card>
   );
-};
-
-CustomerListResults.propTypes = {
-  customers: PropTypes.array.isRequired
 };
