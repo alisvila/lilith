@@ -29,21 +29,30 @@ const MessagesBody = styled(Paper)(({ theme }: any) => ({
   margin: 10,
   overflowY: "auto",
   height: "calc( 100% - 80px )",
+  border: '1px solid #f0f0ff'
 }));
 
-const SearchButton = () => {
-  return (
-    <Button variant="contained" endIcon={<SendIcon />}>
-      ارسال
-    </Button>
-  );
-};
+
 
 export default function History(props: any) {
   const [message, setMessage] = useState("");
   useEffect(() => {
-    console.log(props.historyObj, "==================================");
   }, []);
+
+  const sendMessage = () => {
+    if (!message) {
+      console.log('message')
+    }
+    console.log('sent')
+  }
+
+  const SearchButton = () => {
+    return (
+      <Button variant="contained" onClick={sendMessage} endIcon={<SendIcon style={{transform: 'rotate(180deg)'}}/>}>
+        ارسال
+      </Button>
+    );
+  };
 
   return (
     <Grid item xs={12}>
@@ -52,6 +61,15 @@ export default function History(props: any) {
           <Card {...props}>
             <CardContent>
               <NewPaper>
+              <TextField
+                  id="standard-name"
+                  label="ارسال پیام"
+                  value={message}
+                  name="message"
+                  onChange={(e) => setMessage(e.target.value)}
+                  fullWidth
+                  InputProps={{ endAdornment: <SearchButton /> }}
+                />
                   <MessagesBody id="style-1">
                 <PerfectScrollbar>
                     {!!props.historyObj &&
@@ -80,15 +98,7 @@ export default function History(props: any) {
                       })}
                 </PerfectScrollbar>
                   </MessagesBody>
-                <TextField
-                  id="standard-name"
-                  label="ارسال پیام"
-                  value={message}
-                  name="message"
-                  onChange={(e) => setMessage(e.target.value)}
-                  fullWidth
-                  InputProps={{ endAdornment: <SearchButton /> }}
-                />
+
               </NewPaper>
             </CardContent>
           </Card>

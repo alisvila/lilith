@@ -118,7 +118,7 @@ export const PatientListResults = ({ customers, ...rest }: any) => {
               {customers.slice(0, limit).map((customer: Customer) => (
                 <TableRow
                   component={NavLink}
-                  to="/dashboard"
+                  to={`/dashboard/patient/${customer.id}`}
                   hover
                   key={customer.id}
                   selected={selectedCustomerIds.indexOf(customer.id) !== -1}

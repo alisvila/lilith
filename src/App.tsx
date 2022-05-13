@@ -161,7 +161,7 @@ function App() {
               }
             />
             <Route
-              path="dashboard/patient/:id"
+              path="dashboard/patient"
               element={
                 <ProtectedRoute roles={["all"]}>
                   <DocPatients />
@@ -177,7 +177,7 @@ function App() {
               }
             />
             <Route
-              path="dashboard/patient/detail"
+              path="dashboard/patient/:id"
               element={
                 <ProtectedRoute roles={["all"]}>
                   <PatientDetail />
