@@ -1,6 +1,7 @@
 import { sendRequest } from "./index";
 
 export const createProfile = (uri: string, payload: any) => {
+  console.log(payload, 'this is payload')
   return new Promise((resolve, reject) => {
     sendRequest({
       url: uri,
@@ -31,7 +32,7 @@ export const getProfile = (uri: string) => {
   });
 };
 
-export const getSingleProfile = (uri: string, id?: number) => {
+export const getSingleProfile = (uri: string, id?: string) => {
   return new Promise((resolve, reject) => {
     sendRequest({
       url: `${uri}/${id}`,

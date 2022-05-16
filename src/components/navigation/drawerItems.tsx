@@ -23,6 +23,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MasksIcon from "@mui/icons-material/Masks";
 import DiscountIcon from "@mui/icons-material/Discount";
 import PriceChangeIcon from "@mui/icons-material/PriceChange";
+import BoyIcon from '@mui/icons-material/Boy';
 import {
   Box,
   Button,
@@ -134,9 +135,9 @@ export default React.memo(function NestedList() {
         to="/dashboard/Customers"
       >
         <ListItemIcon>
-          <AirlineSeatReclineExtraIcon />
+          <BoyIcon />
         </ListItemIcon>
-        <ListItemText primary="لیست بیمارها" />
+        <ListItemText primary="لیست دکترها" />
       </ListItemButtonCus>
       <ListItemButtonCus
         key="home"

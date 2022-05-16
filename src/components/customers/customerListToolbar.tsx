@@ -69,7 +69,7 @@ export const CustomerListToolbar = (props: any) => (
                   </InputAdornment>
                 ),
               }}
-              placeholder="Search customer"
+              placeholder="جستجوی دکتر"
               variant="outlined"
             />
           </Box>

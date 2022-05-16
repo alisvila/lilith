@@ -26,16 +26,19 @@ import {
   ListItem,
   ListItemText,
   IconButton,
+  Stack,
 } from "@mui/material";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ApprovalIcon from "@mui/icons-material/Approval";
 import banks from "./healthBanks.webp";
+import { useNavigate } from "react-router-dom";
 
 const SearchButton = () => <Button variant="outlined">ثبت</Button>;
 export default function Payment() {
   const [form, setForm]: any = useState({
     price: 1200000,
   });
+  const navigate = useNavigate();
 
   const changeHandler = (e: any) => {
     setForm((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -71,7 +74,7 @@ export default function Payment() {
                   required
                   id="amount"
                   name="amount"
-                  label="قد"
+                  label="مبلغ"
                   type="number"
                   defaultValue={form.price}
                   fullWidth
@@ -95,9 +98,14 @@ export default function Payment() {
                 />
               </Grid>
               <Grid item xs={12}>
+              <Stack spacing={2} direction="row">
                 <Button variant="contained" startIcon={<AccountBalanceIcon />}>
                   اتصال به درگاه
                 </Button>
+                <Button variant="text" onClick={() => navigate(-1)}>
+                      بازگشت
+                    </Button>
+                    </Stack>
               </Grid>
             </Grid>
           </Grid>

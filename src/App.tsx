@@ -152,6 +152,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+                        <Route
+              path="dashboard/doc/edit/:id"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <CreateDoctor />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="dashboard/doc/:id"
               element={

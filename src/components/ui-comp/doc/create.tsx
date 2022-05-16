@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,138 +12,223 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Stack,
 } from "@mui/material";
 import newDoc from "./new-doc.webp";
-import AdapterJalali from '@date-io/date-fns-jalali';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import AdapterJalali from "@date-io/date-fns-jalali";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { createProfile, getProfile, updateProfile } from "../../../api/profile";
+import { useNavigate } from "react-router-dom";
+import CustomSkeleton from "../Skeleton";
 
+export default function Create({ docDetail , ...rest}: any) {
+  const [value, setValue] = useState(new Date());
+  const [form, setForm]: any = useState({
+    name: "",
+    gender: "true",
+  });
+  const [docList, setDocList] = useState([]);
+  const navigate = useNavigate();
 
-export default function Create() {
-    const [value, setValue] = React.useState(new Date());
+  useEffect(() => {
+    const getDocs = async () => {
+      const docs: any = await getProfile("/Doctor");
+      setDocList(docs);
+    };
+    getDocs();
+  }, []);
 
-  //   "name": "string",
-  //   "lastName": "string",
-  //   "gender": true,
-  //   "birthDate": "2022-05-11T18:01:23.740Z",
-  //   "address": "string",
-  //   "job": "string",
-  //   "userName": "string",
-  //   "email": "string",
-  //   "phoneNumber": 0,
-  //   "parentId": 0
+  useEffect(() => {
+    setForm({ ...docDetail });
+  }, [docDetail]);
+
+  const changeHandler = (e: any) => {
+    setForm((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const createDoc = () => {
+    createProfile("/Doctor", { ...form, birthDate: value });
+  };
+
+  const editDoc = () => {
+    updateProfile("/Doctor", { ...form, birthDate: value });
+  };
+
+  // "name": "string",
+  // "lastName": "string",
+  // "gender": true,
+  // "birthDate": "2022-05-15T12:33:52.078Z",
+  // "address": "string",
+  // "job": "string",
+  // "userName": "string",
+  // "email": "string",
+  // "phoneNumber": 0,
+  // "parentId": 0
   return (
     <Card>
       <CardContent>
-        <Grid container>
-          <Grid item xs={8}>
-            <Typography mb={5} variant="h3">
-              دکتر جدید
-            </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={4}>
-                <TextField
-                  required
-                  id="name"
-                  name="name"
-                  label="نام"
-                  type="text"
-                  fullWidth
-                  //   onChange={(e) => userDetailHandler(e)}
-                />
+        {rest.isLoading ? (
+          <>
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <CustomSkeleton variant="rectangular" height={50} width={200} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CustomSkeleton variant="rectangular" height={50} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CustomSkeleton variant="rectangular" height={50} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CustomSkeleton variant="rectangular" height={50} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CustomSkeleton variant="rectangular" height={50} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CustomSkeleton variant="rectangular" height={50} width={200} />
+                  </Grid>
+                </Grid>
               </Grid>
               <Grid item xs={4}>
-                <TextField
-                  required
-                  id="lastName"
-                  name="lastName"
-                  label="نام خانوادگی"
-                  type="text"
-                  fullWidth
-                  //   onChange={(e) => userDetailHandler(e)}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControl sx={{ width: "100%" }}>
-                  <InputLabel id="demo-simple-select-label">جنسیت</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    // value={age}
-                    label="Age"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value={10}>مرد</MenuItem>
-                    <MenuItem value={20}>زن</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  required
-                  id="username"
-                  name="username"
-                  label="نام کاربری"
-                  type="text"
-                  fullWidth
-                  //   onChange={(e) => userDetailHandler(e)}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  required
-                  id="email"
-                  name="email"
-                  label="ایمیل"
-                  type="text"
-                  fullWidth
-                  //   onChange={(e) => userDetailHandler(e)}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  required
-                  id="phone"
-                  name="phone"
-                  label="شماره"
-                  type="number"
-                  fullWidth
-                  //   onChange={(e) => userDetailHandler(e)}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <LocalizationProvider dateAdapter={AdapterJalali}>
-                  <DesktopDatePicker
-                    label="تاریخ تولد"
-                    inputFormat="MM/dd/yyyy"
-                    value={value}
-                    onChange={(newDate: any) => setValue(newDate)}
-                    renderInput={(params) => <TextField sx={{width: "100%"}} {...params} />}
-                  />
-                </LocalizationProvider>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="address"
-                  name="address"
-                  label="آدرس"
-                  type="text"
-                  fullWidth
-                  //   onChange={(e) => userDetailHandler(e)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button variant="contained">
-                  ایجاد
-                </Button>
+                <img src={newDoc} alt="new doc" style={{ width: "100%" }} />
               </Grid>
             </Grid>
+          </>
+        ) : (
+          <Grid container>
+            <Grid item xs={8}>
+              <Typography mb={5} variant="h3">
+                دکتر جدید
+              </Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={4}>
+                  <TextField
+                    required
+                    id="name"
+                    name="name"
+                    label="نام"
+                    type="text"
+                    value={form.name}
+                    fullWidth
+                    onChange={(e) => changeHandler(e)}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    required
+                    id="lastName"
+                    name="lastName"
+                    label="نام خانوادگی"
+                    type="text"
+                    value={form.lastName}
+                    fullWidth
+                    onChange={(e) => changeHandler(e)}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <FormControl sx={{ width: "100%" }}>
+                    <InputLabel id="demo-simple-select-label">جنسیت</InputLabel>
+                    <Select
+                      name="gender"
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={form.gender}
+                      label="gender"
+                      onChange={(e) => changeHandler(e)}
+                    >
+                      <MenuItem value={"true"}>مرد</MenuItem>
+                      <MenuItem value={"false"}>زن</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    id="username"
+                    name="username"
+                    label="نام کاربری"
+                    type="text"
+                    value={form.username}
+                    fullWidth
+                    onChange={(e) => changeHandler(e)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    id="email"
+                    name="email"
+                    label="ایمیل"
+                    value={form.email}
+                    type="text"
+                    fullWidth
+                    onChange={(e) => changeHandler(e)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={form.phoneNumber}
+                    label="شماره"
+                    type="number"
+                    fullWidth
+                    onChange={(e) => changeHandler(e)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <LocalizationProvider dateAdapter={AdapterJalali}>
+                    <DesktopDatePicker
+                      label="تاریخ تولد"
+                      inputFormat="MM/dd/yyyy"
+                      value={value}
+                      onChange={(newDate: any) => setValue(newDate)}
+                      renderInput={(params) => (
+                        <TextField sx={{ width: "100%" }} {...params} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="address"
+                    name="address"
+                    value={form.address}
+                    label="آدرس"
+                    type="text"
+                    fullWidth
+                    //   onChange={(e) => changeHandler(e)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Stack spacing={2} direction="row">
+                    {docDetail ? (
+                      <Button variant="contained" onClick={editDoc}>
+                        ویرایش
+                      </Button>
+                    ) : (
+                      <Button variant="contained" onClick={createDoc}>
+                        ایجاد
+                      </Button>
+                    )}
+                    <Button variant="text" onClick={() => navigate(-1)}>
+                      بازگشت
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={4}>
+              <img src={newDoc} alt="new doc" style={{ width: "100%" }} />
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <img src={newDoc} alt="new doc" style={{ width: "100%" }} />
-          </Grid>
-        </Grid>
+        )}
       </CardContent>
     </Card>
   );

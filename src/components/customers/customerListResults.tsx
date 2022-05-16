@@ -13,14 +13,19 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  CardContent
+  CardContent,
+  Skeleton
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import CustomSkeleton from "../../components/ui-comp/Skeleton";
+import { persianDate } from '../helper'
+
 // import { getInitials } from '../../utils/get-initials';
 
 type Customer = {
     id: never,
     avatarUrl: string,
+    lastName: string,
     name: number,
     email: string,
     address: {
@@ -28,8 +33,8 @@ type Customer = {
         state: string,
         country: string
     },
-    phone: string,
-    createdAt: Date
+    birthDate: string,
+    phoneNumber: Date
 }
 
 export const CustomerListResults = ({ customers, ...rest }: any) => {
@@ -79,14 +84,14 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
 
   return (
     <Card {...rest}>
-      <CardContent >
-      <PerfectScrollbar>
-        {/* <Box sx={{ minWidth: 1050 }}> */}
-        <Box style={{overflow: 'auto', }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {/* <TableCell padding="checkbox">
+      <CardContent>
+        <PerfectScrollbar>
+          {/* <Box sx={{ minWidth: 1050 }}> */}
+          <Box style={{ overflow: "auto" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedCustomerIds.length === customers.length}
                     color="primary"
@@ -97,92 +102,81 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
                     onChange={handleSelectAll}
                   />
                 </TableCell> */}
-                <TableCell>
-                  نام
-                </TableCell>
-                <TableCell>
-                  ایمیل
-                </TableCell>
-                <TableCell>
-                  تعداد بیمار
-                </TableCell>
-                <TableCell>
-                  شماره تماس
-                </TableCell>
-                <TableCell>
-                  آخرین بازدید
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {customers.slice(0, limit).map((customer: Customer) => (
-                <TableRow
-                  component={NavLink}
-                  to={`/dashboard/doc/${customer.id}`}
-                  hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-                >
-                  {/* <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
-                      value="true"
-                    />
-                  </TableCell> */}
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar
-                        src={customer.avatarUrl}
-                        sx={{ mr: 2 }}
-                      >
-                        {(customer.name)}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {customer.name}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {customer.email}
-                  </TableCell>
-                  <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-                  </TableCell>
-                  <TableCell>
-                    {customer.phone}
-                  </TableCell>
-                  <TableCell>
-                    {customer.createdAt}
-                  </TableCell>                  
+                  <TableCell>نام</TableCell>
+                  <TableCell>ایمیل</TableCell>
+                  <TableCell>آدرس</TableCell>
+                  <TableCell>شماره تماس</TableCell>
+                  <TableCell>تاریخ تولد</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </PerfectScrollbar>
-      <TablePagination
-        component="div"
-        count={customers.length}
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
+              </TableHead>
+              <TableBody>
+                {rest.isLoading && (
+                  <>
+                    <TableRow>
+                      <TableCell>
+                        <CustomSkeleton variant="rectangular" height={60} />
+                      </TableCell>
+                      <TableCell>
+                        <CustomSkeleton variant="rectangular" height={60} />
+                      </TableCell>
+                      <TableCell>
+                        <CustomSkeleton variant="rectangular" height={60} />
+                      </TableCell>
+                      <TableCell>
+                        <CustomSkeleton variant="rectangular" height={60} />
+                      </TableCell>
+                      <TableCell>
+                        <CustomSkeleton variant="rectangular" height={60} />
+                      </TableCell>
+                    </TableRow>
+                  </>
+                )}
+                {customers.slice(0, limit).map((customer: Customer) => (
+                  <TableRow
+                    component={NavLink}
+                    to={`/dashboard/doc/${customer.id}`}
+                    hover
+                    key={customer.id}
+                    selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  >
+                    <TableCell>
+                      <Box
+                        sx={{
+                          alignItems: "center",
+                          display: "flex",
+                        }}
+                      >
+                        <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
+                          {customer.name}
+                        </Avatar>
+                        <Typography color="textPrimary" variant="body1">
+                          {customer.name} {customer.lastName}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell>{customer.email}</TableCell>
+                    <TableCell>
+                      {customer.address}
+                    </TableCell>
+                    <TableCell>{customer.phoneNumber}</TableCell>
+                    <TableCell>{persianDate(customer.birthDate)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+        </PerfectScrollbar>
+        <TablePagination
+          component="div"
+          count={customers.length}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleLimitChange}
+          page={page}
+          labelRowsPerPage="سطر در صفحه:"
+          rowsPerPage={limit}
+          rowsPerPageOptions={[5, 10, 25]}
+        />
       </CardContent>
     </Card>
   );
-};
-
-CustomerListResults.propTypes = {
-  customers: PropTypes.array.isRequired
 };
