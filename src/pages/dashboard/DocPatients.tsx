@@ -1,14 +1,14 @@
 import react, { useEffect, useState } from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { PatientListResults } from "../../components/patents/PatientListResults";
 import { PatientListToolbar } from "../../components/patents/PatientListToolbar";
 import DashLayout from "../layouts/dashboard";
 import { customers } from "../../__mocks__/customers";
 import { useParams } from "react-router-dom";
-import { getSingleProfile } from "../../api/profile";
+import { getSingleProfile, deleteSingleProfile } from "../../api/profile";
 
 export default function DocPatients(props: any) {
-  const [docDetail, setDocDetail] = useState();
+  const [docDetail, setDocDetail]: any = useState();
   const [docPatient, setDocPatient] = useState();
   const [isLoading, setIsLoading] = useState(true);
   let { id } = useParams();
@@ -26,6 +26,9 @@ export default function DocPatients(props: any) {
     setIsLoading(false);
   }, []);
 
+  const deleteDoc = () => {
+    deleteSingleProfile("/Doctor", id + "/Patients")
+  }
   return (
     <Box
       component="main"
@@ -35,9 +38,29 @@ export default function DocPatients(props: any) {
       }}
     >
       <Container maxWidth={false}>
-        <Typography gutterBottom variant="h3">
+      <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            m: -1,
+          }}
+        >
+          <Typography sx={{ m: 1 }} variant="h3">
           جزییات دکتر
-        </Typography>
+          </Typography>
+          <Box sx={{ m: 1 }}>
+            <Button
+              color="error"
+              variant="contained"
+              onClick={deleteDoc}
+            >
+             حذف  
+            </Button>
+          </Box>
+        </Box>
+
         <PatientListToolbar docDetail={docDetail} isLoading={isLoading} />
         <Box sx={{ mt: 3 }}>
           <PatientListResults customers={docPatient} isLoading={isLoading} />

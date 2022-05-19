@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -20,7 +20,9 @@ import {
 import styled from "@emotion/styled";
 import SendIcon from "@mui/icons-material/Send";
 import MessageIcon from "@mui/icons-material/Message";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { deleteSingleProfile, getSingleProfile } from "../../../api/profile";
+import { persianDate, getGender } from "../../helper";
 
 const DetailGrid = styled(Grid)(({ theme }: any) => ({
   borderBottom: "1px solid #d3d3d3",
@@ -75,7 +77,22 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-export default function MoreDetail(props: any) {
+
+  // "name": "string",
+  // "lastName": "string",
+  // "gender": 0,
+  // "birthDate": "2022-05-17T11:42:55.950Z",
+  // "address": "string",
+  // "job": "string",
+  // "userName": "string",
+  // "email": "string",
+  // "phoneNumber": 0,
+  // "fileNumber": 0,
+  // "registerDate": "2022-05-17T11:42:55.950Z",
+  // "doctorId": 0
+
+
+export default function MoreDetail({patientDetail, isLoading, ...props}: any) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: any, newValue: any) => {
@@ -86,93 +103,101 @@ export default function MoreDetail(props: any) {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Card {...props}>
-          <Grid container>
-            <Grid
-              item
-              md={2}
-              sm={7}
-              xs={12}
-              sx={{
-                borderRight: "1px solid #d3d3d3",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Avatar
-                src="avatar"
+          {isLoading ? (
+            <></>
+          ) : (
+            <Grid container>
+              <Grid
+                item
+                md={2}
+                sm={7}
+                xs={12}
                 sx={{
-                  height: 64,
-                  mb: 2,
-                  width: 64,
+                  borderRight: "1px solid #d3d3d3",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
-              />
-              <Typography variant="h5">مهران بادامی</Typography>
-              <Grid>
-                <IconButton
-                  component={NavLink}
-                  to="/dashboard/sendtiket"
-                  aria-label="delete"
-                >
-                  <SendIcon />
-                </IconButton>
-                <IconButton
-                  component={NavLink}
-                  to="/dashboard/history"
-                  aria-label="delete"
-                >
-                  <MessageIcon />
-                </IconButton>
+              >
+                <Avatar
+                  src="avatar"
+                  sx={{
+                    height: 64,
+                    mb: 2,
+                    width: 64,
+                  }}
+                />
+                <Typography variant="h5">
+                  {patientDetail?.name} {patientDetail?.lastName}
+                </Typography>
+                <Grid>
+                  <IconButton
+                    component={NavLink}
+                    to="/dashboard/sendtiket"
+                    aria-label="delete"
+                  >
+                    <SendIcon />
+                  </IconButton>
+                  <IconButton
+                    component={NavLink}
+                    to="/dashboard/history"
+                    aria-label="delete"
+                  >
+                    <MessageIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+              <Grid item md={10} sm={5} xs={12}>
+                <Grid container>
+                  <DetailGrid item xs={12}>
+                    <Typography variant="subtitle1">مشخصات فردی</Typography>
+                    <Grid container>
+                      <Grid item sm={4} xs={12}>
+                        جنسیت: {getGender(patientDetail?.gender)}
+                      </Grid>
+                      <Grid item sm={4} xs={12}>
+                        تاریخ تولد:
+                        {persianDate(patientDetail?.birthDate)}
+                      </Grid>
+                      <Grid item sm={4} xs={12}>
+                        شماره موبایل:
+                        {patientDetail?.phoneNumber}
+                      </Grid>
+                    </Grid>
+                  </DetailGrid>
+                  <DetailGrid item xs={12}>
+                    <Typography variant="subtitle1">body detail</Typography>
+                    <Grid container>
+                      <Grid item sm={4} xs={12}>
+                        Blood Type: o+
+                      </Grid>
+                      <Grid item sm={4} xs={12}>
+                        Weight: 75KG
+                      </Grid>
+                      <Grid item sm={4} xs={12}>
+                        Body type: slim
+                      </Grid>
+                    </Grid>
+                  </DetailGrid>
+                  <DetailGrid item xs={12}>
+                    <Typography variant="subtitle1">مهران بادامی</Typography>
+                    <Grid container>
+                      <Grid item sm={4} xs={12}>
+                        Blood Type: o+
+                      </Grid>
+                      <Grid item sm={4} xs={12}>
+                        Weight: 75KG
+                      </Grid>
+                      <Grid item sm={4} xs={12}>
+                        Body type: slim
+                      </Grid>
+                    </Grid>
+                  </DetailGrid>
+                </Grid>
               </Grid>
             </Grid>
-            <Grid item md={10} sm={5} xs={12}>
-              <Grid container>
-                <DetailGrid item xs={12}>
-                  <Typography variant="subtitle1">person info</Typography>
-                  <Grid container>
-                    <Grid item sm={4} xs={12}>
-                      Gender: female
-                    </Grid>
-                    <Grid item sm={4} xs={12}>
-                      BDate: 15/06
-                    </Grid>
-                    <Grid item sm={4} xs={12}>
-                      Phone number: 0934
-                    </Grid>
-                  </Grid>
-                </DetailGrid>
-                <DetailGrid item xs={12}>
-                  <Typography variant="subtitle1">body detail</Typography>
-                  <Grid container>
-                    <Grid item sm={4} xs={12}>
-                      Blood Type: o+
-                    </Grid>
-                    <Grid item sm={4} xs={12}>
-                      Weight: 75KG
-                    </Grid>
-                    <Grid item sm={4} xs={12}>
-                      Body type: slim
-                    </Grid>
-                  </Grid>
-                </DetailGrid>
-                <DetailGrid item xs={12}>
-                  <Typography variant="subtitle1">مهران بادامی</Typography>
-                  <Grid container>
-                    <Grid item sm={4} xs={12}>
-                      Blood Type: o+
-                    </Grid>
-                    <Grid item sm={4} xs={12}>
-                      Weight: 75KG
-                    </Grid>
-                    <Grid item sm={4} xs={12}>
-                      Body type: slim
-                    </Grid>
-                  </Grid>
-                </DetailGrid>
-              </Grid>
-            </Grid>
-          </Grid>
+          )}
         </Card>
       </Grid>
       <Grid item xs={12}>
@@ -184,9 +209,11 @@ export default function MoreDetail(props: any) {
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
+                <Tab label="ویزیت" {...a11yProps(0)} />
+                <Tab label="داروهای مصرفی بیمار" {...a11yProps(1)} />
+                <Tab label="سابقه بیماری" {...a11yProps(2)} />
+                <Tab label="شرایط زندگی" {...a11yProps(2)} />
+                <Tab label="سوابق پرداخت" {...a11yProps(2)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>

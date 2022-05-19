@@ -16,14 +16,13 @@ import {
 import { Search as SearchIcon } from "../../icons/search";
 import { Upload as UploadIcon } from "../../icons/upload";
 import { Download as DownloadIcon } from "../../icons/download";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import DocDetail from "./DocDetail";
 import TotalPatient from "./totalPatient";
 import { Budget } from "../ui-comp/dash/budget";
 
 export const PatientListToolbar = (props: any) => (
   <Box {...props}>
-
     <Grid item xs={12}>
       <Grid container spacing={5}>
         <Grid item lg={5} xs={6}>
@@ -37,51 +36,5 @@ export const PatientListToolbar = (props: any) => (
         </Grid>
       </Grid>
     </Grid>
-    <Box sx={{ mt: 3 }}>
-      <Card>
-        <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography sx={{ m: 1 }} variant="h6">
-        لیست بیمار ها
-      </Typography>
-          <Box sx={{ maxWidth: 500, flexGrow: 1 }}>
-            <TextField
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SvgIcon color="action" fontSize="small">
-                      <SearchIcon />
-                    </SvgIcon>
-                  </InputAdornment>
-                ),
-              }}
-              placeholder="جستجوی بیمار"
-              variant="outlined"
-            />
-          </Box>
-          <Box
-      sx={{
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        m: -1,
-      }}
-    >
-
-    </Box>
-          <Box sx={{ maxWidth: 500 }}>
-          <Button
-          component={NavLink}
-          to="/dashboard/patient/create"
-          color="primary"
-          variant="contained"
-        >
-          افزودن بیمار جدید
-        </Button>
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
   </Box>
 );

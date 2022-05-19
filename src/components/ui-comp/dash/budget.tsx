@@ -59,7 +59,7 @@ export const Budget = (props: any) => {
                   }}
                 >
                   <Typography color="textPrimary" variant="h4">
-                    {props?.detail?.budget || "24.000.000 "}
+                    {props?.detail?.budget}
                   </Typography>
                   <Typography color="textSecondary" variant="caption">
                     ریال
@@ -96,7 +96,7 @@ export const Budget = (props: any) => {
                 }}
                 variant="body2"
               >
-                {props?.detail?.budgetRate || "12%"}
+                {props?.detail?.budgetRate}
               </Typography>
               <Typography color="textSecondary" variant="caption">
                 نسبت به ماه گذشته

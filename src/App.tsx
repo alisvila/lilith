@@ -29,6 +29,7 @@ import CreateDoctor from "./pages/dashboard/CreateDoctor";
 import DocPatients from "./pages/dashboard/DocPatients";
 import PatientDetail from "./pages/dashboard/PatientDetail";
 import MessageHistory from "./pages/MessageHistory";
+import CreatePatient from "./components/ui-comp/patient/CreatePatient";
 
 function App() {
   return (
@@ -177,10 +178,10 @@ function App() {
               }
             />
             <Route
-              path="dashboard/patient/create"
+              path="dashboard/doc/:id/patient/create"
               element={
                 <ProtectedRoute roles={["all"]}>
-                  <CreateDoctor />
+                  <CreatePatient />
                 </ProtectedRoute>
               }
             />

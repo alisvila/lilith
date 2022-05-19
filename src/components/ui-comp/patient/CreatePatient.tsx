@@ -14,20 +14,20 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import newDoc from "./new-doc.webp";
+// import newDoc from "./new-doc.webp";
 import AdapterJalali from "@date-io/date-fns-jalali";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { createProfile, getProfile, updateProfile } from "../../../api/profile";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomSkeleton from "../Skeleton";
-import IDoctorCreate from './DoctorDTO'
 
-export default function Create({ docDetail , ...rest}: any) {
+export default function CreatePatient({ docDetail , ...rest}: any) {
   const [value, setValue] = useState(new Date());
   const [form, setForm]: any = useState({});
   const [docList, setDocList] = useState([]);
   const navigate = useNavigate();
+  let { id } = useParams();
 
   useEffect(() => {
     const getDocs = async () => {
@@ -47,23 +47,27 @@ export default function Create({ docDetail , ...rest}: any) {
   };
 
   const createDoc = () => {
-    createProfile("/Doctor", { ...form, birthDate: value });
+    createProfile("/Patient", { ...form, birthDate: value, doctorId: id });
   };
 
   const editDoc = () => {
-    updateProfile("/Doctor", { ...form, birthDate: value });
+    updateProfile("/Patient", { ...form, birthDate: value });
   };
 
-  // "name": "string",
-  // "lastName": "string",
-  // "gender": true,
-  // "birthDate": "2022-05-15T12:33:52.078Z",
-  // "address": "string",
-  // "job": "string",
-  // "userName": "string",
-  // "email": "string",
-  // "phoneNumber": 0,
-  // "parentId": 0
+  
+    // "name": "string",
+    // "lastName": "string",
+    // "gender": 0,
+    // "birthDate": "2022-05-17T11:42:55.950Z",
+    // "address": "string",
+    // "job": "string",
+    // "userName": "string",
+    // "email": "string",
+    // "phoneNumber": 0,
+    // "fileNumber": 0,
+    // "registerDate": "2022-05-17T11:42:55.950Z",
+    // "doctorId": 0
+  
   return (
     <Card>
       <CardContent>
@@ -93,7 +97,7 @@ export default function Create({ docDetail , ...rest}: any) {
                 </Grid>
               </Grid>
               <Grid item xs={4}>
-                <img src={newDoc} alt="new doc" style={{ width: "100%" }} />
+                {/* <img src={newDoc} alt="new doc" style={{ width: "100%" }} /> */}
               </Grid>
             </Grid>
           </>
@@ -101,7 +105,7 @@ export default function Create({ docDetail , ...rest}: any) {
           <Grid container>
             <Grid item xs={8}>
               <Typography mb={5} variant="h3">
-                دکتر جدید
+                بیمار جدید {id}
               </Typography>
               <Grid container spacing={3}>
                 <Grid item xs={4}>
@@ -139,8 +143,8 @@ export default function Create({ docDetail , ...rest}: any) {
                       label="gender"
                       onChange={(e) => changeHandler(e)}
                     >
-                      <MenuItem value={"true"}>مرد</MenuItem>
-                      <MenuItem value={"false"}>زن</MenuItem>
+                      <MenuItem value={1}>مرد</MenuItem>
+                      <MenuItem value={0}>زن</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -224,7 +228,7 @@ export default function Create({ docDetail , ...rest}: any) {
               </Grid>
             </Grid>
             <Grid item xs={4}>
-              <img src={newDoc} alt="new doc" style={{ width: "100%" }} />
+              {/* <img src={newDoc} alt="new doc" style={{ width: "100%" }} /> */}
             </Grid>
           </Grid>
         )}
