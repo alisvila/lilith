@@ -11,6 +11,8 @@ import { Container, Grid } from "@mui/material";
 import UserDetail from "../../components/visit/UserDetail";
 import UserMedicine from "../../components/visit/UserMedicine";
 import UserIllnessSurgery from "../../components/visit/UserIllnessSurgery";
+import { getProfile } from "../../api/profile";
+import CustomSkeleton from "../../components/ui-comp/Skeleton";
 
 const steps = ["اطلاعات بیمار", "داروهای مصرفی", "بیماری های خاص و جراحی"];
 
@@ -35,13 +37,37 @@ export default function HorizontalLinearStepper() {
       HistricalEat: false,
       Diabete: undefined,
       Lipidemia: undefined,
+      LivingCondition: 0,
     },
-    Medicine: [{id: 1994,title: "The Shawshank Redemption"}],
-    OtherMedicine : "",
-    Disease : [{id: 1994,title: "The Shawshank Redemption"}],
-    OtherDisease : "",
-    Surgery : ""
-    });
+    Medicine: [{ id: 1994, title: "The Shawshank Redemption" }],
+    OtherMedicine: "",
+    Disease: [{ id: 1994, title: "The Shawshank Redemption" }],
+    OtherDisease: "",
+    Surgery: "",
+  });
+
+  useEffect(() => {
+    const getActivity = async () => {
+      const activity: any = await getProfile("/ActivityType");
+      setVisit((prev) => ({ ...prev, Activity: { ...activity } }));
+    };
+    const getAppetite = async () => {
+      const appetite: any = await getProfile("/Appetite");
+      setVisit((prev) => ({ ...prev, Appetite: { ...appetite } }));
+    };
+    const getLivingCondition = async () => {
+      const livingCondition: any = await getProfile("/LivingCondition");
+      setVisit((prev) => ({
+        ...prev,
+        LivingCondition: { ...livingCondition },
+      }));
+    };
+
+    getActivity();
+    getAppetite();
+    getLivingCondition();
+    setLoading(false);
+  }, []);
 
   const userDetailHandler = (e: any) => {
     let newUserDetail = {
@@ -52,16 +78,33 @@ export default function HorizontalLinearStepper() {
   };
 
   const UserMedicineHandler = (newMedicine: any) => {
-    setVisit((prevVisit)=> ({...prevVisit , ...newMedicine}))
+    setVisit((prevVisit) => ({ ...prevVisit, ...newMedicine }));
   };
 
   const UserIllnessSurgeryHandler = (newUserIllnessSurgery: any) => {
-    setVisit((prevVisit)=> ({...prevVisit , ...newUserIllnessSurgery}))
-
+    setVisit((prevVisit) => ({ ...prevVisit, ...newUserIllnessSurgery }));
   };
 
   const isStepSkipped = (step: any) => {
     return skipped.has(step);
+  };
+
+  const changeLivingCondition = (e: any) => {
+    if (e.target.value === "true") {
+      setVisit((prev: any) => ({
+        ...prev,
+        userDetail: {
+          LivingCondition: prev.userDetail.LivingCondition + +e.target.name,
+        },
+      }));
+    } else {
+      setVisit((prev: any) => ({
+        ...prev,
+        userDetail: {
+          LivingCondition: prev.userDetail.LivingCondition - +e.target.name,
+        },
+      }));
+    }
   };
 
   const handleNext = () => {
@@ -90,74 +133,86 @@ export default function HorizontalLinearStepper() {
           <UserDetail
             userDetail={visit.userDetail}
             userDetailHandler={userDetailHandler}
+            changeLivingCondition={changeLivingCondition}
           />
         );
       case 1:
-        return <UserMedicine Medicine={visit.Medicine} OtherMedicine={visit.OtherMedicine}  UserMedicineHandler={UserMedicineHandler} />;
+        return (
+          <UserMedicine
+            Medicine={visit.Medicine}
+            OtherMedicine={visit.OtherMedicine}
+            UserMedicineHandler={UserMedicineHandler}
+          />
+        );
       case 2:
-        return <UserIllnessSurgery Disease={visit.Disease} OtherDisease={visit.OtherDisease} Surgery={visit.Surgery} UserIllnessSurgeryHandler={UserIllnessSurgeryHandler} />;
+        return (
+          <UserIllnessSurgery
+            Disease={visit.Disease}
+            OtherDisease={visit.OtherDisease}
+            Surgery={visit.Surgery}
+            UserIllnessSurgeryHandler={UserIllnessSurgeryHandler}
+          />
+        );
     }
   };
 
   return (
-      <Container maxWidth={false}>
-        <Box sx={{ width: "100%" }}>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label, index) => {
-              const stepProps: { completed?: boolean } = {};
-              const labelProps: {
-                optional?: any;
-              } = {};
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-          {activeStep === steps.length ? (
-            <>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                ثبت با موفقیت انجام شد.
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleReset}>ثبت ویزیت جدید</Button>
-              </Box>
-            </>
-          ) : (
-            <>
-              <Grid sx={{ m: 5 }}>
-                {StepComponentHandler()}
-              </Grid>
+    <Container maxWidth={false}>
+      <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps: { completed?: boolean } = {};
+            const labelProps: {
+              optional?: any;
+            } = {};
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        {activeStep === steps.length ? (
+          <>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              ثبت با موفقیت انجام شد.
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Box sx={{ flex: "1 1 auto" }} />
+              <Button onClick={handleReset}>ثبت ویزیت جدید</Button>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Grid sx={{ m: 5 }}>{StepComponentHandler()}</Grid>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  pt: 2,
-                  maxWidth: "10%",
-                }}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                pt: 2,
+                maxWidth: "10%",
+              }}
+            >
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
               >
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  بازگشت
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? "ثبت" : "بعدی"}
-                </Button>
-              </Box>
-            </>
-          )}
-        </Box>
-      </Container>
+                بازگشت
+              </Button>
+              <Box sx={{ flex: "1 1 auto" }} />
+              <Button onClick={handleNext}>
+                {activeStep === steps.length - 1 ? "ثبت" : "بعدی"}
+              </Button>
+            </Box>
+          </>
+        )}
+      </Box>
+    </Container>
   );
 }

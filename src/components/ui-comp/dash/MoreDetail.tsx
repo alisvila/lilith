@@ -16,6 +16,7 @@ import {
   TableRow,
   Tabs,
   Typography,
+  Button,
 } from "@mui/material";
 import styled from "@emotion/styled";
 import SendIcon from "@mui/icons-material/Send";
@@ -23,6 +24,9 @@ import MessageIcon from "@mui/icons-material/Message";
 import { NavLink, useParams } from "react-router-dom";
 import { deleteSingleProfile, getSingleProfile } from "../../../api/profile";
 import { persianDate, getGender } from "../../helper";
+import CustomSkeleton from "../Skeleton";
+import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteDialog from "../DeleteDialog";
 
 const DetailGrid = styled(Grid)(({ theme }: any) => ({
   borderBottom: "1px solid #d3d3d3",
@@ -77,34 +81,95 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
+// "name": "string",
+// "lastName": "string",
+// "gender": 0,
+// "birthDate": "2022-05-17T11:42:55.950Z",
+// "address": "string",
+// "job": "string",
+// "userName": "string",
+// "email": "string",
+// "phoneNumber": 0,
+// "fileNumber": 0,
+// "registerDate": "2022-05-17T11:42:55.950Z",
+// "doctorId": 0
 
-  // "name": "string",
-  // "lastName": "string",
-  // "gender": 0,
-  // "birthDate": "2022-05-17T11:42:55.950Z",
-  // "address": "string",
-  // "job": "string",
-  // "userName": "string",
-  // "email": "string",
-  // "phoneNumber": 0,
-  // "fileNumber": 0,
-  // "registerDate": "2022-05-17T11:42:55.950Z",
-  // "doctorId": 0
-
-
-export default function MoreDetail({patientDetail, isLoading, ...props}: any) {
+export default function MoreDetail({
+  patientDetail,
+  isLoading,
+  ...props
+}: any) {
   const [value, setValue] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
 
+  const handleConfitm = () => {
+    console.log('delete')
+  }
+
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
+        <Typography sx={{ m: 1 }} variant="h3">
+          جزییات بیمار
+        </Typography>
+        <Button
+          variant="outlined"
+          color="error"
+          endIcon={<RemoveIcon />}
+          onClick={() => setOpen(true)}
+        >
+          حذف
+        </Button>
+      </Grid>
+      <Grid item xs={12}>
         <Card {...props}>
           {isLoading ? (
-            <></>
+            <>
+              <Grid container>
+                <Grid
+                  item
+                  md={2}
+                  sm={7}
+                  xs={12}
+                  sx={{
+                    borderRight: "1px solid #d3d3d3",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CustomSkeleton variant="circular" height={30} />
+                  <CustomSkeleton variant="rectangular" height={30} />
+                  <CustomSkeleton variant="rectangular" height={30} />
+                </Grid>
+                <Grid item md={10} sm={5} xs={12}>
+                  <Grid container>
+                    <DetailGrid item xs={12}>
+                      <CustomSkeleton variant="rectangular" height={30} />
+                    </DetailGrid>
+                    <DetailGrid item xs={12}>
+                      <CustomSkeleton variant="rectangular" height={30} />
+                    </DetailGrid>
+                    <DetailGrid item xs={12}>
+                      <CustomSkeleton variant="rectangular" height={30} />
+                    </DetailGrid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </>
           ) : (
             <Grid container>
               <Grid
@@ -310,6 +375,7 @@ export default function MoreDetail({patientDetail, isLoading, ...props}: any) {
           </Box>
         </Card>
       </Grid>
+      <DeleteDialog open={open} handleClose={handleClose} handleConfitm={handleConfitm}/>
     </Grid>
   );
 }

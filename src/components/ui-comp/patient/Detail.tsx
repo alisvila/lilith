@@ -12,10 +12,9 @@ export default function Detail(props: any) {
     const getDocDetail = async () => {
       const patient: any = await getSingleProfile("/Patient", props.patientId);
       setPatientDetail(patient);
+      setIsLoading(false);
     };
-
     getDocDetail();
-    setIsLoading(false);
   }, []);
 
   const deleteDoc = () => {

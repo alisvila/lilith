@@ -11,6 +11,8 @@ export default function DocPatients(props: any) {
   const [docDetail, setDocDetail]: any = useState();
   const [docPatient, setDocPatient] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+
   let { id } = useParams();
   useEffect(() => {
     const getDocDetail = async () => {
@@ -26,6 +28,10 @@ export default function DocPatients(props: any) {
     setIsLoading(false);
   }, []);
 
+  const handleConfitm = () => {
+    console.log('delete')
+  }
+  
   const deleteDoc = () => {
     deleteSingleProfile("/Doctor", id + "/Patients")
   }
@@ -54,8 +60,8 @@ export default function DocPatients(props: any) {
             <Button
               color="error"
               variant="contained"
-              onClick={deleteDoc}
-            >
+              onClick={() => setOpen(true)}
+              >
              حذف  
             </Button>
           </Box>

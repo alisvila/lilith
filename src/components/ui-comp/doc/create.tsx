@@ -13,7 +13,9 @@ import {
   Select,
   MenuItem,
   Stack,
+  Alert
 } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import newDoc from "./new-doc.webp";
 import AdapterJalali from "@date-io/date-fns-jalali";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -21,12 +23,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { createProfile, getProfile, updateProfile } from "../../../api/profile";
 import { useNavigate } from "react-router-dom";
 import CustomSkeleton from "../Skeleton";
-import IDoctorCreate from './DoctorDTO'
+import IDoctorCreate from "./DoctorDTO";
 
-export default function Create({ docDetail , ...rest}: any) {
+export default function Create({ docDetail, ...rest }: any) {
   const [value, setValue] = useState(new Date());
   const [form, setForm]: any = useState({});
   const [docList, setDocList] = useState([]);
+  const [isSubmited, setIsSubmited] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,12 +50,29 @@ export default function Create({ docDetail , ...rest}: any) {
     setForm((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const createDoc = () => {
-    createProfile("/Doctor", { ...form, birthDate: value });
+  const createDoc = async () => {
+    setErrorMsg("")
+    try {
+      setIsSubmited(true);
+      await createProfile("/Doctor", { ...form, birthDate: value });
+      navigate(-1);
+    } catch (e: any) {
+      console.log(e.message)
+      setErrorMsg(e.message)
+      setIsSubmited(false);
+    }
   };
 
-  const editDoc = () => {
-    updateProfile("/Doctor", { ...form, birthDate: value });
+  const editDoc = async () => {
+    setErrorMsg("")
+    try {
+      setIsSubmited(true);
+      await updateProfile("/Doctor", { ...form, birthDate: value });
+      navigate(-1);
+    } catch (e: any) {
+      setErrorMsg(e.message)
+      setIsSubmited(false);
+    }
   };
 
   // "name": "string",
@@ -73,7 +94,11 @@ export default function Create({ docDetail , ...rest}: any) {
               <Grid item xs={8}>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <CustomSkeleton variant="rectangular" height={50} width={200} />
+                    <CustomSkeleton
+                      variant="rectangular"
+                      height={50}
+                      width={200}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     <CustomSkeleton variant="rectangular" height={50} />
@@ -88,7 +113,11 @@ export default function Create({ docDetail , ...rest}: any) {
                     <CustomSkeleton variant="rectangular" height={50} />
                   </Grid>
                   <Grid item xs={12}>
-                    <CustomSkeleton variant="rectangular" height={50} width={200} />
+                    <CustomSkeleton
+                      variant="rectangular"
+                      height={50}
+                      width={200}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -139,8 +168,8 @@ export default function Create({ docDetail , ...rest}: any) {
                       label="gender"
                       onChange={(e) => changeHandler(e)}
                     >
-                      <MenuItem value={"true"}>مرد</MenuItem>
-                      <MenuItem value={"false"}>زن</MenuItem>
+                      <MenuItem value={1}>مرد</MenuItem>
+                      <MenuItem value={0}>زن</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -208,13 +237,29 @@ export default function Create({ docDetail , ...rest}: any) {
                 <Grid item xs={12}>
                   <Stack spacing={2} direction="row">
                     {docDetail ? (
-                      <Button variant="contained" onClick={editDoc}>
-                        ویرایش
-                      </Button>
+                      <>
+                        {isSubmited ? (
+                          <LoadingButton loading variant="outlined">
+                            Submit
+                          </LoadingButton>
+                        ) : (
+                          <Button variant="contained" onClick={editDoc}>
+                            ویرایش
+                          </Button>
+                        )}
+                      </>
                     ) : (
-                      <Button variant="contained" onClick={createDoc}>
-                        ایجاد
-                      </Button>
+                      <>
+                        {isSubmited ? (
+                          <LoadingButton loading variant="outlined">
+                            Submit
+                          </LoadingButton>
+                        ) : (
+                          <Button variant="contained" onClick={createDoc}>
+                            ایجاد
+                          </Button>
+                        )}
+                      </>
                     )}
                     <Button variant="text" onClick={() => navigate(-1)}>
                       بازگشت
@@ -225,6 +270,13 @@ export default function Create({ docDetail , ...rest}: any) {
             </Grid>
             <Grid item xs={4}>
               <img src={newDoc} alt="new doc" style={{ width: "100%" }} />
+            </Grid>
+          </Grid>
+        )}
+        {errorMsg && (
+          <Grid container spacing={2} sx={{marginTop: '5px'}}>
+            <Grid item xs={12}>
+              <Alert severity="error">{errorMsg}</Alert>
             </Grid>
           </Grid>
         )}
