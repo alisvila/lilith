@@ -7,33 +7,33 @@ type State = {
 };
 
 const Select = styled("select")(({ theme }: any) => ({
-  margin: '50px',
-  width: '150px',
-  padding: '5px 35px 5px 5px',
-  fontSize: '16px',
-  border: '1px solid #ccc',
-  height: '34px',
-  '&:focus': {
-    outline: 'none !important',
+  margin: "50px",
+  width: "150px",
+  padding: "5px 35px 5px 5px",
+  fontSize: "16px",
+  border: "1px solid #ccc",
+  height: "34px",
+  "&:focus": {
+    outline: "none !important",
     borderColor: theme.palette.secondary[800],
-    borderRadius: '5px',
+    borderRadius: "5px",
     // box-shadow: 0 0 10px #719ece;
-  }
-}))
+  },
+}));
 
 const Input = styled("input")(({ theme }: any) => ({
   border: "1px solid rgb(0 0 0 / 8%)",
-  '&:focus': {
-    outline: 'none !important',
+  "&:focus": {
+    outline: "none !important",
     borderColor: theme.palette.secondary[800],
-    borderRadius: '5px',
+    borderRadius: "5px",
     // box-shadow: 0 0 10px #719ece;
-  }
-}))
+  },
+}));
 
 const Span = styled("span")(({ theme }: any) => ({
   border: "1px solid rgb(0 0 0 / 8%)",
-}))
+}));
 
 export default function Cell(props: any) {
   const [edit, setEdit] = useState(false);
@@ -71,33 +71,23 @@ export default function Cell(props: any) {
       // css.fontWeight = "bold";
     }
 
-    if (props.x === 0 ) {
-      css.position = "sticky"
-      css.right= "0"
-      css.zIndex = "5"
+    if (props.x === 0) {
+      css.position = "sticky";
+      css.right = "0";
+      css.zIndex = "5";
       // css.fontWeight = "bold";
     }
 
     return css;
   };
 
-  const onBlur = (e: any) => {
-    hasNewValue(e.target.value);
-  };
-
-  const hasNewValue = (value: any) => {
-    props.changeValue({ x: props.x, y: props.y }, value);
-  };
-
-  const onKeyPressOnInput = () => {};
-
   const onChange = (e: any) => {
-    props.handleChange(props.y, props.x, e.target.value)
+    props.handleChange(e.target.value, props.id, props.name);
     // setState(e.target.value);
   };
-  
+
   const checkTitle = () => {
-    if (props.x === 0 || props.y === 0) {
+    if (props.isReadOnly) {
       return <Span style={calculateCss()}>{props.value} </Span>;
     } else if (Array.isArray(props.value)) {
       return (
@@ -114,8 +104,6 @@ export default function Cell(props: any) {
           id={props.id}
           style={calculateCss()}
           type="text"
-          onBlur={onBlur}
-          onKeyPress={onKeyPressOnInput}
           value={props.value}
           onChange={onChange}
           autoComplete="off"

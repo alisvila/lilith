@@ -30,64 +30,6 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useEffect, useState } from "react";
 
-const caleryList = [
-  {
-    id: uuid(),
-    name: "1700",
-    imageUrl: "/static/images/products/product_1.png",
-  },
-  {
-    id: uuid(),
-    name: "2205",
-    imageUrl: "/static/images/products/product_2.png",
-  },
-  {
-    id: uuid(),
-    name: "2355",
-    imageUrl: "/static/images/products/product_3.png",
-  },
-  {
-    id: uuid(),
-    name: "2505",
-    imageUrl: "/static/images/products/product_4.png",
-  },
-  {
-    id: uuid(),
-    name: "1950",
-    imageUrl: "/static/images/products/product_5.png",
-  },
-  {
-    id: uuid(),
-    name: "2350",
-    imageUrl: "/static/images/products/product_3.png",
-  },
-  {
-    id: uuid(),
-    name: "2600",
-    imageUrl: "/static/images/products/product_4.png",
-  },
-  {
-    id: uuid(),
-    name: "1900",
-    imageUrl: "/static/images/products/product_5.png",
-  },
-  {
-    id: uuid(),
-    name: "2300",
-    imageUrl: "/static/images/products/product_3.png",
-  },
-  {
-    id: uuid(),
-    name: "2500",
-    imageUrl: "/static/images/products/product_4.png",
-  },
-  {
-    id: uuid(),
-    name: "1900",
-    imageUrl: "/static/images/products/product_5.png",
-  },
-];
-
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -104,13 +46,11 @@ const style = {
 
 export const MealList = (props: any) => {
   const [open, setOpen] = useState(false);
-  const [calery, setCalery]: any = useState(caleryList);
+  const [calery, setCalery]: any = useState("ss");
 
   useEffect(() => {
     // setCalery(api.call())
   }, []);
-
-  const addNewCalery = () => {};
 
   const deleteCalery = () => {
     // api.callDelete(selectedCalery)
@@ -119,15 +59,11 @@ export const MealList = (props: any) => {
     setOpen(true);
   };
 
-  const saveCalery = () => {
-    // api call for new calery
-  }
-
   return (
     <>
       <Card {...props}>
         <Grid sx={{ p: 3 }} container>
-          <Grid xs={4} sm={4} md={4} lg={4}>
+          <Grid item xs={4} sm={4} md={4} lg={4}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">کالری</InputLabel>
               <Select
@@ -137,17 +73,18 @@ export const MealList = (props: any) => {
                 label="Age"
                 onChange={props.handleChange}
               >
-                {calery.map((item: any) => (
-                  <MenuItem key={item.id} value={item.name}>
-                    {item.name}
+                {props.caleryList.map((item: any, index: number) => (
+                  <MenuItem key={index} value={item.calorie}>
+                    {item.calorie}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Grid>
-          <Grid xs={2} sm={4} md={6} lg={6}></Grid>
+          <Grid item xs={2} sm={4} md={6} lg={6}></Grid>
           <Grid
-            xs={6}  sm={4} md={2} lg={2}
+            item
+            xs={6} sm={4} md={2} lg={2}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -205,12 +142,14 @@ export const MealList = (props: any) => {
                 label="Outlined"
                 variant="outlined"
                 fullWidth
+                value={calery}
+                onChange={(e: any) => setCalery(e.target.value)}
               />
               </FormControl>
 
             <Divider />
             <Grid sx={{mt: 2}}>
-              <Button variant="contained" onClick={saveCalery}>ثبت</Button>
+              <Button variant="contained" onClick={() => props.saveCalery(calery)}>ثبت</Button>
               <Button variant="text" onClick={() => setOpen(false)}>انصراف</Button>
             </Grid>
           </Grid>

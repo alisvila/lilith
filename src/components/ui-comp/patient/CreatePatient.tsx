@@ -13,8 +13,10 @@ import {
   Select,
   MenuItem,
   Stack,
+  Alert
 } from "@mui/material";
 // import newDoc from "./new-doc.webp";
+import LoadingButton from '@mui/lab/LoadingButton';
 import AdapterJalali from "@date-io/date-fns-jalali";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -25,7 +27,9 @@ import CustomSkeleton from "../Skeleton";
 export default function CreatePatient({ docDetail , ...rest}: any) {
   const [value, setValue] = useState(new Date());
   const [form, setForm]: any = useState({});
+  const [isSubmited, setIsSubmited] = useState(false);
   const [docList, setDocList] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -46,12 +50,30 @@ export default function CreatePatient({ docDetail , ...rest}: any) {
     setForm((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const createDoc = () => {
-    createProfile("/Patient", { ...form, birthDate: value, doctorId: id });
+  const createDoc = async () => {
+    setErrorMsg("")
+    try {
+      setIsSubmited(true);
+      await createProfile("/Patient", { ...form, birthDate: value, doctorId: id });
+      navigate(-1);
+    } catch (e: any) {
+      console.log(e.message)
+      setErrorMsg(e.message)
+      setIsSubmited(false);
+    }   
   };
 
-  const editDoc = () => {
-    updateProfile("/Patient", { ...form, birthDate: value });
+  const editDoc = async () => {
+    setErrorMsg("")
+    try {
+      setIsSubmited(true);
+      await updateProfile("/Patient", { ...form, birthDate: value });
+      navigate(-1);
+    } catch (e: any) {
+      setErrorMsg(e.message)
+      setIsSubmited(false);
+    }
+    
   };
 
   
@@ -211,7 +233,33 @@ export default function CreatePatient({ docDetail , ...rest}: any) {
                 </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={2} direction="row">
-                    {docDetail ? (
+                  {docDetail ? (
+                      <>
+                        {isSubmited ? (
+                          <LoadingButton loading variant="outlined">
+                            Submit
+                          </LoadingButton>
+                        ) : (
+                          <Button variant="contained" onClick={editDoc}>
+                            ویرایش
+                          </Button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {isSubmited ? (
+                          <LoadingButton loading variant="outlined">
+                            Submit
+                          </LoadingButton>
+                        ) : (
+                          <Button variant="contained" onClick={createDoc}>
+                            ایجاد
+                          </Button>
+                        )}
+                      </>
+                    )}
+
+                    {/* {docDetail ? (
                       <Button variant="contained" onClick={editDoc}>
                         ویرایش
                       </Button>
@@ -219,7 +267,7 @@ export default function CreatePatient({ docDetail , ...rest}: any) {
                       <Button variant="contained" onClick={createDoc}>
                         ایجاد
                       </Button>
-                    )}
+                    )} */}
                     <Button variant="text" onClick={() => navigate(-1)}>
                       بازگشت
                     </Button>
@@ -229,6 +277,13 @@ export default function CreatePatient({ docDetail , ...rest}: any) {
             </Grid>
             <Grid item xs={4}>
               {/* <img src={newDoc} alt="new doc" style={{ width: "100%" }} /> */}
+            </Grid>
+          </Grid>
+        )}
+                {errorMsg && (
+          <Grid container spacing={2} sx={{marginTop: '5px'}}>
+            <Grid item xs={12}>
+              <Alert severity="error">{errorMsg}</Alert>
             </Grid>
           </Grid>
         )}

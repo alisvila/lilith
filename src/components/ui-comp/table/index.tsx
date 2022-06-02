@@ -1,38 +1,100 @@
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { Grid, Skeleton } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { updateProfile, getProfile } from "../../../api/profile";
 import Row from "./Row";
+import RowHeader from "./RowHeader";
 import { tableValues } from "./tableValue";
 
-export default function Table({ x, y, id, selectedCalery }: any) {
-  const [data, setData]: any = useState(tableValues);
-  const [loading, setLoading]: any = useState(true)
+const Table = forwardRef((props: any, ref: any) => {
+  const { selectedCalery, id } = props;
+  const [data, setData]: any = useState();
+  const [loading, setLoading]: any = useState(true);
 
-  const handleChange = (y: any, x: any, value: any) => {
-    let modifedData: any = { ...data };
-    modifedData[y][x] = value;
-    setData(modifedData);
+  const categoury = ["حالی", "نان", "سبزی", "میوه", "لبنیات", "گوشت", "چربی"];
+
+  useEffect(() => {
+    setLoading(true);
+    getMealCata();
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    getMealCata();
+  }, [props]);
+
+  useEffect(() => {
+    console.log('in ref')
+    setLoading(true);
+    getMealCata();
+  }, [ref]);
+
+  const getMealCata = async () => {
+    const meal: any = await getProfile(`/Meal`);
+    const LC: any = await getProfile(`/Pattern/${selectedCalery}/${id}`);
+    const finalData: any = [];
+    meal.map((item: any) => {
+      finalData.push({
+        mealCaloriePatternId: null,
+        mealId: item.id,
+        calorie: selectedCalery,
+        type: id,
+        bread: 0,
+        vegetable: 0,
+        fruit: 0,
+        milk: 0,
+        meat: 0,
+        fat: 0,
+      });
+    });
+    finalData.map((item: any) => {
+      const discoveredLc = LC.find((l: any) => l.mealId === item.mealId);
+      Object.assign(item, discoveredLc);
+      Object.assign(item, {
+        mealId: meal.find((m: any) => m.id === item.mealId),
+      });
+    });
+    console.log(finalData, 'in mealcata')
+
+    setData(finalData);
+    setLoading(false);
   };
 
-  useEffect((): void => {
-    setLoading(true)
-    // api call
-    async function fetchMyAPI() {
-      const tableData = await fakeApi()
-      setData(tableData)
-      setLoading(false)
+  const handleChange = (value: any, rowIndexer: number, cellName: string) => {
+    const newState = [...data];
+    newState[rowIndexer][cellName] = value;
+    setData(newState);
+  };
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit() {
+      handleSubmit();
+    },
+  }));
+
+  const handleSubmit = async () => {
+    console.log(data)
+
+    const finalData: any = [...data];
+    finalData.map((item: any) => {
+      Object.assign(item, {
+        mealId: item.mealId.id,
+      });
+    });
+    try {
+      await updateProfile(`/Pattern`, finalData);
     }
-    fetchMyAPI()
-  }, [selectedCalery])
+    catch (e) {
+      console.log(data)
+    }
+  };
 
-
-  const fakeApi = (): Promise<any> =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve(tableValues), 1000);
-  });
-
-  const rows = [];
-  for (let i = 0; i < y + 1; i++) {
-    const rowData = data[i];
+  const makeRow = () => {
+    const rows = [];
     rows.push(
       <Grid container>
         <Grid
@@ -44,25 +106,40 @@ export default function Table({ x, y, id, selectedCalery }: any) {
             justifyContent: "flex-start",
           }}
         >
-          <Row
-            id={id}
-            handleChange={handleChange}
-            key={`${i}-${id}`}
-            y={i}
-            x={x}
-            rowData={rowData}
-          />
+          <RowHeader id={id} rowData={categoury} />
         </Grid>
       </Grid>
     );
-  }
+    data.map((item: any, index: number) => {
+      rows.push(
+        <Grid container key={index}>
+          <Grid
+            item
+            lg={12}
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+            }}
+          >
+            <Row id={index} handleChange={handleChange} rowData={item} />
+          </Grid>
+        </Grid>
+      );
+    });
+
+    return rows;
+  };
+
   return (
     <>
       {loading ? (
-        <Skeleton animation="wave" variant="rectangular" height={250}/>
+        <Skeleton animation="wave" variant="rectangular" height={250} />
       ) : (
-        <>{ rows }</>
+        <>{makeRow()}</>
       )}
     </>
   );
-}
+});
+
+export default Table;

@@ -6,6 +6,7 @@ import DashLayout from "../layouts/dashboard";
 import { customers } from "../../__mocks__/customers";
 import { useParams } from "react-router-dom";
 import { getSingleProfile, deleteSingleProfile } from "../../api/profile";
+import DeleteDialog from "../../components/ui-comp/DeleteDialog";
 
 export default function DocPatients(props: any) {
   const [docDetail, setDocDetail]: any = useState();
@@ -29,12 +30,16 @@ export default function DocPatients(props: any) {
   }, []);
 
   const handleConfitm = () => {
-    console.log('delete')
-  }
-  
+    console.log("delete");
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const deleteDoc = () => {
-    deleteSingleProfile("/Doctor", id + "/Patients")
-  }
+    deleteSingleProfile("/Doctor", id + "/Patients");
+  };
   return (
     <Box
       component="main"
@@ -44,7 +49,7 @@ export default function DocPatients(props: any) {
       }}
     >
       <Container maxWidth={false}>
-      <Box
+        <Box
           sx={{
             alignItems: "center",
             display: "flex",
@@ -54,15 +59,15 @@ export default function DocPatients(props: any) {
           }}
         >
           <Typography sx={{ m: 1 }} variant="h3">
-          جزییات دکتر
+            جزییات دکتر
           </Typography>
           <Box sx={{ m: 1 }}>
             <Button
               color="error"
               variant="contained"
               onClick={() => setOpen(true)}
-              >
-             حذف  
+            >
+              حذف
             </Button>
           </Box>
         </Box>
@@ -71,6 +76,12 @@ export default function DocPatients(props: any) {
         <Box sx={{ mt: 3 }}>
           <PatientListResults customers={docPatient} isLoading={isLoading} />
         </Box>
+        <DeleteDialog
+          open={open}
+          handleClose={handleClose}
+          handleConfitm={handleConfitm}
+          label={docDetail?.name + docDetail?.lastName}
+        />
       </Container>
     </Box>
   );

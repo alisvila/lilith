@@ -32,7 +32,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import DashLayout from "../layouts/dashboard";
-import { getProfile } from "../../api/profile";
+import { getProfile, getSingleProfile } from "../../api/profile";
 import CustomSkeleton from "../../components/ui-comp/Skeleton";
 
 const ITEM_HEIGHT = 48;
@@ -141,27 +141,40 @@ export default function FoodCategory() {
     activityStatus: [],
   });
 
+  // useEffect(() => {
+  //   async function getMealsApi() {
+  //     const parsedCata: any = [];
+  //     let mealCata: any = {meal: {}, cata: {}}
+  //     await Promise.all([
+  //       getProfile("/Meals"),
+  //       getProfile("/Meals"),
+  //       getProfile("/Meals"),
+  //     ]).then((values: any) => {
+  //       mealCata.meal = values[0]
+  //       mealCata.cata = values[1]
+  //       values[0].map((item: any) => {
+  //         parsedCata.push({ title: item.name, id: item.id });
+  //       });
+  //       setIsLoading(false);
+  //     });
+  //     console.log(parsedCata, 'parsedCata')
+  //     setMealsCata(parsedCata);
+  //   }
+  //   getMealsApi();
+  // }, []);
+
   useEffect(() => {
-    async function getMealsApi() {
-      const parsedCata: any = [];
-      let mealCata: any = {meal: {}, cata: {}}
-      await Promise.all([
-        getProfile("/Meals"),
-        getProfile("/Meals"),
-        getProfile("/Meals"),
-      ]).then((values: any) => {
-        mealCata.meal = values[0]
-        mealCata.cata = values[1]
-        values[0].map((item: any) => {
-          parsedCata.push({ title: item.name, id: item.id });
-        });
-        setIsLoading(false);
-      });
-      console.log(parsedCata, 'parsedCata')
-      setMealsCata(parsedCata);
-    }
-    getMealsApi();
+    const getMealCata = async () => {
+      const docs: any = await getProfile("/Meal");
+      const parse: any = []
+      docs.map((cat: any) => parse.push({title: cat.name, id: cat.id}))
+      setMealsCata(parse);
+      setIsLoading(false);
+    };
+    getMealCata();
   }, []);
+
+
   // 316
   // 45
   // ma: 24

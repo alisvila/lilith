@@ -111,8 +111,8 @@ export default function MoreDetail({
   };
 
   const handleConfitm = () => {
-    console.log('delete')
-  }
+    console.log("delete");
+  };
 
   useEffect(() => {
     console.log(isLoading);
@@ -375,7 +375,12 @@ export default function MoreDetail({
           </Box>
         </Card>
       </Grid>
-      <DeleteDialog open={open} handleClose={handleClose} handleConfitm={handleConfitm}/>
+      <DeleteDialog
+        open={open}
+        handleClose={handleClose}
+        handleConfitm={handleConfitm}
+        label={patientDetail?.name + patientDetail?.lastName}
+      />
     </Grid>
   );
 }

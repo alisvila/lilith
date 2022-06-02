@@ -22,6 +22,7 @@ import { persianDate } from "../helper";
 import GridSkeleton from "../ui-comp/Grid/GridSkeleton";
 import EnhancedTableHead from "../ui-comp/Grid/EnhancedTableHead";
 import EnhancedTableToolbar from "../ui-comp/Grid/EnhancedTableToolbar";
+import DeleteDialog from "../ui-comp/DeleteDialog";
 
 // import { getInitials } from '../../utils/get-initials';
 
@@ -69,12 +70,24 @@ const tableHead = [
   },
 ];
 
-
-
 export const PatientListResults = ({ customers, ...rest }: any) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  const handleConfitm = () => {
+    console.log("delete");
+    selectedCustomerIds.map(id => {
+      // deleteSingleProfile("/Doctor" + id)
+      setTimeout(() => console.log('deleted', id), 2000)
+    })
+    setOpen(false)
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSelectAll = (event: any) => {
     let newSelectedCustomerIds;
@@ -141,6 +154,7 @@ export const PatientListResults = ({ customers, ...rest }: any) => {
   };
 
   const handleRemove = () => {
+    setOpen(true);
     console.log("deleteall", selectedCustomerIds);
     // createProfile("/Doctor", selectedCustomerIds)
   };
@@ -151,7 +165,7 @@ export const PatientListResults = ({ customers, ...rest }: any) => {
         <PerfectScrollbar>
           {/* <Box sx={{ minWidth: 1050 }}> */}
           <Box style={{ overflow: "auto" }}>
-          <EnhancedTableToolbar
+            <EnhancedTableToolbar
               numSelected={selectedCustomerIds.length}
               handleRemove={handleRemove}
               LeftComponent={LeftComponent}
@@ -234,6 +248,12 @@ export const PatientListResults = ({ customers, ...rest }: any) => {
             rowsPerPageOptions={[5, 10, 25]}
           />
         )}
+        <DeleteDialog
+          open={open}
+          handleClose={handleClose}
+          handleConfitm={handleConfitm}
+          label={selectedCustomerIds.length}
+        />
       </CardContent>
     </Card>
   );

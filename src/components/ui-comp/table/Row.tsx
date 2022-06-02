@@ -1,39 +1,71 @@
-import React from 'react'
-import Cell from './Cell'
+import React, { useEffect } from "react";
+import Cell from "./Cell";
 
 type Display = {
-    ax: {x : number, y: number}
-    value: string
-}
+  ax: { x: number; y: number };
+  value: string;
+};
+
+const cellTitle = [
+  "bread",
+  "vegetable",
+  "fruit",
+  "milk",
+  "meat",
+  "fat",
+  "mealId",
+];
 
 export default function Row(props: any) {
-    const cells: any = []
-    const determineDisplay = ({ax, value} : Display) => {
-        return value
-    }
-
-    const changeValue = () => {
-        console.log("5")
-    }
-
-    for (let i = 0; i < props.x + 1; i++){
-        cells.push(
-            <Cell
-                id={props.id}
-                key={`${i}-${props.y}-${props.id}`}
-                y={props.y}
-                x={i}
-                handleChange={props.handleChange}
-                value={props.rowData[i]}
-                determineDisplay={determineDisplay}
-                changeValue={changeValue}
-            />
-        )
-    }
+  useEffect(() => {
+    console.log(props.rowData, "rows");
+  }, [props]);
 
   return (
     <>
-        {cells}
+      <Cell
+        isReadOnly={true}
+        id={props.id}
+        handleChange={props.handleChange}
+        value={props.rowData.mealId.name}
+        name={"mealId"}
+      />
+      <Cell
+        id={props.id}
+        handleChange={props.handleChange}
+        value={props.rowData.bread}
+        name={"bread"}
+      />
+      <Cell
+        id={props.id}
+        handleChange={props.handleChange}
+        value={props.rowData.vegetable}
+        name={"vegetable"}
+      />
+      <Cell
+        id={props.id}
+        handleChange={props.handleChange}
+        value={props.rowData.fruit}
+        name={"fruit"}
+      />
+      <Cell
+        id={props.id}
+        handleChange={props.handleChange}
+        value={props.rowData.milk}
+        name={"milk"}
+      />
+      <Cell
+        id={props.id}
+        handleChange={props.handleChange}
+        value={props.rowData.meat}
+        name={"meat"}
+      />
+      <Cell
+        id={props.id}
+        handleChange={props.handleChange}
+        value={props.rowData.fat}
+        name={"fat"}
+      />
     </>
-  )
+  );
 }

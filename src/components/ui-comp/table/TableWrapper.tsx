@@ -6,7 +6,9 @@ import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import ActualTable from "./index";
-import { Box, Card, CardContent } from "@mui/material";
+import { Box, Card, CardContent, Button } from "@mui/material";
+import { forwardRef, useEffect, useState } from "react";
+import { getProfile, createProfile } from "../../../api/profile";
 
 const blue = {
   50: "#F0F7FF",
@@ -81,53 +83,69 @@ const StickyGrid: any = styled(Card)(({ theme }: any) => ({
   top: "0",
 }));
 
-export default function TableWrapper(props: any) {
+const TableWrapper = (props: any) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [livingCondition, setLivingCondition] = useState([]);
+  const myRef: any = React.useRef();
+
+  useEffect(() => {
+    const getMealCata = async () => {
+      const LC: any = await getProfile("/LivingCondition");
+      setLivingCondition(LC);
+      setIsLoading(false);
+    };
+    getMealCata();
+    console.log(livingCondition);
+  }, []);
+
+  useEffect(() => {
+    console.log(props.selectedCalery);
+  }, [props.selectedCalery]);
+
+  const handleSubmit = () => {
+    setIsLoading(true)
+    myRef.current.handleSubmit()
+    setIsLoading(false)
+  }
+
   return (
     <StickyGrid>
       <CardContent>
         <Box style={{ overflow: "auto" }}>
           <TabsUnstyled defaultValue={0} style={{ minWidth: "800px" }}>
             <TabsList>
-              <Tab>معمولی</Tab>
+              {livingCondition.map((lc: any) => (
+                <Tab key={lc.id}>{lc.name}</Tab>
+              ))}
+              {/* <Tab>معمولی</Tab>
               <Tab>نوجوان</Tab>
               <Tab>باردار</Tab>
-              <Tab>دیابت</Tab>
+              <Tab>دیابت</Tab> */}
             </TabsList>
-            <TabPanel value={0}>
-              <ActualTable
-                id="normal"
-                x={6}
-                y={6}
-                selectedCalery={props.selectedCalery}
-              />
-            </TabPanel>
-            <TabPanel value={1}>
-              <ActualTable
-                id="young"
-                x={6}
-                y={6}
-                selectedCalery={props.selectedCalery}
-              />
-            </TabPanel>
-            <TabPanel value={2}>
-              <ActualTable
-                id="pregnant"
-                x={6}
-                y={6}
-                selectedCalery={props.selectedCalery}
-              />
-            </TabPanel>
-            <TabPanel value={3}>
-              <ActualTable
-                id="Diabetes"
-                x={6}
-                y={6}
-                selectedCalery={props.selectedCalery}
-              />
-            </TabPanel>
+            {livingCondition.map((item: any, index: number) => (
+              <TabPanel value={index} key={index}>
+                <ActualTable
+                  ref={myRef}
+                  id={item.id}
+                  selectedCalery={props.selectedCalery}
+                  handleSubmit={props.handleSubmit}
+                />
+              </TabPanel>
+            ))}
           </TabsUnstyled>
         </Box>
+        <Button
+          sx={{ mt: 2 }}
+          color="primary"
+          fullWidth
+          variant="outlined"
+          onClick={handleSubmit}
+        >
+          ثبت جدول
+        </Button>
       </CardContent>
     </StickyGrid>
   );
-}
+};
+
+export default TableWrapper;

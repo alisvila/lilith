@@ -23,7 +23,8 @@ import EnhancedTableHead from "../ui-comp/Grid/EnhancedTableHead";
 import EnhancedTableToolbar from "../ui-comp/Grid/EnhancedTableToolbar";
 import GridSkeleton from "../ui-comp/Grid/GridSkeleton";
 import { createProfile } from "../../api/profile";
-
+import DeleteDialog from "../../components/ui-comp/DeleteDialog";
+import { deleteSingleProfile } from "../../api/profile";
 // import { getInitials } from '../../utils/get-initials';
 
 type Customer = {
@@ -78,6 +79,21 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  const handleConfitm = () => {
+    console.log("delete");
+    selectedCustomerIds.map(id => {
+      // deleteSingleProfile("/Doctor" + id)
+      setTimeout(() => console.log('deleted', id), 2000)
+
+    })
+    setOpen(false)
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSelectAll = (event: any) => {
     let newSelectedCustomerIds;
@@ -129,6 +145,8 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
   };
 
   const handleRemove = () => {
+    setOpen(true)
+
     console.log("deleteall", selectedCustomerIds);
     // createProfile("/Doctor", selectedCustomerIds)
   };
@@ -231,6 +249,12 @@ export const CustomerListResults = ({ customers, ...rest }: any) => {
           labelRowsPerPage="سطر در صفحه:"
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25]}
+        />
+        <DeleteDialog
+          open={open}
+          handleClose={handleClose}
+          handleConfitm={handleConfitm}
+          label={selectedCustomerIds.length}
         />
       </CardContent>
     </Card>

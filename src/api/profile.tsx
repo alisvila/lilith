@@ -65,7 +65,7 @@ export const updateProfile = (uri: string, payload: any) => {
   return new Promise((resolve, reject) => {
     sendRequest({
       url: uri,
-      method: "PATCH",
+      method: "PUT",
       body: payload,
     })
       .then((res) => {

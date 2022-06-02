@@ -8,14 +8,12 @@ import Button from "@mui/material/Button";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-export default function DeleteDialog({props}: any) {
+export default function DeleteDialog(props: any) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-
   return (
     <div>
-      {" "}
       <Dialog
         fullScreen={fullScreen}
         open={props.open}
@@ -23,19 +21,28 @@ export default function DeleteDialog({props}: any) {
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Use Google's location service?"}
+          آیا از حذف <span style={{ color: "red" }}> {props.label} </span>{" "}
+          اطمینان دارید؟
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-              آیا از حذف {props.label} اطمینان دارید؟
-          </DialogContentText>
+          <DialogContentText></DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={props.handleClose}>
-            Disagree
+          <Button
+            variant="contained"
+            color="success"
+            autoFocus
+            onClick={props.handleClose}
+          >
+            خیر
           </Button>
-          <Button onClick={props.handleConfitm} autoFocus>
-            Agree
+          <Button
+            variant="contained"
+            color="error"
+            onClick={props.handleConfitm}
+            autoFocus
+          >
+            بله
           </Button>
         </DialogActions>
       </Dialog>

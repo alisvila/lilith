@@ -1,4 +1,4 @@
-export const tableValues = {
+export const old = {
     0: {
         0:"وعده",
         1:"نان",
@@ -64,3 +64,54 @@ export const tableValues = {
     }
 }
 
+
+export const tableValues = [
+    {
+      "mealCaloriePatternId": 27,
+      "mealId": {id: 1, name: "صبونه"},
+      "calorie": 1650,
+      "type": 1,
+      "bread": 0,
+      "vegetable": 0,
+      "fruit": 0,
+      "milk": 0,
+      "meat": 0,
+      "fat": 0
+    },
+    {
+      "mealCaloriePatternId": 27,
+      "mealId": 2,
+      "calorie": 1650,
+      "type": 1,
+      "bread": 0,
+      "vegetable": 0,
+      "fruit": 0,
+      "milk": 0,
+      "meat": 0,
+      "fat": 0
+    },
+    {
+      "mealCaloriePatternId": 27,
+      "mealId": 4,
+      "calorie": 1650,
+      "type": 1,
+      "bread": 0,
+      "vegetable": 0,
+      "fruit": 0,
+      "milk": 0,
+      "meat": 0,
+      "fat": 0
+    },
+    {
+      "mealCaloriePatternId": 27,
+      "mealId": 8,
+      "calorie": 1650,
+      "type": 1,
+      "bread": 0,
+      "vegetable": 0,
+      "fruit": 0,
+      "milk": 0,
+      "meat": 0,
+      "fat": 0
+    }
+  ]
