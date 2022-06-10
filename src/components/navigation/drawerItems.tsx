@@ -224,8 +224,8 @@ export default React.memo(function NestedList() {
             sx={{ pl: 4 }}
             key="meal4"
             component={NavLink}
-            selected={location.pathname === "/dashboard/FoodCategory"}
-            to="/dashboard/FoodCategory"
+            selected={location.pathname === "/dashboard/diseas"}
+            to="/dashboard/diseas"
           >
             <ListItemIcon>
               <MasksIcon />

@@ -4,6 +4,7 @@ import DashLayout from "../layouts/dashboard";
 import Table from "../../components/ui-comp/table/TableWrapper";
 import { MealList } from "../../components/ui-comp/dash/MealList";
 import { createProfile, getProfile } from "../../api/profile";
+import CustomSkeleton from "../../components/ui-comp/Skeleton";
 
 export default function Meal() {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,6 +34,7 @@ export default function Meal() {
     };
     const mainC: any = await createProfile("/Pattern/MainCalories", payload);
     await getMealCata();
+    
   };
 
   const handleSubmit = async (payload: any, id: number) => {
@@ -44,6 +46,7 @@ export default function Meal() {
       <Grid container spacing={3}>
         <Grid item xs={12} lg={12}>
           <MealList
+            isLoading={isLoading}
             handleChange={handleChange}
             caleryList={caleryList}
             selectedCalery={selectedCalery}
@@ -52,10 +55,18 @@ export default function Meal() {
           />
         </Grid>
         <Grid item xs={12} lg={12}>
-          <Table
-            selectedCalery={selectedCalery}
-            handleSubmit={handleSubmit}
-          />
+          {isLoading ? (
+            <CustomSkeleton
+              animation="wave"
+              variant="rectangular"
+              height={260}
+            />
+          ) : (
+            <Table
+              selectedCalery={selectedCalery}
+              handleSubmit={handleSubmit}
+            />
+          )}
         </Grid>
       </Grid>
     </Container>

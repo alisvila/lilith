@@ -22,6 +22,7 @@ import {
   Paper,
   Typography,
   TextField,
+  Stack
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -29,6 +30,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useEffect, useState } from "react";
+import CustomSkeleton from "../Skeleton";
 
 const style = {
   position: "absolute" as "absolute",
@@ -41,12 +43,12 @@ const style = {
   borderColor: "primary.main",
   boxShadow: 24,
   p: 4,
-  borderRadius: "25px"
+  borderRadius: "25px",
 };
 
 export const MealList = (props: any) => {
   const [open, setOpen] = useState(false);
-  const [calery, setCalery]: any = useState("ss");
+  const [calery, setCalery]: any = useState("");
 
   useEffect(() => {
     // setCalery(api.call())
@@ -62,52 +64,61 @@ export const MealList = (props: any) => {
   return (
     <>
       <Card {...props}>
-        <Grid sx={{ p: 3 }} container>
-          <Grid item xs={4} sm={4} md={4} lg={4}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">کالری</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={props.selectedCalery}
-                label="Age"
-                onChange={props.handleChange}
-              >
-                {props.caleryList.map((item: any, index: number) => (
-                  <MenuItem key={index} value={item.calorie}>
-                    {item.calorie}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={2} sm={4} md={6} lg={6}></Grid>
-          <Grid
-            item
-            xs={6} sm={4} md={2} lg={2}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-          >
-            <Button
-              variant="outlined"
-              color="error"
-              endIcon={<RemoveIcon />}
-              onClick={deleteCalery}
+        {props.isLoading ? (
+          <CustomSkeleton animation="wave" variant="rectangular" height={50} />
+        ) : (
+          <Grid sx={{ p: 3 }} container>
+            <Grid item xs={4} sm={4} md={4} lg={4}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">کالری</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={props.selectedCalery}
+                  label="Age"
+                  onChange={props.handleChange}
+                >
+                  {props.caleryList.map((item: any, index: number) => (
+                    <MenuItem key={index} value={item.calorie}>
+                      {item.calorie}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={2} sm={4} md={6} lg={6}></Grid>
+            <Grid
+              item
+              xs={6}
+              sm={4}
+              md={2}
+              lg={2}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
             >
-              حذف
-            </Button>
-            <Button
-              variant="contained"
-              endIcon={<AddIcon />}
-              onClick={handleOpen}
-            >
-              اضافه
-            </Button>
+              <Stack spacing={2} direction="row">
+                <Button
+                  variant="outlined"
+                  color="error"
+                  endIcon={<RemoveIcon />}
+                  onClick={deleteCalery}
+                >
+                  حذف
+                </Button>
+                <Button
+                  variant="contained"
+                  endIcon={<AddIcon />}
+                  onClick={handleOpen}
+                >
+                  اضافه
+                </Button>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Card>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -132,9 +143,10 @@ export const MealList = (props: any) => {
               </Typography>
             </Grid>
             <Grid>
-              <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </Typography>
+              <Typography
+                id="transition-modal-description"
+                sx={{ mt: 2 }}
+              ></Typography>
             </Grid>
             <FormControl fullWidth sx={{ m: 1 }}>
               <TextField
@@ -145,12 +157,19 @@ export const MealList = (props: any) => {
                 value={calery}
                 onChange={(e: any) => setCalery(e.target.value)}
               />
-              </FormControl>
+            </FormControl>
 
             <Divider />
-            <Grid sx={{mt: 2}}>
-              <Button variant="contained" onClick={() => props.saveCalery(calery)}>ثبت</Button>
-              <Button variant="text" onClick={() => setOpen(false)}>انصراف</Button>
+            <Grid sx={{ mt: 2 }}>
+              <Button
+                variant="contained"
+                onClick={() => props.saveCalery(calery)}
+              >
+                ثبت
+              </Button>
+              <Button variant="text" onClick={() => setOpen(false)}>
+                انصراف
+              </Button>
             </Grid>
           </Grid>
         </Fade>

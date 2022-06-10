@@ -13,7 +13,6 @@ import PersonalInfo from "../../components/ui-comp/dash/personalInfo";
 import Chart from "../../components/ui-comp/lineChart";
 import styled from "@emotion/styled";
 import EarningCard from "../../components/ui-comp/earningCard";
-import TableWrapper from "../../components/ui-comp/table/TableWrapper";
 
 const BoxMain: any = styled(Box)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.main,

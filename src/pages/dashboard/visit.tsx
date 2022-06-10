@@ -39,9 +39,9 @@ export default function HorizontalLinearStepper() {
       Lipidemia: undefined,
       LivingCondition: 0,
     },
-    Medicine: [{ id: 1994, title: "The Shawshank Redemption" }],
+    Medicine: [],
     OtherMedicine: "",
-    Disease: [{ id: 1994, title: "The Shawshank Redemption" }],
+    Disease: [],
     OtherDisease: "",
     Surgery: "",
   });
@@ -62,9 +62,25 @@ export default function HorizontalLinearStepper() {
         LivingCondition: { ...livingCondition },
       }));
     };
+    const getDisease = async () => {
+      const Disease: any = await getProfile("/Disease");
+      setVisit((prev) => ({
+        ...prev,
+        Disease: { ...Disease },
+      }));
+    };
+    const Medication = async () => {
+      const Medication: any = await getProfile("/Medication");
+      setVisit((prev) => ({
+        ...prev,
+        Medicine: { ...Medication },
+      }));
+    };
 
     getActivity();
     getAppetite();
+    getDisease();
+    Medication();
     getLivingCondition();
     setLoading(false);
   }, []);

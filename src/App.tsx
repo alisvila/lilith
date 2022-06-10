@@ -30,6 +30,9 @@ import DocPatients from "./pages/dashboard/DocPatients";
 import PatientDetail from "./pages/dashboard/PatientDetail";
 import MessageHistory from "./pages/MessageHistory";
 import CreatePatient from "./components/ui-comp/patient/CreatePatient";
+import Disease from "./pages/dashboard/disease/DiseaseList";
+import DiseaseSubGrp from "./pages/dashboard/disease/DiseasSubGrp";
+
 
 function App() {
   return (
@@ -198,6 +201,23 @@ function App() {
               element={
                 <ProtectedRoute roles={["all"]}>
                   <MessageHistory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/diseas"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <Disease />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NoMatch />} />
+            <Route
+              path="dashboard/disease/type/:id"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <DiseaseSubGrp />
                 </ProtectedRoute>
               }
             />

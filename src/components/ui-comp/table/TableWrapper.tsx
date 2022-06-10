@@ -9,6 +9,7 @@ import ActualTable from "./index";
 import { Box, Card, CardContent, Button } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
 import { getProfile, createProfile } from "../../../api/profile";
+import { LoadingButton } from "@mui/lab";
 
 const blue = {
   50: "#F0F7FF",
@@ -95,18 +96,13 @@ const TableWrapper = (props: any) => {
       setIsLoading(false);
     };
     getMealCata();
-    console.log(livingCondition);
   }, []);
 
-  useEffect(() => {
-    console.log(props.selectedCalery);
-  }, [props.selectedCalery]);
-
   const handleSubmit = () => {
-    setIsLoading(true)
-    myRef.current.handleSubmit()
-    setIsLoading(false)
-  }
+    setIsLoading(true);
+    myRef.current.handleSubmit();
+    setIsLoading(false);
+  };
 
   return (
     <StickyGrid>
@@ -117,10 +113,7 @@ const TableWrapper = (props: any) => {
               {livingCondition.map((lc: any) => (
                 <Tab key={lc.id}>{lc.name}</Tab>
               ))}
-              {/* <Tab>معمولی</Tab>
-              <Tab>نوجوان</Tab>
-              <Tab>باردار</Tab>
-              <Tab>دیابت</Tab> */}
+
             </TabsList>
             {livingCondition.map((item: any, index: number) => (
               <TabPanel value={index} key={index}>
@@ -134,15 +127,21 @@ const TableWrapper = (props: any) => {
             ))}
           </TabsUnstyled>
         </Box>
-        <Button
-          sx={{ mt: 2 }}
-          color="primary"
-          fullWidth
-          variant="outlined"
-          onClick={handleSubmit}
-        >
-          ثبت جدول
-        </Button>
+        {isLoading ? (
+          <LoadingButton sx={{ mt: 2 }} fullWidth loading variant="outlined">
+            Submit
+          </LoadingButton>
+        ) : (
+          <Button
+            sx={{ mt: 2 }}
+            color="primary"
+            fullWidth
+            variant="outlined"
+            onClick={handleSubmit}
+          >
+            ثبت جدول
+          </Button>
+        )}
       </CardContent>
     </StickyGrid>
   );

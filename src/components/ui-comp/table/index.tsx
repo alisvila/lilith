@@ -9,10 +9,11 @@ import { updateProfile, getProfile } from "../../../api/profile";
 import Row from "./Row";
 import RowHeader from "./RowHeader";
 import { tableValues } from "./tableValue";
+import { Z_DATA_ERROR } from "zlib";
 
 const Table = forwardRef((props: any, ref: any) => {
   const { selectedCalery, id } = props;
-  const [data, setData]: any = useState();
+  const [data, setData]: any[] = useState([]);
   const [loading, setLoading]: any = useState(true);
 
   const categoury = ["حالی", "نان", "سبزی", "میوه", "لبنیات", "گوشت", "چربی"];
@@ -26,12 +27,6 @@ const Table = forwardRef((props: any, ref: any) => {
     setLoading(true);
     getMealCata();
   }, [props]);
-
-  useEffect(() => {
-    console.log('in ref')
-    setLoading(true);
-    getMealCata();
-  }, [ref]);
 
   const getMealCata = async () => {
     const meal: any = await getProfile(`/Meal`);
@@ -58,7 +53,6 @@ const Table = forwardRef((props: any, ref: any) => {
         mealId: meal.find((m: any) => m.id === item.mealId),
       });
     });
-    console.log(finalData, 'in mealcata')
 
     setData(finalData);
     setLoading(false);
@@ -66,6 +60,7 @@ const Table = forwardRef((props: any, ref: any) => {
 
   const handleChange = (value: any, rowIndexer: number, cellName: string) => {
     const newState = [...data];
+    console.log(newState);
     newState[rowIndexer][cellName] = value;
     setData(newState);
   };
@@ -77,19 +72,17 @@ const Table = forwardRef((props: any, ref: any) => {
   }));
 
   const handleSubmit = async () => {
-    console.log(data)
-
-    const finalData: any = [...data];
-    finalData.map((item: any) => {
-      Object.assign(item, {
-        mealId: item.mealId.id,
+    const finalData: any = [];
+      data.map((item: any) => {
+        finalData.push(Object.assign({}, item, {
+          mealId: item.mealId.id,
+        }));
       });
-    });
+
     try {
       await updateProfile(`/Pattern`, finalData);
-    }
-    catch (e) {
-      console.log(data)
+    } catch (e) {
+      console.log(data);
     }
   };
 
