@@ -50,7 +50,7 @@ export const CustomerListToolbar = (props: any) => (
           color="primary"
           variant="contained"
         >
-          اضافه کردن دکتر جدید
+          افزودن دکتر جدید
         </Button>
       </Box>
     </Box>

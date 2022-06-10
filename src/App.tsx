@@ -32,6 +32,7 @@ import MessageHistory from "./pages/MessageHistory";
 import CreatePatient from "./components/ui-comp/patient/CreatePatient";
 import Disease from "./pages/dashboard/disease/DiseaseList";
 import DiseaseSubGrp from "./pages/dashboard/disease/DiseasSubGrp";
+import MedicinList from "./pages/dashboard/MedicinList";
 
 
 function App() {
@@ -218,6 +219,14 @@ function App() {
               element={
                 <ProtectedRoute roles={["all"]}>
                   <DiseaseSubGrp />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard/medicins"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <MedicinList />
                 </ProtectedRoute>
               }
             />

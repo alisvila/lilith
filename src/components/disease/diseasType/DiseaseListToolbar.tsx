@@ -29,7 +29,7 @@ export const DiseaseListToolbar = (props: any) => (
       }}
     >
       <Typography sx={{ m: 1 }} variant="h4">
-        لیست دکتر
+        لیست گروه دارو ها
       </Typography>
       <Box sx={{ m: 1 }}>
         {/* <Button
@@ -50,7 +50,7 @@ export const DiseaseListToolbar = (props: any) => (
           color="primary"
           variant="contained"
         >
-          اضافه کردن دکتر جدید
+          افزودن گروه دارو ها جدید
         </Button>
       </Box>
     </Box>

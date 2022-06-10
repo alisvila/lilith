@@ -30,16 +30,9 @@ import { deleteSingleProfile } from "../../../api/profile";
 type Customer = {
   id: never;
   avatarUrl: string;
-  lastName: string;
   name: number;
-  email: string;
-  address: {
-    city: string;
-    state: string;
-    country: string;
-  };
-  birthDate: string;
-  phoneNumber: Date;
+  diseaseTypeName: string;
+  description: string;
 };
 
 const tableHead = [
@@ -50,28 +43,16 @@ const tableHead = [
     label: "نام",
   },
   {
-    id: "email",
+    id: "diseaseGroup",
     numeric: false,
     disablePadding: true,
-    label: "ایمیل",
+    label: "گروه",
   },
   {
-    id: "address",
+    id: "description",
     numeric: false,
     disablePadding: true,
-    label: "آدرس",
-  },
-  {
-    id: "phoneNumber",
-    numeric: false,
-    disablePadding: true,
-    label: "شماره تماس",
-  },
-  {
-    id: "birthDate",
-    numeric: false,
-    disablePadding: true,
-    label: "تاریخ تولد",
+    label: "توضیحات",
   },
 ];
 
@@ -172,7 +153,7 @@ export const DiseaseListResults = ({ customers, ...rest }: any) => {
                 {rest.isLoading && (
                   <>
                     <TableRow>
-                      <GridSkeleton cells={6} />
+                      <GridSkeleton cells={4} />
                     </TableRow>
                   </>
                 )}
@@ -195,8 +176,6 @@ export const DiseaseListResults = ({ customers, ...rest }: any) => {
                     </TableCell>
                     <TableCell>
                       <Box
-                        component={NavLink}
-                        to={`/dashboard/disease/type/${customer.id}`}
                         sx={{
                           alignItems: "center",
                           display: "flex",
@@ -206,14 +185,12 @@ export const DiseaseListResults = ({ customers, ...rest }: any) => {
                           {customer.name}
                         </Avatar>
                         <Typography color="textPrimary" variant="body1">
-                          {customer.name} {customer.lastName}
+                          {customer.name}
                         </Typography>
                       </Box>
                     </TableCell>
-                    <TableCell>{customer.email}</TableCell>
-                    <TableCell>{customer.address}</TableCell>
-                    <TableCell>{customer.phoneNumber}</TableCell>
-                    <TableCell>{persianDate(customer.birthDate)}</TableCell>
+                    <TableCell>{customer.diseaseTypeName}</TableCell>
+                    <TableCell>{customer.description}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import {
   Typography,
   Card,
@@ -45,6 +46,10 @@ export default function UserMedicine(props: any) {
     props.UserMedicineHandler({ [fieldName]: value });
   };
 
+  useEffect(() => {
+    console.log(props.Medicine, 'medicine')
+  }, [props])
+  
   return (
     <Card>
       <CardContent>
@@ -62,10 +67,10 @@ export default function UserMedicine(props: any) {
               multiple
               fullWidth
               id="Medicine"
-              options={top100Films}
+              options={props.Medicine}
               disableCloseOnSelect
               value={props.Medicine}
-              getOptionLabel={(option) => option.title}
+              getOptionLabel={(option) => option.enName}
               onChange={(e, value) => MedicineHandler(e, value, "Medicine")}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
@@ -75,7 +80,7 @@ export default function UserMedicine(props: any) {
                     style={{ marginRight: 8 }}
                     checked={selected}
                   />
-                  {option.title}
+                  {option.enName}
                 </li>
               )}
               // style={{ width: 500 }}

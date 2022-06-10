@@ -25,8 +25,8 @@ import {
   Stack,
   Container,
 } from "@mui/material";
-import { DiseaseListResults } from "../../components/disease/diseasType/DiseaseListResults";
-import { DiseaseListToolbar } from "../../components/disease/diseasType/DiseaseListToolbar";
+import { MedicationListResults } from "../../components/medication/MedicationListResults"
+import { MedicationListToolbar } from "../../components/medication/MedicationListToolbar"
 import DashLayout from "../layouts/dashboard";
 import { getProfile, createProfile } from "../../api/profile";
 import { NavLink } from "react-router-dom";
@@ -100,7 +100,7 @@ export default function MedicinList(props: any) {
             }}
           >
             <Typography sx={{ m: 1 }} variant="h4">
-              گروه های بیماری
+              دارو
             </Typography>
             <Box sx={{ m: 1 }}>
               <Button
@@ -108,13 +108,13 @@ export default function MedicinList(props: any) {
                 color="primary"
                 variant="contained"
               >
-                اضافه کردن گروه بیماری جدید
+                افزودن دارو جدید
               </Button>
             </Box>
           </Box>
           {/* <CustomerListToolbar /> */}
           <Box sx={{ mt: 3 }}>
-            <DiseaseListResults customers={diseaseList} isLoading={isLoading} />
+            <MedicationListResults customers={diseaseList} isLoading={isLoading} />
           </Box>
         </Container>
       </Box>
@@ -137,7 +137,7 @@ export default function MedicinList(props: any) {
                 variant="h6"
                 component="h2"
               >
-                افزودن گروه های بیماری
+                افزودن دارو
               </Typography>
             </Grid>
             <Grid>

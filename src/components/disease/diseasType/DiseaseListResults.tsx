@@ -50,28 +50,10 @@ const tableHead = [
     label: "نام",
   },
   {
-    id: "email",
+    id: "date",
     numeric: false,
     disablePadding: true,
-    label: "ایمیل",
-  },
-  {
-    id: "address",
-    numeric: false,
-    disablePadding: true,
-    label: "آدرس",
-  },
-  {
-    id: "phoneNumber",
-    numeric: false,
-    disablePadding: true,
-    label: "شماره تماس",
-  },
-  {
-    id: "birthDate",
-    numeric: false,
-    disablePadding: true,
-    label: "تاریخ تولد",
+    label: "تاریخ ساخت",
   },
 ];
 
@@ -172,7 +154,7 @@ export const DiseaseListResults = ({ customers, ...rest }: any) => {
                 {rest.isLoading && (
                   <>
                     <TableRow>
-                      <GridSkeleton cells={6} />
+                      <GridSkeleton cells={3} />
                     </TableRow>
                   </>
                 )}
@@ -210,9 +192,7 @@ export const DiseaseListResults = ({ customers, ...rest }: any) => {
                         </Typography>
                       </Box>
                     </TableCell>
-                    <TableCell>{customer.email}</TableCell>
-                    <TableCell>{customer.address}</TableCell>
-                    <TableCell>{customer.phoneNumber}</TableCell>
+
                     <TableCell>{persianDate(customer.birthDate)}</TableCell>
                   </TableRow>
                 ))}

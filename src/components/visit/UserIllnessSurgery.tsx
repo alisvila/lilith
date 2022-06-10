@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getProfile } from "../../api/profile";
 
 const Illness = [
   {
@@ -58,7 +59,22 @@ const GridWrapper: any = styled(Grid)(({ theme }: any) => ({
 
 export default function UserIllnessSurgery(props: any) {
   const [category, setCategory] = useState();
+  const [diseaseType, setDiseaseType] = useState();
+  const [disease, setDisease] = useState();
 
+  const getDiseaseType = async () => {
+    const dRes: any = await getProfile("/DiseaseType");
+    setDiseaseType(dRes);
+  };
+  const getDisease = async () => {
+    const dRes: any = await getProfile("/Disease");
+    setDisease(dRes);
+  };
+
+  useEffect(() => {
+    getDisease()
+    getDiseaseType()
+  }, [])
   const categoryHandler = (e: any) => {
     setCategory(e.target.value);
   };

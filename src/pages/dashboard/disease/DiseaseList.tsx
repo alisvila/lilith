@@ -104,7 +104,7 @@ export default function DiseaseList(props: any) {
                 color="primary"
                 variant="contained"
               >
-                اضافه کردن گروه بیماری جدید
+                افزودن گروه بیماری جدید
               </Button>
             </Box>
           </Box>

@@ -58,7 +58,7 @@ export default function DiseasSubGrp(props: any) {
   let { id } = useParams();
 
   const getDocs = async () => {
-    const disease = await getSingleProfile("/Disease", id);
+    const disease = await getSingleProfile("/DiseaseType", `${id}/Diseases`);
     setDiseaseList(disease);
     setIsLoading(false);
   };
@@ -108,7 +108,7 @@ export default function DiseasSubGrp(props: any) {
             </Typography>
             <Box sx={{ m: 1 }}>
               <Button onClick={handleOpen} color="primary" variant="contained">
-                اضافه کردن گروه بیماری جدید
+                افزودن گروه بیماری جدید
               </Button>
             </Box>
           </Box>

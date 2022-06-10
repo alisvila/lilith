@@ -30,16 +30,9 @@ import { deleteSingleProfile } from "../../api/profile";
 type Customer = {
   id: never;
   avatarUrl: string;
-  lastName: string;
+  enName: string;
   name: number;
-  email: string;
-  address: {
-    city: string;
-    state: string;
-    country: string;
-  };
-  birthDate: string;
-  phoneNumber: Date;
+  calorie: string;
 };
 
 const tableHead = [
@@ -50,28 +43,16 @@ const tableHead = [
     label: "نام",
   },
   {
-    id: "email",
+    id: "enName",
     numeric: false,
     disablePadding: true,
-    label: "ایمیل",
+    label: "نام انگلیسی",
   },
   {
-    id: "address",
+    id: "calorie",
     numeric: false,
     disablePadding: true,
-    label: "آدرس",
-  },
-  {
-    id: "phoneNumber",
-    numeric: false,
-    disablePadding: true,
-    label: "شماره تماس",
-  },
-  {
-    id: "birthDate",
-    numeric: false,
-    disablePadding: true,
-    label: "تاریخ تولد",
+    label: "کالری",
   },
 ];
 
@@ -168,31 +149,12 @@ export const MedicationListResults = ({ customers, ...rest }: any) => {
                 numSelected={selectedCustomerIds.length}
                 rowCount={customers.length}
               />
-              {/* <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
-                    color="primary"
-                    indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
-                  <TableCell>نام</TableCell>
-                  <TableCell>ایمیل</TableCell>
-                  <TableCell>آدرس</TableCell>
-                  <TableCell>شماره تماس</TableCell>
-                  <TableCell>تاریخ تولد</TableCell>
-                </TableRow>
-              </TableHead> */}
+
               <TableBody>
                 {rest.isLoading && (
                   <>
                     <TableRow>
-                      <GridSkeleton cells={6} />
+                      <GridSkeleton cells={4} />
                     </TableRow>
                   </>
                 )}
@@ -215,8 +177,6 @@ export const MedicationListResults = ({ customers, ...rest }: any) => {
                     </TableCell>
                     <TableCell>
                       <Box
-                        component={NavLink}
-                        to={`/dashboard/doc/${customer.id}`}
                         sx={{
                           alignItems: "center",
                           display: "flex",
@@ -226,14 +186,12 @@ export const MedicationListResults = ({ customers, ...rest }: any) => {
                           {customer.name}
                         </Avatar>
                         <Typography color="textPrimary" variant="body1">
-                          {customer.name} {customer.lastName}
+                          {customer.name}
                         </Typography>
                       </Box>
                     </TableCell>
-                    <TableCell>{customer.email}</TableCell>
-                    <TableCell>{customer.address}</TableCell>
-                    <TableCell>{customer.phoneNumber}</TableCell>
-                    <TableCell>{persianDate(customer.birthDate)}</TableCell>
+                    <TableCell>{customer.enName}</TableCell>
+                    <TableCell>{customer.calorie}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

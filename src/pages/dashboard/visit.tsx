@@ -66,14 +66,14 @@ export default function HorizontalLinearStepper() {
       const Disease: any = await getProfile("/Disease");
       setVisit((prev) => ({
         ...prev,
-        Disease: { ...Disease },
+        Disease: Disease,
       }));
     };
     const Medication = async () => {
       const Medication: any = await getProfile("/Medication");
       setVisit((prev) => ({
         ...prev,
-        Medicine: { ...Medication },
+        Medicine: Medication,
       }));
     };
 
