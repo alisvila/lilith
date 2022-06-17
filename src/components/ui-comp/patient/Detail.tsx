@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from '@mui/material'
-import MoreDetail from '../dash/MoreDetail'
+import MoreDetail from './MoreDetail'
 import { NavLink, useParams } from "react-router-dom";
 import { deleteSingleProfile, getSingleProfile } from "../../../api/profile";
 

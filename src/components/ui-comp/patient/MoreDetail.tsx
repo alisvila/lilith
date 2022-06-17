@@ -27,6 +27,7 @@ import { persianDate, getGender } from "../../helper";
 import CustomSkeleton from "../Skeleton";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteDialog from "../DeleteDialog";
+import BasicAlerts from "../BasicAlert";
 
 const DetailGrid = styled(Grid)(({ theme }: any) => ({
   borderBottom: "1px solid #d3d3d3",
@@ -101,7 +102,45 @@ export default function MoreDetail({
 }: any) {
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
+  const [checkups, setCheckups]: any = React.useState([]);
+  const [medications, setMedications]: any = React.useState([]);
+  const [additionalMedications, setAdditionalMedications]: any = React.useState([]);
+  const [descriptions, setDescriptions]: any = React.useState([]);
+  const [diseases, setDiseases]: any = React.useState([]);
 
+  useEffect(() => {
+    getCheckups()
+    getMedications()
+    getAdditionalMedications()
+    getDescriptions()
+    getDiseases()
+  }, [])
+
+  const getCheckups = async () => {
+    const check: any = await getSingleProfile("Patient", `${patientDetail.id}/Checkups`)
+    setCheckups(check)
+  }
+
+  const getMedications = async () => {
+    const check: any = await getSingleProfile("Patient", `${patientDetail.id}/Medications`)
+    setMedications(check)
+  }
+
+  const getAdditionalMedications = async () => {
+    const check: any = await getSingleProfile("Patient", `${patientDetail.id}/AdditionalMedications`)
+    setAdditionalMedications(check)
+  }
+
+  const getDescriptions = async () => {
+    const check: any = await getSingleProfile("Patient", `${patientDetail.id}/Descriptions`)
+    setDescriptions(check)
+  }
+
+  const getDiseases = async () => {
+    const check: any = await getSingleProfile("Patient", `${patientDetail.id}/Diseases`)
+    setDiseases(check)
+  }
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -124,14 +163,14 @@ export default function MoreDetail({
         <Typography sx={{ m: 1 }} variant="h3">
           جزییات بیمار
         </Typography>
-        <Button
+        {/* <Button
           variant="outlined"
           color="error"
           endIcon={<RemoveIcon />}
           onClick={() => setOpen(true)}
         >
           حذف
-        </Button>
+        </Button> */}
       </Grid>
       <Grid item xs={12}>
         <Card {...props}>
@@ -232,16 +271,16 @@ export default function MoreDetail({
                     </Grid>
                   </DetailGrid>
                   <DetailGrid item xs={12}>
-                    <Typography variant="subtitle1">body detail</Typography>
+                    <Typography variant="subtitle1">چزییات بدن</Typography>
                     <Grid container>
                       <Grid item sm={4} xs={12}>
-                        Blood Type: o+
+                        فشارخون: {checkups.bloodPressure}
                       </Grid>
                       <Grid item sm={4} xs={12}>
-                        Weight: 75KG
+                        وزن: {checkups.weight}
                       </Grid>
                       <Grid item sm={4} xs={12}>
-                        Body type: slim
+                        دور کمر: {checkups.length}
                       </Grid>
                     </Grid>
                   </DetailGrid>
@@ -286,15 +325,15 @@ export default function MoreDetail({
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Dessert (100g serving)</TableCell>
+                      <TableCell></TableCell>
                       <TableCell align="right">Calories</TableCell>
                       <TableCell align="right">Fat&nbsp;(g)</TableCell>
                       <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                      <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                      <TableCell align="right">تاریخ چکاپ</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row) => (
+                    {checkups.map((row: any) => (
                       <TableRow
                         key={row.name}
                         sx={{
@@ -307,70 +346,147 @@ export default function MoreDetail({
                         <TableCell align="right">{row.calories}</TableCell>
                         <TableCell align="right">{row.fat}</TableCell>
                         <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
+                        <TableCell align="right">
+                          {persianDate(row.registerDate)}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
+                {checkups.length === 0 && (
+                  <div style={{ marginTop: "15px" }}>
+                    <BasicAlerts variant="info">
+                      <p>موردی برای نمایش وجود ندارد</p>
+                    </BasicAlerts>
+                  </div>
+                )}
               </TableContainer>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Dessert (100g serving)</TableCell>
-                    <TableCell align="right">Calories</TableCell>
-                    <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                    <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                    <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                    <TableCell>نام دارو</TableCell>
+                    <TableCell align="right">تاریخ ثبت</TableCell>
+                    <TableCell align="right">تاریخ انقضا</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
+                  {medications.map((row: any) => (
                     <TableRow
                       key={row.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.name}
+                        {row.medicationName}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">
+                        {persianDate(row.registerDate)}
+                      </TableCell>
+                      <TableCell align="right">
+                        {persianDate(row.expiryDate)}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              {medications.length === 0 && (
+                <div style={{ marginTop: "15px" }}>
+                  <BasicAlerts variant="info">
+                    <p>موردی برای نمایش وجود ندارد</p>
+                  </BasicAlerts>
+                </div>
+              )}
             </TabPanel>
             <TabPanel value={value} index={2}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Dessert (100g serving)</TableCell>
-                    <TableCell align="right">Calories</TableCell>
-                    <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                    <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                    <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                    <TableCell>نام بیماری</TableCell>
+                    <TableCell align="right">تاریخ ثبت</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
+                  {diseases.map((row: any) => (
                     <TableRow
                       key={row.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.name}
+                        {row.diseaseName}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.registerDate}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              {diseases.length === 0 && (
+                <div style={{ marginTop: "15px" }}>
+                  <BasicAlerts variant="info">
+                    <p>موردی برای نمایش وجود ندارد</p>
+                  </BasicAlerts>
+                </div>
+              )}
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>نام بیماری</TableCell>
+                    <TableCell align="right">تاریخ ثبت</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {diseases.map((row: any) => (
+                    <TableRow
+                      key={row.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.diseaseName}
+                      </TableCell>
+                      <TableCell align="right">{row.registerDate}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              {diseases.length === 0 && (
+                <div style={{ marginTop: "15px" }}>
+                  <BasicAlerts variant="info">
+                    <p>موردی برای نمایش وجود ندارد</p>
+                  </BasicAlerts>
+                </div>
+              )}
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>نام بیماری</TableCell>
+                    <TableCell align="right">تاریخ ثبت</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {diseases.map((row: any) => (
+                    <TableRow
+                      key={row.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.diseaseName}
+                      </TableCell>
+                      <TableCell align="right">{row.registerDate}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              {diseases.length === 0 && (
+                <div style={{ marginTop: "15px" }}>
+                  <BasicAlerts variant="info">
+                    <p>موردی برای نمایش وجود ندارد</p>
+                  </BasicAlerts>
+                </div>
+              )}
             </TabPanel>
           </Box>
         </Card>

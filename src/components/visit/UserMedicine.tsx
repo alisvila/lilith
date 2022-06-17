@@ -12,38 +12,12 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import drug from "./drug.webp";
 
-const top100Films = [
-  { title: "The Shawshank Redemption", id: 1994 },
-  { title: "The Godfather", id: 1972 },
-  { title: "The Godfather: Part II", id: 1974 },
-  { title: "The Dark Knight", id: 2008 },
-  { title: "12 Angry Men", id: 1957 },
-  { title: "Schindler's List", id: 1993 },
-  { title: "Pulp Fiction", id: 1994 },
-  {
-    title: "The Lord of the Rings: The Return of the King",
-    id: 2003,
-  },
-  { title: "The Good, the Bad and the Ugly", id: 1966 },
-  { title: "Fight Club", id: 1999 },
-  {
-    title: "The Lord of the Rings: The Fellowship of the Ring",
-    id: 2001,
-  },
-  {
-    title: "Star Wars: Episode V - The Empire Strikes Back",
-    id: 1980,
-  },
-  { title: "Forrest Gump", id: 1994 },
-  { title: "Inception", id: 2010 },
-];
-
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function UserMedicine(props: any) {
   const MedicineHandler = (e: any, value: any, fieldName: string) => {
-    props.UserMedicineHandler({ [fieldName]: value });
+    props.UserMedicineHandler(value);
   };
 
   useEffect(() => {
@@ -67,7 +41,7 @@ export default function UserMedicine(props: any) {
               multiple
               fullWidth
               id="Medicine"
-              options={props.Medicine}
+              options={props.allMedicine}
               disableCloseOnSelect
               value={props.Medicine}
               getOptionLabel={(option) => option.enName}
@@ -100,7 +74,7 @@ export default function UserMedicine(props: any) {
               fullWidth
               value={props.OtherMedicine}
               onChange={(e) =>
-                MedicineHandler(e, e.target.value, "OtherMedicine")
+                props.changeDesc(1, e.target.value)
               }
             />
           </Grid>

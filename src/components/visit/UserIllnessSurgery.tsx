@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getProfile } from "../../api/profile";
+import { getProfile, getSingleProfile } from "../../api/profile";
 
 const Illness = [
   {
@@ -58,27 +58,39 @@ const GridWrapper: any = styled(Grid)(({ theme }: any) => ({
 }));
 
 export default function UserIllnessSurgery(props: any) {
-  const [category, setCategory] = useState();
-  const [diseaseType, setDiseaseType] = useState();
-  const [disease, setDisease] = useState();
+  const [category, setCategory] = useState(0);
+  const [selected, setSelected] = useState();
+  const [diseaseType, setDiseaseType] = useState([]);
+  const [disease, setDisease] = useState([]);
+  const [selectedDisease, setSelectedDisease]: any = useState([]);
+
+  useEffect(() => {
+    getDisease()
+    getDiseaseType()
+  }, [])
+
+  useEffect(() => {
+    console.log(category)
+    getDisease()
+  }, [category])
 
   const getDiseaseType = async () => {
     const dRes: any = await getProfile("/DiseaseType");
     setDiseaseType(dRes);
   };
   const getDisease = async () => {
-    const dRes: any = await getProfile("/Disease");
+    const dRes: any = await getSingleProfile("/DiseaseType", `${category.toString()}/Diseases`);
+    console.log(dRes)
     setDisease(dRes);
   };
 
-  useEffect(() => {
-    getDisease()
-    getDiseaseType()
-  }, [])
+
   const categoryHandler = (e: any) => {
     setCategory(e.target.value);
   };
   const diseaseHandler = (e: any) => {
+    setSelectedDisease((prev: any) => [...prev, e.target.value])
+
     const diseaseItem = Illness.map((cat) =>
       cat.sub.find((disease) => disease.id === e.target.value)
     ).find((i) => i);
@@ -111,9 +123,9 @@ export default function UserIllnessSurgery(props: any) {
               fullWidth
               onChange={categoryHandler}
             >
-              {Illness.map((category) => (
-                <MenuItem key={category.name} value={category.name}>
-                  {category.name}
+              {diseaseType.map((category: any) => (
+                <MenuItem key={category?.name} value={category?.id}>
+                  {category?.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -131,13 +143,11 @@ export default function UserIllnessSurgery(props: any) {
               <MenuItem key={"Diseases"} disabled value={"بیماری"}>
                 بیماری ها
               </MenuItem>
-              {Illness.find((ct) => ct.name === category)?.sub.map(
-                (desease) => (
-                  <MenuItem key={desease.id} value={desease.id}>
-                    {desease.title}
-                  </MenuItem>
-                )
-              )}
+              {disease.map((category: any) => (
+                <MenuItem key={category.name} value={category.id}>
+                  {category.name}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
@@ -155,11 +165,11 @@ export default function UserIllnessSurgery(props: any) {
                   }}
                 >
                   <List dense={false}>
-                    {props.Disease.map((disease: any) => {
+                    {selectedDisease.map((disease: any) => {
                       return (
                         <ListItem
                           dense
-                          key={disease.id}
+                          key={disease}
                           secondaryAction={
                             <IconButton
                               edge="end"
@@ -170,7 +180,7 @@ export default function UserIllnessSurgery(props: any) {
                             </IconButton>
                           }
                         >
-                          <ListItemText primary={disease.title} />
+                          <ListItemText primary={disease} />
                         </ListItem>
                       );
                     })}

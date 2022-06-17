@@ -19,7 +19,7 @@ import Customers from "./pages/customers";
 import Meal from "./pages/dashboard/meal";
 import Illnes from "./pages/dashboard/illnes";
 import Visit from "./pages/dashboard/visit";
-import Discount from "./pages/dashboard/Discount";
+import Discount from "./pages/dashboard/doc/Discount";
 import FoodCategory from "./pages/dashboard/FoodCategory";
 import DashLayout from "./pages/layouts/dashboard";
 import FoodGrid from "./pages/dashboard/FoodGrid";
@@ -33,6 +33,7 @@ import CreatePatient from "./components/ui-comp/patient/CreatePatient";
 import Disease from "./pages/dashboard/disease/DiseaseList";
 import DiseaseSubGrp from "./pages/dashboard/disease/DiseasSubGrp";
 import MedicinList from "./pages/dashboard/MedicinList";
+import VisitPrice from "./pages/dashboard/doc/VisitPrice";
 
 
 function App() {
@@ -230,6 +231,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="dashboard/visit/price"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <VisitPrice />
+                </ProtectedRoute>
+              }
+            />
+            
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </DashLayout>
