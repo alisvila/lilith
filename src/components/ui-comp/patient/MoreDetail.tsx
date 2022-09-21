@@ -109,12 +109,13 @@ export default function MoreDetail({
   const [diseases, setDiseases]: any = React.useState([]);
 
   useEffect(() => {
+    console.log('fir', patientDetail)
     getCheckups()
     getMedications()
     getAdditionalMedications()
     getDescriptions()
     getDiseases()
-  }, [])
+  }, [patientDetail])
 
   const getCheckups = async () => {
     const check: any = await getSingleProfile("Patient", `${patientDetail.id}/Checkups`)
@@ -140,7 +141,7 @@ export default function MoreDetail({
     const check: any = await getSingleProfile("Patient", `${patientDetail.id}/Diseases`)
     setDiseases(check)
   }
-  
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -274,13 +275,13 @@ export default function MoreDetail({
                     <Typography variant="subtitle1">چزییات بدن</Typography>
                     <Grid container>
                       <Grid item sm={4} xs={12}>
-                        فشارخون: {checkups.bloodPressure}
+                        فشارخون: {checkups[checkups.length - 1]?.bloodPressure}
                       </Grid>
                       <Grid item sm={4} xs={12}>
-                        وزن: {checkups.weight}
+                        وزن: {checkups[checkups.length - 1]?.weight}
                       </Grid>
                       <Grid item sm={4} xs={12}>
-                        دور کمر: {checkups.length}
+                        دور کمر: {checkups[checkups.length - 1]?.length}
                       </Grid>
                     </Grid>
                   </DetailGrid>
@@ -325,15 +326,18 @@ export default function MoreDetail({
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell></TableCell>
-                      <TableCell align="right">Calories</TableCell>
-                      <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                      <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                      <TableCell align="right">تاریخ چکاپ</TableCell>
+                      <TableCell>ردیف</TableCell>
+                      {/* Patient/:patientId/Checkup/:checkupId/Prescription */}
+                      <TableCell align="right">تاریخ ویزیت</TableCell>
+                      <TableCell align="right">اشتها</TableCell>
+                      <TableCell align="right">فعالیت</TableCell>
+                      <TableCell align="right">دور لگن</TableCell>
+                      <TableCell align="right">وزن</TableCell>
+                      <TableCell align="right">تاریخ ویزیت</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {checkups.map((row: any) => (
+                    {checkups.map((row: any, index: number) => (
                       <TableRow
                         key={row.name}
                         sx={{
@@ -341,11 +345,26 @@ export default function MoreDetail({
                         }}
                       >
                         <TableCell component="th" scope="row">
-                          {row.name}
+                          {index + 1}
                         </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
+                        <TableCell>
+                          <Box
+                            component={NavLink}
+                            to={`/Patient/${patientDetail.id}/Checkup/${row.id}/Prescription`}
+                            sx={{
+                              alignItems: "center",
+                              display: "flex",
+                            }}
+                          >
+                            <Typography color="textPrimary" variant="body1">
+                              {persianDate(row.registerDate)}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="right">{row.appetiteName}</TableCell>
+                        <TableCell align="right">{row.activityActivity}</TableCell>
+                        <TableCell align="right">{row.pelvisSize}</TableCell>
+                        <TableCell align="right">{row.weight}</TableCell>
                         <TableCell align="right">
                           {persianDate(row.registerDate)}
                         </TableCell>
@@ -415,7 +434,7 @@ export default function MoreDetail({
                       <TableCell component="th" scope="row">
                         {row.diseaseName}
                       </TableCell>
-                      <TableCell align="right">{row.registerDate}</TableCell>
+                      <TableCell align="right">{persianDate(row.registerDate)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -437,20 +456,26 @@ export default function MoreDetail({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {diseases.map((row: any) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.diseaseName}
-                      </TableCell>
-                      <TableCell align="right">{row.registerDate}</TableCell>
-                    </TableRow>
+                  {checkups.map((row: any) => (
+                    <>
+                    {row.livingConditionNames.map((lc: any) => (
+                      <TableRow
+                        key={lc}
+                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {lc}
+                        </TableCell>
+                        <TableCell align="right">
+                        {persianDate(row.registerDate)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    </>
                   ))}
                 </TableBody>
               </Table>
-              {diseases.length === 0 && (
+              {checkups.length === 0 && (
                 <div style={{ marginTop: "15px" }}>
                   <BasicAlerts variant="info">
                     <p>موردی برای نمایش وجود ندارد</p>

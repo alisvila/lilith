@@ -70,6 +70,10 @@ export default function UserIllnessSurgery(props: any) {
   }, [])
 
   useEffect(() => {
+    console.log('its in the bag')
+  }, [props.Disease])
+
+  useEffect(() => {
     console.log(category)
     getDisease()
   }, [category])
@@ -89,15 +93,21 @@ export default function UserIllnessSurgery(props: any) {
     setCategory(e.target.value);
   };
   const diseaseHandler = (e: any) => {
-    setSelectedDisease((prev: any) => [...prev, e.target.value])
+    let newDisease: any = [...props.Disease]
+    // const newDisease = props.Disease.find((d: any) => d === e.target.value);
+    if (!props.Disease.find((d: any) => d === e.target.value)) {
+      newDisease.push(e.target.value)
+    }
+    props.UserIllnessSurgeryHandler(newDisease)
+    // setSelectedDisease((prev: any) => [...prev, e.target.value])
 
-    const diseaseItem = Illness.map((cat) =>
-      cat.sub.find((disease) => disease.id === e.target.value)
-    ).find((i) => i);
-    !props.Disease.find((d: any) => d.id === diseaseItem?.id) &&
-      props.UserIllnessSurgeryHandler({
-        Disease: [diseaseItem, ...props.Disease],
-      });
+    // const diseaseItem = Illness.map((cat) =>
+    //   cat.sub.find((disease) => disease.id === e.target.value)
+    // ).find((i) => i);
+    // !props.Disease.find((d: any) => d.id === diseaseItem?.id) &&
+    //   props.UserIllnessSurgeryHandler({
+    //     Disease: [diseaseItem, ...props.Disease],
+    //   });
   };
 
   const deleteDisease = (item: any) => {
@@ -165,7 +175,7 @@ export default function UserIllnessSurgery(props: any) {
                   }}
                 >
                   <List dense={false}>
-                    {selectedDisease.map((disease: any) => {
+                    {props.Disease.map((disease: any) => {
                       return (
                         <ListItem
                           dense

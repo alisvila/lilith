@@ -34,6 +34,8 @@ import Disease from "./pages/dashboard/disease/DiseaseList";
 import DiseaseSubGrp from "./pages/dashboard/disease/DiseasSubGrp";
 import MedicinList from "./pages/dashboard/MedicinList";
 import VisitPrice from "./pages/dashboard/doc/VisitPrice";
+import Prescription from "./pages/dashboard/Prescription";
+
 
 
 function App() {
@@ -236,6 +238,15 @@ function App() {
               element={
                 <ProtectedRoute roles={["all"]}>
                   <VisitPrice />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="Patient/:patientId/Checkup/:checkupId/Prescription"
+              element={
+                <ProtectedRoute roles={["all"]}>
+                  <Prescription />
                 </ProtectedRoute>
               }
             />

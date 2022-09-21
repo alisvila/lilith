@@ -11,6 +11,7 @@ export default function Detail(props: any) {
   useEffect(() => {
     const getDocDetail = async () => {
       const patient: any = await getSingleProfile("/Patient", props.patientId);
+      console.log(patient)
       setPatientDetail(patient);
       setIsLoading(false);
     };

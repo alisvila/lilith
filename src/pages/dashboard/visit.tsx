@@ -21,6 +21,9 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [medicine, setMedicine] = useState([]);
   const [allMedicine, setAllMedicine] = useState([]);
+  const [allDisease, setAllDisease] = useState([]);
+  const [disease, setDisease] = useState([]);
+
   const [skipped, setSkipped] = useState(new Set<any>());
   const [description, setDescriptiopn] = useState({type: 0, value: ""});
   const [visit, setVisit] = useState({
@@ -130,7 +133,7 @@ export default function HorizontalLinearStepper() {
 
   const submitPatientDetail = async () => {
     var payload = {
-      "patientId": 1,
+      "patientId": 5,
       "activityId": 1,
       "wristSize": 0,
       "abdomenSize": 0,
@@ -149,14 +152,14 @@ export default function HorizontalLinearStepper() {
     await createProfile('/Checkup', payload)
   }
 
+  
   const submitDisease = async () => {
     var payload = {
-      "name": "string",
-      "diseaseTypeId": 1,
-      "description": "string"
+      "patientId": 5,
+      "diseaseId": 1,
     }
 
-    await createProfile('/Disease', payload)
+    await createProfile('/Patient/Diseases', payload)
   }
 
   const submitMedication = async () => {
@@ -171,7 +174,8 @@ export default function HorizontalLinearStepper() {
   }
 
   const UserIllnessSurgeryHandler = (newUserIllnessSurgery: any) => {
-    setVisit((prevVisit) => ({ ...prevVisit, ...newUserIllnessSurgery }));
+    setDisease(newUserIllnessSurgery)
+    // setVisit((prevVisit) => ({ ...prevVisit, ...newUserIllnessSurgery }));
   };
 
   const isStepSkipped = (step: any) => {
@@ -200,13 +204,14 @@ export default function HorizontalLinearStepper() {
     console.log(activeStep, 'activeStep')
     switch(activeStep) {
       case 0:
-        await submitDisease()
+        await submitPatientDetail()
         break;
       case 1:
         await submitOtherDesc()
         await submitMedication()
         break;
       case 2:
+        await submitDisease()
         break;
     }
     console.log('next')
@@ -251,7 +256,7 @@ export default function HorizontalLinearStepper() {
       case 2:
         return (
           <UserIllnessSurgery
-            Disease={visit.Disease}
+            Disease={disease}
             OtherDisease={visit.OtherDisease}
             Surgery={visit.Surgery}
             UserIllnessSurgeryHandler={UserIllnessSurgeryHandler}

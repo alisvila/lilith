@@ -13,6 +13,7 @@ import PersonalInfo from "../../components/ui-comp/dash/personalInfo";
 import Chart from "../../components/ui-comp/lineChart";
 import styled from "@emotion/styled";
 import EarningCard from "../../components/ui-comp/earningCard";
+import useState1 from "../../components/hooks/useState";
 
 const BoxMain: any = styled(Box)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.main,
@@ -20,12 +21,22 @@ const BoxMain: any = styled(Box)(({ theme }: any) => ({
   marginRight: "15px",
 }));
 
+
 export default function Index() {
   const [isLoading, setLoading] = useState(true);
+  const [isLoading1, setLoading1] = useState1(1);
+
 
   useEffect(() => {
+    console.log(isLoading1, 'filanbisar')
+    setLoading1(11)
     console.log(api.get("https://jsonplaceholder.typicode.com/todos/1"));
+    
   }, []);
+
+  useEffect(() => {
+    console.log(isLoading1, 'filanbisar in change')    
+  }, [isLoading1]);
 
   return (
     <>

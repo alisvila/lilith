@@ -5,13 +5,12 @@ import React, {
   useImperativeHandle,
 } from "react";
 import { Grid, Skeleton } from "@mui/material";
-import { updateProfile, getProfile } from "../../../api/profile";
-import Row from "./Row";
-import RowHeader from "./RowHeader";
-import { tableValues } from "./tableValue";
+import { updateProfile, getProfile } from "../../../../api/profile";
+import Row from "../../table/Row";
+import RowHeader from "../../table/RowHeader";
 
 const Table = forwardRef((props: any, ref: any) => {
-  const { selectedCalery, id } = props;
+  const { id, patientId, checkupId } = props;
   const [data, setData]: any[] = useState([]);
   const [loading, setLoading]: any = useState(true);
 
@@ -29,13 +28,13 @@ const Table = forwardRef((props: any, ref: any) => {
 
   const getMealCata = async () => {
     const meal: any = await getProfile(`/Meal`);
-    const LC: any = await getProfile(`/Pattern/${selectedCalery}/${id}`);
+    const LC: any = await getProfile(`/Patient/${patientId}/Checkup/${checkupId}/Prescription `);
     const finalData: any = [];
     meal.map((item: any) => {
       finalData.push({
         mealCaloriePatternId: null,
         mealId: item.id,
-        calorie: selectedCalery,
+        // calorie: selectedCalery,
         type: id,
         bread: 0,
         vegetable: 0,
@@ -46,7 +45,7 @@ const Table = forwardRef((props: any, ref: any) => {
       });
     });
     finalData.map((item: any) => {
-      const discoveredLc = LC.find((l: any) => l.mealId === item.mealId);
+      const discoveredLc = LC.patterns.find((l: any) => l.mealId === item.mealId);
       Object.assign(item, discoveredLc);
       Object.assign(item, {
         mealId: meal.find((m: any) => m.id === item.mealId),
