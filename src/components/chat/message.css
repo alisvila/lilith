@@ -1,0 +1,44 @@
+
+    .messageRow {
+        display: flex;
+        padding-right: 17px;
+        padding-top: 15px;
+      }
+      .messageRowRight {
+        display: flex;
+        justify-content: flex-end;
+        padding-left: 17px;
+      }
+        
+      .messageContent {
+        padding: 0;
+        margin: 0;
+      }
+      .mesageTimeStampRight {
+        position: absolute;
+        font-size: .85em;
+        font-weight: 300;
+        margin-top: 10px;
+        bottom: -3px;
+        right: 5px;
+      }
+  
+      .orange {
+        /* color: theme.palette.getContrastText(deepOrange[500]), */
+        /* backgroundColor: deepOrange[500], */
+        /* width: theme.spacing(4), */
+        /* height: theme.spacing(4) */
+      }
+      .avatarNothing {
+        color: transparent;
+        background-color: transparent;
+        /* width: theme.spacing(4), */
+        /* height: theme.spacing(4) */
+      }
+      .displayName {
+        margin-left: 20px;
+      }
+
+      .messageTimeStampRight {
+        color: #8b8b8b;
+      }
