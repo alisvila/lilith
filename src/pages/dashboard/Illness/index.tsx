@@ -7,9 +7,9 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import DashLayout from "../layouts/dashboard";
-import MiniGrid from "../../components/ui-comp/miniGrid";
-import MiniGridDetail from "./MiniGridDetaial";
+import DashLayout from "../../layouts";
+import MiniGrid from "../../../core/miniGrid";
+import MiniGridDetail from "../../../core/miniGrid/MiniGridDetaial";
 
 export default function Illnes() {
   const [isLoading, setLoading] = useState(true);

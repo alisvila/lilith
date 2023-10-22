@@ -7,8 +7,8 @@ import NoMatch from "./pages/NoMatch";
 import ProtectedRoute from "./ProtectedRoute";
 import AccountSettings from "./pages/dashboard/AccountSettings";
 // import Customers from "./pages/customers";
-// import Meal from "./pages/dashboard/meal";
-import Illnes from "./pages/dashboard/illnes";
+import Meal from "./pages/meal";
+import Illnes from "./pages/dashboard/Illness";
 // import Visit from "./pages/dashboard/visit";
 // import Discount from "./pages/dashboard/doc/Discount";
 // import FoodCategory from "./pages/dashboard/FoodCategory";
@@ -41,15 +41,15 @@ export default function router() {
       />
       {/* <Route path="dashboard" element={<Dashboard />} /> */}
 
-      {/* <Route
+      <Route
         path="dashboard/meal"
         element={
-          <ProtectedRoute roles={["admin", "all"]}>
+          <ProtectedRoute>
             <Meal />
           </ProtectedRoute>
         }
       />
-      */}
+     
       <Route
         path="profile"
         element={
