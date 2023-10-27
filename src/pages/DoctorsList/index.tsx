@@ -1,7 +1,7 @@
 import react, { useEffect, useState } from "react";
 import { Box, Button, Container, debounce, Typography } from "@mui/material";
-import { DoctorListResults } from "../components/DoctorsList/DoctorListResults";
-// import { getProfile } from "../api/profile";
+import { DoctorListResults } from "../../components/DoctorsList/DoctorListResults";
+import { getProfile } from "../../api/profile";
 import { NavLink, useSearchParams, useNavigate } from "react-router-dom";
 
 export default function DoctorList(props: any) {

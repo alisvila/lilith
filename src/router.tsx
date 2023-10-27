@@ -6,25 +6,25 @@ import Dashboard from "./pages/dashboard/index";
 import NoMatch from "./pages/NoMatch";
 import ProtectedRoute from "./ProtectedRoute";
 import AccountSettings from "./pages/dashboard/AccountSettings";
-// import Customers from "./pages/customers";
+import DoctorList from "./pages/DoctorsList";
 import Meal from "./pages/meal";
 import Illnes from "./pages/dashboard/Illness";
-// import Visit from "./pages/dashboard/visit";
-// import Discount from "./pages/dashboard/doc/Discount";
-// import FoodCategory from "./pages/dashboard/FoodCategory";
-// import FoodGrid from "./pages/dashboard/FoodGrid";
-// import PayMethod from "./pages/dashboard/PayMethod";
-// import Ticket from "./pages/dashboard/Ticket";
-// import CreateDoctor from "./pages/dashboard/CreateDoctor";
-// import DocPatients from "./pages/dashboard/DocPatients";
-// import PatientDetail from "./pages/dashboard/PatientDetail";
-// import MessageHistory from "./pages/MessageHistory";
-// import CreatePatient from "./components/ui-comp/patient/CreatePatient";
-// import Disease from "./pages/dashboard/disease/DiseaseList";
-// import DiseaseSubGrp from "./pages/dashboard/disease/DiseasSubGrp";
-// import MedicinList from "./pages/dashboard/MedicinList";
-// import VisitPrice from "./pages/dashboard/doc/VisitPrice";
-// import Prescription from "./pages/dashboard/Prescription";
+import Visit from "./pages/visit";
+import Discount from "./pages/discount";
+import FoodCategory from "./pages/foodCategory";
+import FoodGrid from "./pages/foodGrid";
+import PayMethod from "./pages/payMethod";
+import Ticket from "./pages/ticket";
+import CreateDoctor from "./pages/createDoctor";
+import DocPatients from "./pages/docPatients";
+import PatientDetail from "./pages/patientDetail";
+import MessageHistory from "./pages/messageHistory";
+import CreatePatient from "./pages/createPatient";
+import Disease from "./pages/disease/DiseaseList";
+import DiseaseSubGrp from "./pages/disease/diseaseSubGrp";
+import MedicinList from "./pages/medicinList";
+import VisitPrice from "./pages/visitPrice";
+import Prescription from "./pages/prescription";
 
 export default function router() {
   return (
@@ -58,7 +58,6 @@ export default function router() {
           </ProtectedRoute>
         }
       />
-      {
         <Route
           path="dashboard/Illnes"
           element={
@@ -66,44 +65,47 @@ export default function router() {
               <Illnes />
             </ProtectedRoute>
           }
-        />
-        /*
+          />
       <Route
         path="visit"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute>
             <Visit />
           </ProtectedRoute>
         }
-      />
+        />
+
       <Route
-        path="dashboard/customers"
+        path="dashboard/doctorlist"
         element={
-          <ProtectedRoute roles={["all"]}>
-            <Customers />
+          <ProtectedRoute>
+            <DoctorList />
           </ProtectedRoute>
         }
-      />
+        />
+
       <Route
         path="dashboard/Discount"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute>
             <Discount />
           </ProtectedRoute>
         }
       />
+
       <Route
         path="dashboard/FoodCategory"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute>
             <FoodCategory />
           </ProtectedRoute>
         }
-      />
+        />
+
       <Route
         path="dashboard/FoodGrid"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <FoodGrid />
           </ProtectedRoute>
         }
@@ -111,7 +113,7 @@ export default function router() {
       <Route
         path="dashboard/payMethod"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <PayMethod />
           </ProtectedRoute>
         }
@@ -119,7 +121,7 @@ export default function router() {
       <Route
         path="sendtiket"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <Ticket />
           </ProtectedRoute>
         }
@@ -127,7 +129,7 @@ export default function router() {
       <Route
         path="dashboard/doc/create"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <CreateDoctor />
           </ProtectedRoute>
         }
@@ -135,7 +137,7 @@ export default function router() {
       <Route
         path="dashboard/doc/edit/:id"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <CreateDoctor />
           </ProtectedRoute>
         }
@@ -143,7 +145,7 @@ export default function router() {
       <Route
         path="dashboard/doc/:id"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <DocPatients />
           </ProtectedRoute>
         }
@@ -151,7 +153,7 @@ export default function router() {
       <Route
         path="dashboard/patient"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <DocPatients />
           </ProtectedRoute>
         }
@@ -159,7 +161,7 @@ export default function router() {
       <Route
         path="dashboard/doc/:id/patient/create"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <CreatePatient />
           </ProtectedRoute>
         }
@@ -167,7 +169,7 @@ export default function router() {
       <Route
         path="dashboard/patient/:id"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <PatientDetail />
           </ProtectedRoute>
         }
@@ -175,7 +177,7 @@ export default function router() {
       <Route
         path="/dashboard/history"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <MessageHistory />
           </ProtectedRoute>
         }
@@ -183,7 +185,7 @@ export default function router() {
       <Route
         path="dashboard/diseas"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <Disease />
           </ProtectedRoute>
         }
@@ -192,7 +194,7 @@ export default function router() {
       <Route
         path="dashboard/disease/type/:id"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <DiseaseSubGrp />
           </ProtectedRoute>
         }
@@ -200,7 +202,7 @@ export default function router() {
       <Route
         path="dashboard/medicins"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <MedicinList />
           </ProtectedRoute>
         }
@@ -208,7 +210,7 @@ export default function router() {
       <Route
         path="dashboard/visit/price"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <VisitPrice />
           </ProtectedRoute>
         }
@@ -217,12 +219,12 @@ export default function router() {
       <Route
         path="Patient/:patientId/Checkup/:checkupId/Prescription"
         element={
-          <ProtectedRoute roles={["all"]}>
+          <ProtectedRoute >
             <Prescription />
           </ProtectedRoute>
         }
-      /> */
-      }
+      /> 
+      
 
       <Route path="*" element={<NoMatch />} />
     </Routes>

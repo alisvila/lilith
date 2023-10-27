@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
@@ -16,12 +17,23 @@ import {
   Skeleton,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import CustomSkeleton from "../core/skeleton";
 import { persianDate } from "../helper";
 import EnhancedTableHead from "../core/grid/EnhancedTableHead";
 import EnhancedTableToolbar from "../core/grid/EnhancedTableToolbar";
 import GridSkeleton from "../core/grid/GridSkeleton";
-import DeleteDialog from "../core/dialog/delete";
-import type { Person } from "../../types/User"
+import { createProfile } from "../../api/profile";
+import DeleteDialog from "../core/deleteDialog";
+import { deleteSingleProfile } from "../../api/profile";
+// import { getInitials } from '../../utils/get-initials';
+
+type Customer = {
+  id: never;
+  avatarUrl: string;
+  enName: string;
+  name: number;
+  calorie: string;
+};
 
 const tableHead = [
   {
@@ -31,44 +43,33 @@ const tableHead = [
     label: "نام",
   },
   {
-    id: "email",
+    id: "enName",
     numeric: false,
     disablePadding: true,
-    label: "ایمیل",
+    label: "نام انگلیسی",
   },
   {
-    id: "address",
+    id: "calorie",
     numeric: false,
     disablePadding: true,
-    label: "آدرس",
-  },
-  {
-    id: "phoneNumber",
-    numeric: false,
-    disablePadding: true,
-    label: "شماره تماس",
-  },
-  {
-    id: "birthDate",
-    numeric: false,
-    disablePadding: true,
-    label: "تاریخ تولد",
+    label: "کالری",
   },
 ];
 
-export const DoctorListResults = ({ doctors, ...rest }: any) => {
-  const [selectedDoctorIds, setSelectedDoctorIds] = useState([]);
+export const MedicationListResults = ({ customers, ...rest }: any) => {
+  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
 
   const handleConfitm = () => {
     console.log("delete");
-    selectedDoctorIds.map((id) => {
+    selectedCustomerIds.map(id => {
       // deleteSingleProfile("/Doctor" + id)
-      setTimeout(() => console.log("deleted", id), 2000);
-    });
-    setOpen(false);
+      setTimeout(() => console.log('deleted', id), 2000)
+
+    })
+    setOpen(false)
   };
 
   const handleClose = () => {
@@ -76,42 +77,44 @@ export const DoctorListResults = ({ doctors, ...rest }: any) => {
   };
 
   const handleSelectAll = (event: any) => {
-    let newselectedDoctorIds;
+    let newSelectedCustomerIds;
 
     if (event.target.checked) {
-      newselectedDoctorIds = doctors.map((doctors: Person) => doctors.id);
+      newSelectedCustomerIds = customers.map(
+        (customer: Customer) => customer.id
+      );
     } else {
-      newselectedDoctorIds = [];
+      newSelectedCustomerIds = [];
     }
 
-    setSelectedDoctorIds(newselectedDoctorIds);
+    setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
   const handleSelectOne = (event: any, id: never) => {
-    const selectedIndex = selectedDoctorIds.indexOf(id);
-    let newselectedDoctorIds: any = [];
+    const selectedIndex = selectedCustomerIds.indexOf(id);
+    let newSelectedCustomerIds: any = [];
 
     if (selectedIndex === -1) {
-      newselectedDoctorIds = newselectedDoctorIds.concat(
-        selectedDoctorIds,
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(
+        selectedCustomerIds,
         id
       );
     } else if (selectedIndex === 0) {
-      newselectedDoctorIds = newselectedDoctorIds.concat(
-        selectedDoctorIds.slice(1)
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(
+        selectedCustomerIds.slice(1)
       );
-    } else if (selectedIndex === selectedDoctorIds.length - 1) {
-      newselectedDoctorIds = newselectedDoctorIds.concat(
-        selectedDoctorIds.slice(0, -1)
+    } else if (selectedIndex === selectedCustomerIds.length - 1) {
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(
+        selectedCustomerIds.slice(0, -1)
       );
     } else if (selectedIndex > 0) {
-      newselectedDoctorIds = newselectedDoctorIds.concat(
-        selectedDoctorIds.slice(0, selectedIndex),
-        selectedDoctorIds.slice(selectedIndex + 1)
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(
+        selectedCustomerIds.slice(0, selectedIndex),
+        selectedCustomerIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedDoctorIds(newselectedDoctorIds);
+    setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
   const handleLimitChange = (event: any) => {
@@ -123,10 +126,10 @@ export const DoctorListResults = ({ doctors, ...rest }: any) => {
   };
 
   const handleRemove = () => {
-    setOpen(true);
+    setOpen(true)
 
-    console.log("deleteall", selectedDoctorIds);
-    // createProfile("/Doctor", selectedDoctorIds)
+    console.log("deleteall", selectedCustomerIds);
+    // createProfile("/Doctor", selectedCustomerIds)
   };
 
   return (
@@ -136,82 +139,59 @@ export const DoctorListResults = ({ doctors, ...rest }: any) => {
           {/* <Box sx={{ minWidth: 1050 }}> */}
           <Box style={{ overflow: "auto" }}>
             <EnhancedTableToolbar
-              numSelected={selectedDoctorIds.length}
+              numSelected={selectedCustomerIds.length}
               handleRemove={handleRemove}
             />
             <Table>
               <EnhancedTableHead
                 headCells={tableHead}
                 onSelectAllClick={handleSelectAll}
-                numSelected={selectedDoctorIds.length}
-                rowCount={doctors.length}
+                numSelected={selectedCustomerIds.length}
+                rowCount={customers.length}
               />
-              {/* <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
-                    color="primary"
-                    indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
-                  <TableCell>نام</TableCell>
-                  <TableCell>ایمیل</TableCell>
-                  <TableCell>آدرس</TableCell>
-                  <TableCell>شماره تماس</TableCell>
-                  <TableCell>تاریخ تولد</TableCell>
-                </TableRow>
-              </TableHead> */}
+
               <TableBody>
                 {rest.isLoading && (
                   <>
                     <TableRow>
-                      <GridSkeleton cells={6} />
+                      <GridSkeleton cells={4} />
                     </TableRow>
                   </>
                 )}
-                {doctors.slice(0, limit).map((doctor: Person) => (
+                {customers.slice(0, limit).map((customer: Customer) => (
                   <TableRow
                     hover
-                    key={doctor.id}
-                    selected={selectedDoctorIds.indexOf(doctor.id) !== -1}
+                    key={customer.id}
+                    selected={selectedCustomerIds.indexOf(customer.id) !== -1}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={
-                          selectedDoctorIds.indexOf(doctor.id) !== -1
+                          selectedCustomerIds.indexOf(customer.id) !== -1
                         }
                         onChange={(event) =>
-                          handleSelectOne(event, doctor.id)
+                          handleSelectOne(event, customer.id)
                         }
                         value="true"
                       />
                     </TableCell>
                     <TableCell>
                       <Box
-                        component={NavLink}
-                        to={`/dashboard/doc/${doctor.id}`}
                         sx={{
                           alignItems: "center",
                           display: "flex",
                         }}
                       >
-                        <Avatar src={doctor.avatarUrl} sx={{ mr: 2 }}>
-                          {doctor.name}
+                        <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
+                          {customer.name}
                         </Avatar>
                         <Typography color="textPrimary" variant="body1">
-                          {doctor.name} {doctor.lastName}
+                          {customer.name}
                         </Typography>
                       </Box>
                     </TableCell>
-                    <TableCell>{doctor.email}</TableCell>
-                    <TableCell>{doctor.address.city}</TableCell>
-                    <TableCell>{doctor.phoneNumber}</TableCell>
-                    <TableCell>{persianDate(doctor.birthDate)}</TableCell>
+                    <TableCell>{customer.enName}</TableCell>
+                    <TableCell>{customer.calorie}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -220,7 +200,7 @@ export const DoctorListResults = ({ doctors, ...rest }: any) => {
         </PerfectScrollbar>
         <TablePagination
           component="div"
-          count={doctors.length}
+          count={customers.length}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleLimitChange}
           page={page}
@@ -232,7 +212,7 @@ export const DoctorListResults = ({ doctors, ...rest }: any) => {
           open={open}
           handleClose={handleClose}
           handleConfitm={handleConfitm}
-          label={selectedDoctorIds.length}
+          label={selectedCustomerIds.length}
         />
       </CardContent>
     </Card>
