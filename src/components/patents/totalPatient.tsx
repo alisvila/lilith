@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 
 // material-ui
@@ -6,7 +7,7 @@ import { Avatar, Box, Grid, Menu, MenuItem, Typography } from "@mui/material";
 
 // project imports
 import MainCard from "../core/cards/mainCard";
-import SkeletonEarningCard from "./skeleton";
+// import SkeletonEarningCard from "../core/skeleton/EarningCard";
 
 // assets
 import { RotateLeft } from "@mui/icons-material";
@@ -16,6 +17,8 @@ import GetAppTwoToneIcon from "@mui/icons-material/GetAppOutlined";
 import FileCopyTwoToneIcon from "@mui/icons-material/FileCopyOutlined";
 import PictureAsPdfTwoToneIcon from "@mui/icons-material/PictureAsPdfOutlined";
 import ArchiveTwoToneIcon from "@mui/icons-material/ArchiveOutlined";
+import CustomSkeleton from "../core/skeleton";
+import AccessibilityIcon from '@mui/icons-material/Accessibility';
 
 const CardWrapper = styled(MainCard)(({ theme }: any) => ({
   backgroundColor: theme.palette.secondary.dark,
@@ -55,9 +58,8 @@ const CardWrapper = styled(MainCard)(({ theme }: any) => ({
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const EarningCard = ({ isLoading }: any) => {
+const TotalPatient = ({ docDetail }: any) => {
   const theme: any = useTheme();
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event: any) => {
@@ -70,11 +72,37 @@ const EarningCard = ({ isLoading }: any) => {
 
   return (
     <>
-      {isLoading ? (
-        <SkeletonEarningCard />
-      ) : (
-        <CardWrapper border={false} content={false}>
-          <Box sx={{ p: 2.25 }}>
+      <CardWrapper border={false} content={false} style={{ height: "100%" }}>
+        {!docDetail ? (
+          <>
+            <Box sx={{ p: 2.25, height: "100%" }}>
+              <Grid container spacing={2} direction="column">
+                <Grid item>
+                  <Grid container justifyContent="space-between">
+                    <Grid item>
+                      <CustomSkeleton variant="rectangular" height={30} />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <CustomSkeleton
+                    variant="rectangular"
+                    height={30}
+                    width={150}
+                  />
+                </Grid>
+                <Grid item>
+                  <CustomSkeleton
+                    variant="rectangular"
+                    height={30}
+                    width={150}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </>
+        ) : (
+          <Box sx={{ p: 2.25, height: "100%" }}>
             <Grid container direction="column">
               <Grid item>
                 <Grid container justifyContent="space-between">
@@ -82,62 +110,26 @@ const EarningCard = ({ isLoading }: any) => {
                     <Avatar
                       variant="rounded"
                       sx={{
-                        ...theme.typography.commonAvatar,
                         ...theme.typography.largeAvatar,
-                        backgroundColor: theme.palette.secondary[800],
+                        backgroundColor: theme.palette.secondary.dark,
                         mt: 1,
                       }}
                     >
-                      <RotateLeft />
+                      <AccessibilityIcon />
                     </Avatar>
-                  </Grid>
-                  <Grid item>
-                    <Avatar
-                      variant="rounded"
-                      sx={{
-                        ...theme.typography.commonAvatar,
-                        ...theme.typography.mediumAvatar,
-                        backgroundColor: theme.palette.secondary.dark,
-                        color: theme.palette.secondary[200],
-                        zIndex: 1,
-                      }}
-                      aria-controls="menu-earning-card"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                    >
-                      <MoreHorizIcon fontSize="inherit" />
-                    </Avatar>
-                    <Menu
-                      id="menu-earning-card"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                      variant="selectedMenu"
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}>
-                        <GetAppTwoToneIcon sx={{ mr: 1.75 }} /> Import Card
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <FileCopyTwoToneIcon sx={{ mr: 1.75 }} /> Copy Data
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <PictureAsPdfTwoToneIcon sx={{ mr: 1.75 }} /> Export
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <ArchiveTwoToneIcon sx={{ mr: 1.75 }} /> Archive File
-                      </MenuItem>
-                    </Menu>
                   </Grid>
                 </Grid>
+              </Grid>
+              <Grid item sx={{ mb: 1.25 }}>
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: 500,
+                    color: theme.palette.secondary[200],
+                  }}
+                >
+                  تعداد بیمار
+                </Typography>
               </Grid>
               <Grid item>
                 <Grid container alignItems="center">
@@ -151,13 +143,12 @@ const EarningCard = ({ isLoading }: any) => {
                         mb: 0.75,
                       }}
                     >
-                      $500.00
+                      {docDetail.countOfPatient}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Avatar
                       sx={{
-                        cursor: "pointer",
                         ...theme.typography.smallAvatar,
                         backgroundColor: theme.palette.secondary[200],
                         color: theme.palette.secondary.dark,
@@ -171,23 +162,12 @@ const EarningCard = ({ isLoading }: any) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item sx={{ mb: 1.25 }}>
-                <Typography
-                  sx={{
-                    fontSize: "1rem",
-                    fontWeight: 500,
-                    color: theme.palette.secondary[200],
-                  }}
-                >
-                  Total Earning
-                </Typography>
-              </Grid>
             </Grid>
           </Box>
-        </CardWrapper>
-      )}
+        )}
+      </CardWrapper>
     </>
   );
 };
 
-export default EarningCard;
+export default TotalPatient;
