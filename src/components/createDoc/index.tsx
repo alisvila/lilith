@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import newDoc from "./new-doc.webp";
-import AdapterJalali from "@date-io/date-fns-jalali";
+import AdapterJalali from '@date-io/date-fns-jalali';
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { createProfile, getProfile, updateProfile } from "../../api/profile";

@@ -110,10 +110,10 @@ export default React.memo(function NestedList() {
         <ListItemText primary="پنل کاربری" />
       </ListItemButtonCus>
       <ListItemButtonCus
-        key="Customers"
+        key="doctorlist"
         component={NavLink}
-        selected={location.pathname === "/dashboard/Customers"}
-        to="/dashboard/Customers"
+        selected={location.pathname === "/dashboard/doctorlist"}
+        to="/dashboard/doctorlist"
       >
         <ListItemIcon>
           <BoyIcon />
